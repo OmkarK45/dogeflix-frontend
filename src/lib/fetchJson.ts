@@ -2,6 +2,8 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
+axios.defaults.withCredentials = true
+
 export const fetcher = (
 	url: string,
 	options: AxiosRequestConfig<any> | undefined
@@ -12,6 +14,7 @@ export const fetcher = (
 			withCredentials: true,
 		})
 		.then((res) => res.data)
+		.catch((error) => console.log(error))
 
 export const mutationFn = (
 	url: string,
