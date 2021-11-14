@@ -8,8 +8,8 @@ export const fetcher = (
 ) =>
 	axios
 		.get(BASE_URL + url, {
-			withCredentials: true,
 			...options,
+			withCredentials: true,
 		})
 		.then((res) => res.data)
 
@@ -20,8 +20,8 @@ export const mutationFn = (
 ) =>
 	axios
 		.post(url, data, {
-			withCredentials: true,
 			...options,
+			withCredentials: true,
 		})
 		.then((res) => res.data)
 
@@ -30,8 +30,8 @@ export default async function fetchJson<JSON = unknown>(
 	init?: RequestInit
 ): Promise<JSON> {
 	const response = await fetch(input, {
-		credentials: 'include',
 		...init,
+		credentials: 'include',
 	})
 
 	// if the server replies, there's always some data in json

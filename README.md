@@ -4,6 +4,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+- [x] first item
+- [x] second item
+- [x] third item
+
 ```bash
 npm run dev
 # or
