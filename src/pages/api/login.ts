@@ -5,7 +5,7 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../lib/session'
 import { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-
+import cookie from 'cookie'
 export default withIronSessionApiRoute(loginRoute, sessionOptions)
 
 /**
@@ -37,7 +37,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 			{ withCredentials: true }
 		)
 
-		console.log(response.headers['set-cookie'])
+		console.log(response.headers)
 		const user = {
 			isLoggedIn: true,
 			login: response.data.data,
@@ -45,8 +45,27 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 		} as User
 
 		req.session.user = user
-		console.log(response.headers)
-		res.setHeader('Set-Cookie', response.headers['set-cookie'] as string[])
+		const backendCookie = cookie.parse(
+			response.headers['set-cookie']![0] as string
+		)
+
+		console.log('OIK', backendCookie['dogemart.cookie.v2'])
+
+		res.setHeader(
+			'Set-Cookie',
+			cookie.serialize(
+				'dogemart.cookie.v2',
+				backendCookie['dogemart.cookie.v2'],
+				{
+					httpOnly: true,
+					secure: true,
+					maxAge: 1000 * 60 * 60 * 24 * 7,
+					path: '/',
+					sameSite: 'none',
+				}
+			)
+		)
+
 		await req.session.save()
 
 		res.json(user)
