@@ -29,7 +29,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
 	try {
 		const response = await axios.post(
-			`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+			`${process.env.API_URL}/auth/login`,
 			{
 				email,
 				password,
@@ -45,7 +45,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 		} as User
 
 		req.session.user = user
-		res.setHeader('Set-Cookie', response.headers['set-cookie'] ?? '')
+		res.setHeader('Set-Cookie', response.headers['set-cookie'] as string[])
 		await req.session.save()
 
 		res.json(user)
