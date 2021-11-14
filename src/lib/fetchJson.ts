@@ -1,3 +1,30 @@
+import axios, { AxiosRequestConfig } from 'axios'
+
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+
+export const fetcher = (
+	url: string,
+	options: AxiosRequestConfig<any> | undefined
+) =>
+	axios
+		.get(BASE_URL + url, {
+			withCredentials: true,
+			...options,
+		})
+		.then((res) => res.data)
+
+export const mutationFn = (
+	url: string,
+	data: any,
+	options: AxiosRequestConfig<any> | undefined
+) =>
+	axios
+		.post(url, data, {
+			withCredentials: true,
+			...options,
+		})
+		.then((res) => res.data)
+
 export default async function fetchJson<JSON = unknown>(
 	input: RequestInfo,
 	init?: RequestInit
