@@ -29,7 +29,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
 	try {
 		const response = await axios.post(
-			'https://dogemart-backend-production-b9e4.up.railway.app/auth/login',
+			'https://dogemart.up.railway.app/auth/login',
 			{
 				email,
 				password,
