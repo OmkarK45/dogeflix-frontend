@@ -11,22 +11,24 @@ export const fetcher = (url: string, init?: RequestInit) => {
 	console.log(BASE_URL + url)
 	return fetch(BASE_URL + url, {
 		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 		method: 'GET',
 		...init,
 	}).then((res) => res.json())
 }
 
-export const mutationFn = (
-	url: string,
-	data: any,
-	options: AxiosRequestConfig<any> | undefined
-) => {
-	return ax
-		.post(url, data, {
-			...options,
-			withCredentials: true,
-		})
-		.then((res) => res.data)
+export const mutationFn = (url: string, data: any, options?: RequestInit) => {
+	return fetch(BASE_URL + url, {
+		method: 'POST',
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+		...options,
+	}).then((res) => res.json())
 }
 
 export default async function fetchJson<JSON = unknown>(
