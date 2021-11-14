@@ -1,5 +1,5 @@
 import useUser from '../lib/useUser'
-
+import Link from 'next/link'
 export default function SgProfile() {
 	const { user } = useUser({
 		redirectTo: '/login',
@@ -10,11 +10,11 @@ export default function SgProfile() {
 			<h1>Your GitHub profile</h1>
 			<h2>
 				This page uses{' '}
-				<a href="https://nextjs.org/docs/basic-features/pages#static-generation-recommended">
+				<Link href="https://nextjs.org/docs/basic-features/pages#static-generation-recommended">
 					Static Generation (SG)
-				</a>{' '}
-				and the <a href="/api/user">/api/user</a> route (using{' '}
-				<a href="https://github.com/vercel/swr">vercel/SWR</a>)
+				</Link>{' '}
+				and the <Link href="/api/user">/api/user</Link> route (using{' '}
+				<Link href="https://github.com/vercel/swr">vercel/SWR</Link>)
 			</h2>
 			{user && (
 				<>
