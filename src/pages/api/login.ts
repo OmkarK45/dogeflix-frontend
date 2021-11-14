@@ -37,7 +37,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 			{ withCredentials: true }
 		)
 
-		console.log(response.headers)
 		const user = {
 			isLoggedIn: true,
 			login: response.data.data,
@@ -45,26 +44,14 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 		} as User
 
 		req.session.user = user
+
 		const backendCookie = cookie.parse(
 			response.headers['set-cookie']![0] as string
 		)
 
-		console.log('OIK', backendCookie['dogemart.cookie.v2'])
+		console.log('INCOMING', backendCookie)
 
-		res.setHeader(
-			'Set-Cookie',
-			cookie.serialize(
-				'dogemart.cookie.v2',
-				backendCookie['dogemart.cookie.v2'],
-				{
-					httpOnly: true,
-					secure: true,
-					maxAge: 1000 * 60 * 60 * 24 * 7,
-					path: '/',
-					sameSite: 'none',
-				}
-			)
-		)
+		res.setHeader('Set-Cookie', response.headers['set-cookie'] as string[])
 
 		await req.session.save()
 
