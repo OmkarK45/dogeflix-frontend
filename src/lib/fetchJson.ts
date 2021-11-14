@@ -2,31 +2,32 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
-axios.defaults.withCredentials = true
+const ax = axios.create({
+	baseURL: BASE_URL,
+	withCredentials: true,
+})
 
-export const fetcher = (
-	url: string,
-	options: AxiosRequestConfig<any> | undefined
-) =>
-	axios
-		.get(BASE_URL + url, {
-			...options,
-			withCredentials: true,
-		})
-		.then((res) => res.data)
-		.catch((error) => console.log(error))
+export const fetcher = (url: string, init?: RequestInit) => {
+	console.log(BASE_URL + url)
+	return fetch(BASE_URL + url, {
+		credentials: 'include',
+		method: 'GET',
+		...init,
+	}).then((res) => res.json())
+}
 
 export const mutationFn = (
 	url: string,
 	data: any,
 	options: AxiosRequestConfig<any> | undefined
-) =>
-	axios
+) => {
+	return ax
 		.post(url, data, {
 			...options,
 			withCredentials: true,
 		})
 		.then((res) => res.data)
+}
 
 export default async function fetchJson<JSON = unknown>(
 	input: RequestInfo,
