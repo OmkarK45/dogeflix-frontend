@@ -42,7 +42,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 		} as User
 
 		req.session.user = user
-
+		console.log(response.headers)
 		res.setHeader('Set-Cookie', response.headers['set-cookie'] as any)
 
 		await req.session.save()
