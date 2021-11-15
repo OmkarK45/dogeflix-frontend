@@ -17,8 +17,8 @@ const Home: NextPage = () => {
 		e.preventDefault()
 
 		const body = {
-			email: e.currentTarget.email.value,
-			password: e.currentTarget.password.value,
+			email: 'root_user2@gmail.com',
+			password: 'root_user',
 		}
 
 		try {

@@ -7,13 +7,15 @@ axios.defaults.withCredentials = true
 export const fetcher = (
 	url: string,
 	options: AxiosRequestConfig<any> | undefined
-) =>
-	axios
+) => {
+	console.log('im called')
+	return axios
 		.get(BASE_URL + url, {
 			...options,
 			withCredentials: true,
 		})
 		.then((res) => res.data)
+}
 
 export const mutationFn = (
 	url: string,

@@ -5,7 +5,7 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../lib/session'
 import { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import cookie from 'cookie'
+import cookie, { serialize } from 'cookie'
 export default withIronSessionApiRoute(loginRoute, sessionOptions)
 
 /**
@@ -30,12 +30,10 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 	try {
 		const response = await axios.post(
 			`${process.env.API_URL}/auth/login`,
-			{
-				email,
-				password,
-			},
+			{ email, password },
 			{ withCredentials: true }
 		)
+		console.log(response.headers)
 
 		const user = {
 			isLoggedIn: true,
@@ -45,13 +43,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
 		req.session.user = user
 
-		const backendCookie = cookie.parse(
-			response.headers['set-cookie']![0] as string
-		)
-
-		console.log('INCOMING', backendCookie)
-
-		res.setHeader('Set-Cookie', response.headers['set-cookie'] as string[])
+		res.setHeader('Set-Cookie', response.headers['set-cookie'] as any)
 
 		await req.session.save()
 

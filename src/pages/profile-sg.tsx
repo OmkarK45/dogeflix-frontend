@@ -1,7 +1,7 @@
 import useUser from '../lib/useUser'
 import Link from 'next/link'
 import useSWR from 'swr'
-import { fetcher } from '../lib/fetchJson'
+import fetchJson, { fetcher } from '../lib/fetchJson'
 
 export default function SgProfile() {
 	const { user } = useUser({
@@ -9,8 +9,6 @@ export default function SgProfile() {
 	})
 
 	const { data, error } = useSWR('/auth/user-info', fetcher)
-	if (error) return <div>failed to load</div>
-	if (!data) return <div>loading...</div>
 
 	return (
 		<div>
@@ -30,8 +28,8 @@ export default function SgProfile() {
 					</p>
 					{process.env.NEXT_PUBLIC_API_URL}
 
-					<pre>{JSON.stringify(data, null, 2)}</pre>
 					<pre>{JSON.stringify(user, null, 2)}</pre>
+					<pre>{JSON.stringify(data, null, 2)}</pre>
 				</>
 			)}
 		</div>
