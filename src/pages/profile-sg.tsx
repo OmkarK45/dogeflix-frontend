@@ -1,33 +1,19 @@
 import useUser from '../lib/useUser'
-import Link from 'next/link'
 import useSWR from 'swr'
-import fetchJson, { fetcher } from '../lib/fetchJson'
+import { fetcher } from '../lib/fetchJson'
 
 export default function SgProfile() {
 	const { user } = useUser({
-		redirectTo: '/login',
+		redirectTo: '/',
 	})
 
 	const { data, error } = useSWR('/auth/user-info', fetcher)
 
 	return (
 		<div>
-			<h1>Your GitHub profile</h1>
-			<h2>
-				This page uses{' '}
-				<Link href="https://nextjs.org/docs/basic-features/pages#static-generation-recommended">
-					Static Generation (SG)
-				</Link>{' '}
-				and the <Link href="/api/user">/api/user</Link> route (using{' '}
-				<Link href="https://github.com/vercel/swr">vercel/SWR</Link>)
-			</h2>
 			{user && (
 				<>
-					<p style={{ fontStyle: 'italic' }}>
-						Public data, from , reduced to `login` and `avatar_url`.
-					</p>
 					{process.env.NEXT_PUBLIC_API_URL}
-
 					<pre>{JSON.stringify(user, null, 2)}</pre>
 					<pre>{JSON.stringify(data, null, 2)}</pre>
 				</>

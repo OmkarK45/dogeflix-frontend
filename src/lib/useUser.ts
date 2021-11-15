@@ -20,6 +20,7 @@ export default function useUser({
 			// If redirectIfFound is also set, redirect if the user was found
 			(redirectIfFound && user?.isLoggedIn)
 		) {
+			localStorage.setItem('token', user.token)
 			Router.push(redirectTo)
 		}
 	}, [user, redirectIfFound, redirectTo])

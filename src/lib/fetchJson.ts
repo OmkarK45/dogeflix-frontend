@@ -6,7 +6,8 @@ axios.defaults.withCredentials = true
 
 export const fetcher = (
 	url: string,
-	options: AxiosRequestConfig<any> | undefined
+	options: AxiosRequestConfig<any> | undefined,
+	token?: string
 ) => {
 	console.log('im called')
 	return axios

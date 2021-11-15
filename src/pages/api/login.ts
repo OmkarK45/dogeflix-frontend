@@ -1,28 +1,11 @@
 import type { User } from './user'
-
+import cookie from 'cookie'
 import { withIronSessionApiRoute } from 'iron-session/next'
 // TODO : fix path alias
 import { sessionOptions } from '../../lib/session'
 import { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import cookie, { serialize } from 'cookie'
 export default withIronSessionApiRoute(loginRoute, sessionOptions)
-
-/**
- * "code": "SUCCESS",
-  "success": true,
-  "data": {
-    "message": "Login successful",
-    "user": {
-      "id": "b5fca53b-64c4-406c-a1aa-87213a88a62a",
-      "email": "root_user2@gmail.com",
-      "name": "root_user1",
-      "role": "USER",
-      "created_at": "2021-11-12T15:45:16.133Z",
-      "update_at": "2021-11-12T15:45:16.133Z"
-    }
-  }
- * */
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 	const { email, password } = await req.body
@@ -31,20 +14,31 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 		const response = await axios.post(
 			`${process.env.API_URL}/auth/login`,
 			{ email, password },
-			{ withCredentials: true }
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Credentials': 'true',
+				},
+			}
 		)
-		console.log(response.headers)
+		console.log(response.request)
 
 		const user = {
 			isLoggedIn: true,
-			login: response.data.data,
-			avatarUrl: 'OK',
+			data: response.data.data,
 		} as User
 
 		req.session.user = user
-		console.log(response.headers)
-		res.setHeader('Set-Cookie', response.headers['set-cookie'] as any)
-
+		res.setHeader(
+			'Set-Cookie',
+			cookie.serialize('token', response.data.data.token, {
+				sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+				path: '/',
+				expires: new Date(Date.now() + 60 * 60 * 1000),
+				secure: process.env.NODE_ENV === 'production',
+			})
+		)
 		await req.session.save()
 
 		res.json(user)
