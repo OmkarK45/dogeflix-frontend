@@ -37,6 +37,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 				path: '/',
 				expires: new Date(Date.now() + 60 * 60 * 1000),
 				secure: process.env.NODE_ENV === 'production',
+				domain:
+					process.env.NODE_ENV === 'production' ? '.railway.app' : 'localhost',
 			})
 		)
 		await req.session.save()
