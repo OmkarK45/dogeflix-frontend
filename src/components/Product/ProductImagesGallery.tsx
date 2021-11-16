@@ -49,7 +49,7 @@ export function ProductImagesGallery({ images }: { images: ProductImage[] }) {
 						<img
 							src={image.src}
 							alt={image.alt}
-							className="w-full h-full object-center object-contain sm:rounded-lg"
+							className="w-full h-full object-center object-contain sm:rounded-lg "
 						/>
 					</Tab.Panel>
 				))}
