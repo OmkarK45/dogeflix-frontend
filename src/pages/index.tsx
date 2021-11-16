@@ -5,6 +5,7 @@ export default function LandingPage() {
 	return (
 		<>
 			<Navbar />
+			{/* probably add carousel here as well for now, create the MVP */}
 			<HeroSection />
 		</>
 	)

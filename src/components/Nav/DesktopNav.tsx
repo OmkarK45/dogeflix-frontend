@@ -165,14 +165,14 @@ export function Navbar() {
 									</div>
 
 									{/* Logo (lg-) */}
-									<a href="#" className="lg:hidden">
+									<Link href="/products" className="lg:hidden no-underline">
 										<span className="flex items-center space-x-2">
 											<ShoppingBagIcon className="h-8 w-auto  text-yellow-600" />
 											<h5 className="mt-1 text-xl font-bold tracking-tighter">
 												DogeMart
 											</h5>
 										</span>
-									</a>
+									</Link>
 
 									<div className="flex-1 flex items-center justify-end">
 										<a

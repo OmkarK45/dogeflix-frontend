@@ -1,3 +1,11 @@
+import { Navbar } from '~/components/Nav/DesktopNav'
+import { ProductDetails } from '~/components/Product/ProductDetails'
+
 export default function ProductDetailsPage() {
-	return <h1>Product Details page</h1>
+	return (
+		<>
+			<Navbar />
+			<ProductDetails />
+		</>
+	)
 }

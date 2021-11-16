@@ -22,15 +22,17 @@ interface Props {
 	variant: keyof typeof BadgeVariants
 	size?: keyof typeof BadgeSizes
 	children: ReactNode
+	className?: string
 }
 
-export function Badge({ children, variant, size = 'md' }: Props) {
+export function Badge({ children, variant, size = 'md', className }: Props) {
 	return (
 		<span
 			className={clsx(
 				'font-semibold inline-flex leading-4 text-sm rounded-full',
 				BadgeVariants[variant],
-				size ? BadgeSizes[size] : BadgeSizes['md']
+				size ? BadgeSizes[size] : BadgeSizes['md'],
+				className
 			)}
 		>
 			{children}

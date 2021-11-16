@@ -72,7 +72,7 @@ export function ProductsList() {
 				/>
 
 				<main className=" mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="w-full bg-white z-10 flex items-baseline justify-between sticky top-0 pt-4 pb-6 border-b border-gray-200">
+					<div className="w-full bg-white z-10 flex items-center justify-between sticky top-0 pt-4 pb-6 border-b border-gray-200">
 						<Heading size="h3">Explore.</Heading>
 						<div className="flex items-center">
 							<SortMenu />
@@ -104,7 +104,11 @@ export function ProductsList() {
 								{/* Replace with your content */}
 								<div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
 									{products.map((product, idx) => (
-										<ProductCard product={product} key={idx} />
+										<ProductCard
+											href={'/product/something-useful'}
+											product={product}
+											key={idx}
+										/>
 									))}
 								</div>
 							</div>

@@ -1,3 +1,5 @@
+import { Link } from '../ui/Link'
+
 interface Product {
 	id: number
 	name: string
@@ -7,9 +9,15 @@ interface Product {
 	color: string
 	href: string
 }
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+	product,
+	href,
+}: {
+	product: Product
+	href: string
+}) {
 	return (
-		<div key={product.id} className="group relative">
+		<Link href={href} key={product.id} className="group relative no-underline ">
 			<div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden group-hover:opacity-75 lg:h-72 xl:h-80">
 				<img
 					src={product.imageSrc}
@@ -25,6 +33,6 @@ export function ProductCard({ product }: { product: Product }) {
 			</h3>
 			<p className="mt-1 text-sm text-gray-500">{product.color}</p>
 			<p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
-		</div>
+		</Link>
 	)
 }

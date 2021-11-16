@@ -122,7 +122,7 @@ export function Footer() {
 					</div>
 				</Modal.Content>
 			</Modal>
-			<p>&copy; DogeSocial, 2021</p>
+			<p>&copy; DogeMart, 2021</p>
 			<div className="flex space-x-2 justify-center mt-2">
 				<div>
 					<a
