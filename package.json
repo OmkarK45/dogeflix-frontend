@@ -1,27 +1,42 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "axios": "^0.24.0",
-    "cookie": "^0.4.1",
-    "iron-session": "^6.0.2",
-    "next": "12.0.3",
-    "next-auth": "^3.29.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "swr": "^1.0.1"
-  },
-  "devDependencies": {
-    "@types/react": "17.0.34",
-    "eslint": "7.32.0",
-    "eslint-config-next": "12.0.3",
-    "typescript": "4.4.4"
-  }
+	"name": "my-app",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@headlessui/react": "^1.4.2",
+		"@heroicons/react": "^1.0.5",
+		"@hookform/resolvers": "^2.8.3",
+		"@tailwindcss/aspect-ratio": "^0.2.1",
+		"@tailwindcss/forms": "^0.4.0-alpha.1",
+		"@tailwindcss/typography": "^0.5.0-alpha.2",
+		"axios": "^0.24.0",
+		"cookie": "^0.4.1",
+		"iron-session": "^6.0.2",
+		"next": "12.0.3",
+		"next-auth": "^3.29.0",
+		"nprogress": "^0.2.0",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-hook-form": "^7.19.5",
+		"react-hot-toast": "^2.1.1",
+		"react-icons": "^4.3.1",
+		"swr": "^1.0.1",
+		"zod": "^3.11.6"
+	},
+	"devDependencies": {
+		"@types/react": "17.0.34",
+		"autoprefixer": "^10.4.0",
+		"clsx": "^1.1.1",
+		"eslint": "7.32.0",
+		"eslint-config-next": "12.0.3",
+		"postcss": "^8.3.11",
+		"tailwindcss": "^3.0.0-alpha.1",
+		"typescript": "4.4.4"
+	}
 }

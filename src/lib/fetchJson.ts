@@ -9,7 +9,6 @@ export const fetcher = (
 	options: AxiosRequestConfig<any> | undefined,
 	token?: string
 ) => {
-	console.log('im called')
 	return axios
 		.get(BASE_URL + url, {
 			...options,

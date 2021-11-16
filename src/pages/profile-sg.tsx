@@ -1,6 +1,7 @@
 import useUser from '../lib/useUser'
 import useSWR from 'swr'
 import { fetcher } from '../lib/fetchJson'
+import { Button } from '../components/ui/Button'
 
 export default function SgProfile() {
 	const { user } = useUser({
@@ -11,6 +12,7 @@ export default function SgProfile() {
 
 	return (
 		<div>
+			<Button>CLICK ME</Button>
 			{user && (
 				<>
 					{process.env.NEXT_PUBLIC_API_URL}
