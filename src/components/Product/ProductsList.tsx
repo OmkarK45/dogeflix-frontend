@@ -14,13 +14,7 @@ export const sortOptions = [
 	{ name: 'Price: Low to High', href: '#', current: false },
 	{ name: 'Price: High to Low', href: '#', current: false },
 ]
-export const subCategories = [
-	{ name: 'Totes', href: '#' },
-	{ name: 'Backpacks', href: '#' },
-	{ name: 'Travel Bags', href: '#' },
-	{ name: 'Hip Bags', href: '#' },
-	{ name: 'Laptop Sleeves', href: '#' },
-]
+
 export const filters = [
 	{
 		id: 'color',
@@ -101,7 +95,6 @@ export function ProductsList() {
 
 							{/* Product grid */}
 							<div className="lg:col-span-3 mt-4 md:mt-0">
-								{/* Replace with your content */}
 								<div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
 									{products.map((product, idx) => (
 										<ProductCard

@@ -14,7 +14,7 @@ export const fetcher = (
 			...options,
 			withCredentials: true,
 		})
-		.then((res) => res.data)
+		.then((res) => res.data.data)
 }
 
 export const mutationFn = (

@@ -1,35 +1,17 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/typography'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-import { Fragment } from 'react'
 import {
 	ArrowLeftIcon,
+	HeartIcon,
 	LightningBoltIcon,
-	ShoppingBagIcon,
 	ShoppingCartIcon,
-	StarIcon,
 } from '@heroicons/react/solid'
-import { Tab } from '@headlessui/react'
-import { Heading } from '../ui/Heading'
+
 import { Button } from '../ui/Button'
-import { ProductImagesGallery } from './ProductImagesGallery'
 import { Badge } from '../ui/Badge'
 import { ShareSection } from '../Common/ShareSection'
+
+import { ProductImagesGallery } from './ProductImagesGallery'
 import { ProductSizeAndColor } from './ProductSizeAndColor'
+import { ProductReviews, ReviewStars } from './ProductReviews'
 
 export const product = {
 	name: 'Louis Vuitton Handbag',
@@ -82,14 +64,14 @@ export const product = {
 	imageAlt:
 		'Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles.',
 }
-const reviews = {
+export const reviews = {
 	average: 4,
 	featured: [
 		{
 			id: 1,
 			rating: 5,
 			content: `
-        <p>This icon pack is just what I need for my latest project. There's an icon for just about anything I could ever need. Love the playful look!</p>
+        This icon pack is just what I need for my latest project. There's an icon for just about anything I could ever need. Love the playful look!
       `,
 			date: 'July 16, 2021',
 			datetime: '2021-07-16',
@@ -101,7 +83,7 @@ const reviews = {
 			id: 2,
 			rating: 5,
 			content: `
-        <p>Blown away by how polished this icon pack is. Everything looks so consistent and each SVG is optimized out of the box so I can use it directly with confidence. It would take me several hours to create a single icon this good, so it's a steal at this price.</p>
+        Blown away by how polished this icon pack is. Everything looks so consistent and each SVG is optimized out of the box so I can use it directly with confidence. It would take me several hours to create a single icon this good, so it's a steal at this price.
       `,
 			date: 'July 12, 2021',
 			datetime: '2021-07-12',
@@ -111,10 +93,6 @@ const reviews = {
 		},
 		// More reviews...
 	],
-}
-
-function classNames(...classes: string[]) {
-	return classes.filter(Boolean).join(' ')
 }
 
 export function ProductDetails() {
@@ -138,10 +116,14 @@ export function ProductDetails() {
 								<Badge variant="orange" className="mb-2 relative shine">
 									Louis Vuitton
 								</Badge>
-								<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-									{product.name}
-								</h1>
-
+								<div className="flex justify-between items-center">
+									<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+										{product.name}{' '}
+									</h1>
+									<button className="bg-red-100 p-2 rounded-full outline-none transition-transform duration-300 hover:scale-150 active:scale-95">
+										<HeartIcon className="w-5 h-5 text-red-500" />
+									</button>
+								</div>
 								<h2 id="information-heading" className="sr-only">
 									Product information
 								</h2>
@@ -151,39 +133,7 @@ export function ProductDetails() {
 								<div className="mr-2">
 									<p className="text-3xl text-gray-900 ">{product.price}</p>
 								</div>
-								<div className="border-l border-gray-300">
-									<p className="text-sm text-gray-700 ml-2">
-										{reviews.average}
-										<span className="sr-only"> out of 5 stars</span>
-									</p>
-								</div>
-
-								<div className="ml-1 flex items-center ">
-									{[0, 1, 2, 3, 4].map((rating) => (
-										<StarIcon
-											key={rating}
-											className={classNames(
-												reviews.average > rating
-													? 'text-yellow-400'
-													: 'text-gray-200',
-												'h-5 w-5 flex-shrink-0'
-											)}
-											aria-hidden="true"
-										/>
-									))}
-								</div>
-								<div aria-hidden="true" className="ml-4 text-sm text-gray-300">
-									·
-								</div>
-								<div className="ml-4 flex">
-									<a
-										href="#"
-										className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-									>
-										See all 512 reviews
-									</a>
-								</div>
-								<p className="sr-only">{reviews.average} out of 5 stars</p>
+								<ReviewStars reviews={reviews} />
 							</div>
 						</div>
 
@@ -193,7 +143,7 @@ export function ProductDetails() {
 						</div>
 						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
 							<Button type="button" fullWidth size="xl">
-								<LightningBoltIcon className="w-5 h-5 mr-2" /> Pay{' '}
+								<LightningBoltIcon className="w-5 h-5 mr-2" /> Buy now{' '}
 								{product.price}
 							</Button>
 							<Button type="button" variant="dark" size="xl">
@@ -216,63 +166,7 @@ export function ProductDetails() {
 						<ShareSection />
 					</div>
 
-					<div className="w-full max-w-2xl mx-auto mt-16 lg:max-w-none lg:mt-0 lg:col-span-4">
-						<div className="border-b border-gray-200"></div>
-						<Heading size="h5" className="py-6">
-							Customer Reviews
-						</Heading>
-						<div className="border-b border-gray-200"></div>
-						<div>
-							{reviews.featured.map((review, reviewIdx) => (
-								<div
-									key={review.id}
-									className="flex text-sm text-gray-500 space-x-4"
-								>
-									<div className="flex-none py-10">
-										<img
-											src={review.avatarSrc}
-											alt=""
-											className="w-10 h-10 bg-gray-100 rounded-full"
-										/>
-									</div>
-									<div
-										className={classNames(
-											reviewIdx === 0 ? '' : 'border-t border-gray-200',
-											'py-10'
-										)}
-									>
-										<h3 className="font-medium text-gray-900">
-											{review.author}
-										</h3>
-										<p>
-											<time dateTime={review.datetime}>{review.date}</time>
-										</p>
-
-										<div className="flex items-center mt-4">
-											{[0, 1, 2, 3, 4].map((rating) => (
-												<StarIcon
-													key={rating}
-													className={classNames(
-														review.rating > rating
-															? 'text-yellow-400'
-															: 'text-gray-300',
-														'h-5 w-5 flex-shrink-0'
-													)}
-													aria-hidden="true"
-												/>
-											))}
-										</div>
-										<p className="sr-only">{review.rating} out of 5 stars</p>
-
-										<div
-											className="mt-4 prose prose-sm max-w-none text-gray-500"
-											dangerouslySetInnerHTML={{ __html: review.content }}
-										/>
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
+					<ProductReviews reviews={reviews} />
 				</div>
 			</div>
 		</div>

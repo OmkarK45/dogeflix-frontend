@@ -1,7 +1,8 @@
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon, XIcon } from '@heroicons/react/outline'
 import { Fragment } from 'react'
-import { filters, subCategories } from './ProductsList'
+import { GradientBar } from '../ui/GradientBar'
+import { filters } from './ProductsList'
 
 export function MobileFiltersSidebar({
 	open,
@@ -53,17 +54,6 @@ export function MobileFiltersSidebar({
 
 						{/* Filters */}
 						<form className="mt-4 border-t border-gray-200">
-							<h3 className="sr-only">Categories</h3>
-							<ul role="list" className="font-medium text-gray-900 px-2 py-3">
-								{subCategories.map((category) => (
-									<li key={category.name}>
-										<a href={category.href} className="block px-2 py-3">
-											{category.name}
-										</a>
-									</li>
-								))}
-							</ul>
-
 							{filters.map((section) => (
 								<Disclosure
 									as="div"
