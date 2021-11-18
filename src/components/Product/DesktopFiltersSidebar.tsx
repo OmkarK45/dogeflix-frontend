@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/outline'
-import { filters, subCategories } from './ProductsList'
+import { filters } from './ProductsList'
 
 export function DesktopFiltersSidebar() {
 	return (

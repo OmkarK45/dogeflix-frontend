@@ -4,6 +4,8 @@ export const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 axios.defaults.withCredentials = true
 
+export { axios }
+
 export const fetcher = (
 	url: string,
 	options: AxiosRequestConfig<any> | undefined,

@@ -1,25 +1,27 @@
 import React from 'react'
 import useSWRInfinite from 'swr/infinite'
+import { Button } from '~/components/ui/Button'
 import { fetcher } from '~/lib/fetchJson'
 
 const PAGE_SIZE = 6
 
 export default function App() {
 	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
-		(index, prevData) =>
-			`/api/products/all?take=${PAGE_SIZE}&skip=${
-				prevData ? prevData.length : 0
-			}`,
+		(index) => `/api/products/all?page=${index + 1}&limit=${PAGE_SIZE}`,
 		fetcher
 	)
 
-	const issues = data ? [].concat(...data) : []
-
 	const isLoadingInitialData = !data && !error
+
+	if (isLoadingInitialData) return <div>loading</div>
+
+	const flattenedData = data?.flat()
+
+	const products = flattenedData ? [].concat(...flattenedData) : []
 
 	const isLoadingMore =
 		isLoadingInitialData ||
-		(size > 0 && data && typeof data[size - 1] === 'undefined')
+		(size > 0 && products && typeof products[size - 1] === 'undefined')
 
 	const isEmpty = data?.[0]?.length === 0
 
@@ -30,17 +32,10 @@ export default function App() {
 
 	return (
 		<div style={{ fontFamily: 'sans-serif' }}>
-			<button
-				onClick={() => {
-					setSize(1)
-				}}
-			>
-				load issues
-			</button>
 			<p>
-				showing {size} page(s) of {isLoadingMore ? '...' : issues.length}{' '}
+				showing {size} page(s) of {isLoadingMore ? '...' : products.length}{' '}
 				issue(s){' '}
-				<button
+				<Button
 					disabled={isLoadingMore || isReachingEnd}
 					onClick={() => setSize(size + 1)}
 				>
@@ -49,19 +44,15 @@ export default function App() {
 						: isReachingEnd
 						? 'no more issues'
 						: 'load more'}
-				</button>
-				<button disabled={isRefreshing} onClick={() => mutate()}>
-					{isRefreshing ? 'refreshing...' : 'refresh'}
-				</button>
-				<button disabled={!size} onClick={() => setSize(0)}>
-					clear
-				</button>
+				</Button>
 			</p>
-			{isEmpty ? <p>Yay, no issues found.</p> : null}
-			{issues.map((issue) => {
+
+			{products.map((product) => {
 				return (
-					<p key={issue.id} style={{ margin: '6px 0' }}>
-						- {JSON.stringify(issue.title)}
+					// @ts-ignore
+					<p key={product.id} style={{ margin: '6px 0' }}>
+						{/* @ts-ignore */}
+						{product.id} - {product.title}
 					</p>
 				)
 			})}
