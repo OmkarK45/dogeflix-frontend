@@ -46,7 +46,7 @@ export default function App() {
 						: 'load more'}
 				</Button>
 			</p>
-
+			<pre>{JSON.stringify(products, null, 2)}</pre>
 			{products.map((product) => {
 				return (
 					// @ts-ignore

@@ -6,6 +6,7 @@ export interface Props extends ButtonOrLinkProps {
 	loading?: boolean
 	size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl'
 	className?: string
+	disabled?: boolean
 }
 
 const ButtonSize = {
@@ -38,6 +39,7 @@ export function Button({
 	rounded,
 	fullWidth,
 	className,
+	disabled,
 	...props
 }: Props) {
 	const sizeStyles = ButtonSize[size] || ButtonSize.sm
@@ -52,6 +54,7 @@ export function Button({
 				rounded === 'full' ? 'rounded-full p-2' : `rounded-${rounded}`,
 				!rounded && 'rounded-md',
 				fullWidth && 'w-full',
+				disabled && 'cursor-not-allowed',
 				className
 			)}
 			{...props}

@@ -40,7 +40,14 @@ const Home: NextPage = () => {
 		}
 	}
 
-	return <LoginForm />
+	// return <LoginForm />
+	return (
+		<div>
+			<form onSubmit={handleSubmit}>
+				<button type="submit">Login</button>
+			</form>
+		</div>
+	)
 }
 
 export default Home

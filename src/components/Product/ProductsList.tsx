@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { ProfilerProps, useState } from 'react'
 import { FilterIcon } from '@heroicons/react/solid'
 import { DesktopFiltersSidebar } from './DesktopFiltersSidebar'
 import { MobileFiltersSidebar } from './MobileFiltersSidebar'
 import { SortMenu } from './SortMenu'
-import { products } from '../Cart/CartPage'
 import { ProductCard } from './ProductCard'
 import { Heading } from '../ui/Heading'
+import useSWRInfinite from 'swr/infinite'
+import { fetcher } from '~/lib/fetchJson'
+import { ProductType } from '~/types'
+import { Button } from '../ui/Button'
+import Spinner from '../ui/Spinner'
 
 export const sortOptions = [
 	{ name: 'Most Popular', href: '#', current: true },
@@ -53,8 +57,39 @@ export const filters = [
 	},
 ]
 
+const PAGE_SIZE = 10
+
 export function ProductsList() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite<
+		Array<ProductType>
+	>(
+		(index) => `/api/products/all?page=${index + 1}&limit=${PAGE_SIZE}`,
+		fetcher
+	)
+
+	const isLoadingInitialData = !data && !error
+
+	if (isLoadingInitialData) return <div>loading</div>
+
+	const flattenedData = data?.flat() as ProductType[]
+
+	const products: ProductType[] = flattenedData
+		? // @ts-ignore - TS doesn't know that `flat()` returns an array
+		  [].concat(...flattenedData)
+		: ([] as ProductType[])
+
+	const isLoadingMore =
+		isLoadingInitialData ||
+		(size > 0 && products && typeof products[size - 1] === 'undefined')
+
+	const isEmpty = data?.[0]?.length === 0
+
+	const isReachingEnd =
+		isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
+
+	const isRefreshing = isValidating && data && data.length === size
 
 	return (
 		<div className="bg-white">
@@ -96,13 +131,30 @@ export function ProductsList() {
 							{/* Product grid */}
 							<div className="lg:col-span-3 mt-4 md:mt-0">
 								<div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
+									{/* TODO: show shimmer while this loads */}
 									{products.map((product, idx) => (
-										<ProductCard
-											href={'/product/something-useful'}
-											product={product}
-											key={idx}
-										/>
+										<ProductCard product={product} key={idx} />
 									))}
+								</div>
+								<div className="flex items-center justify-center py-6">
+									<Button
+										size="xl"
+										variant="white"
+										disabled={isLoadingMore || isReachingEnd}
+										onClick={() => setSize(size + 1)}
+									>
+										{isLoadingMore ? (
+											<span className="flex items-center space-x-2 justify-center">
+												<p>Loading</p> <Spinner />
+											</span>
+										) : isReachingEnd ? (
+											<span>All caught up!</span>
+										) : (
+											<span className="flex items-center space-x-2 justify-center">
+												Load more
+											</span>
+										)}
+									</Button>
 								</div>
 							</div>
 						</div>
