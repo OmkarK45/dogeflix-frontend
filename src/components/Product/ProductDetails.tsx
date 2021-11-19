@@ -11,59 +11,60 @@ import { ShareSection } from '../Common/ShareSection'
 
 import { ProductImagesGallery } from './ProductImagesGallery'
 import { ProductSizeAndColor } from './ProductSizeAndColor'
-import { ProductReviews, ReviewStars } from './ProductReviews'
+import { ProductReviews, RatingStars, ReviewStars } from './ProductReviews'
+import { ProductType } from '~/types'
 
-export const product = {
-	name: 'Louis Vuitton Handbag',
-	version: { name: '1.0', date: 'June 5, 2021', datetime: '2021-06-05' },
-	price: '$220',
-	description:
-		'The Speedy Bandoulière 20 is an on-trend compact handbag, just the right size to carry daily essentials. It’s made from smooth grained Monogram Empreinte leather, embossed with an Oversized Monogram pattern. The hardware and padlock are a golden color.',
-	highlights: [
-		'Embossed grained cowhide leather',
-		'Cowhide-leather trim',
-		'Microfiber lining',
-	],
-	images: [
-		{
-			id: 1,
-			name: 'Angled view',
-			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
-			alt: 'Angled front view with bag zipped and handles upright.',
-		},
-		{
-			id: 2,
-			name: 'Angled view',
-			src: 'https://tailwindui.com/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
-			alt: 'Angled front view with bag zipped and handles upright.',
-		},
-		{
-			id: 3,
-			name: 'Angled view',
-			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
-			alt: 'Angled front view with bag zipped and handles upright.',
-		},
-		// More images...
-	],
-	sizes: [
-		{ name: 'XXS', inStock: true },
-		{ name: 'XS', inStock: true },
-		{ name: 'S', inStock: true },
-		{ name: 'M', inStock: true },
-		{ name: 'L', inStock: true },
-		{ name: 'XL', inStock: false },
-	],
-	colors: [
-		{ name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
-		{
-			name: 'Heather Grey',
-			bgColor: 'bg-gray-400',
-			selectedColor: 'ring-gray-400',
-		},
-	],
-	imageAlt:
-		'Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles.',
-}
+// export const product = {
+// 	name: 'Louis Vuitton Handbag',
+// 	version: { name: '1.0', date: 'June 5, 2021', datetime: '2021-06-05' },
+// 	price: '$220',
+// 	description:
+// 		'The Speedy Bandoulière 20 is an on-trend compact handbag, just the right size to carry daily essentials. It’s made from smooth grained Monogram Empreinte leather, embossed with an Oversized Monogram pattern. The hardware and padlock are a golden color.',
+// 	highlights: [
+// 		'Embossed grained cowhide leather',
+// 		'Cowhide-leather trim',
+// 		'Microfiber lining',
+// 	],
+// 	images: [
+// 		{
+// 			id: 1,
+// 			name: 'Angled view',
+// 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
+// 			alt: 'Angled front view with bag zipped and handles upright.',
+// 		},
+// 		{
+// 			id: 2,
+// 			name: 'Angled view',
+// 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
+// 			alt: 'Angled front view with bag zipped and handles upright.',
+// 		},
+// 		{
+// 			id: 3,
+// 			name: 'Angled view',
+// 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
+// 			alt: 'Angled front view with bag zipped and handles upright.',
+// 		},
+// 		// More images...
+// 	],
+// 	sizes: [
+// 		{ name: 'XXS', inStock: true },
+// 		{ name: 'XS', inStock: true },
+// 		{ name: 'S', inStock: true },
+// 		{ name: 'M', inStock: true },
+// 		{ name: 'L', inStock: true },
+// 		{ name: 'XL', inStock: false },
+// 	],
+// 	colors: [
+// 		{ name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
+// 		{
+// 			name: 'Heather Grey',
+// 			bgColor: 'bg-gray-400',
+// 			selectedColor: 'ring-gray-400',
+// 		},
+// 	],
+// 	imageAlt:
+// 		'Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles.',
+// }
 export const reviews = {
 	average: 4,
 	featured: [
@@ -95,7 +96,8 @@ export const reviews = {
 	],
 }
 
-export function ProductDetails() {
+export function ProductDetails({ product }: { product: ProductType }) {
+	// console.log(product.images)
 	return (
 		<div className="bg-white">
 			<div className="mx-auto  px-4 py-7 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -118,7 +120,7 @@ export function ProductDetails() {
 								</Badge>
 								<div className="flex justify-between items-center">
 									<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-										{product.name}{' '}
+										{product.title}{' '}
 									</h1>
 									<button className="bg-red-100 p-2 rounded-full outline-none transition-transform duration-300 hover:scale-150 active:scale-95">
 										<HeartIcon className="w-5 h-5 text-red-500" />
@@ -133,13 +135,19 @@ export function ProductDetails() {
 								<div className="mr-2">
 									<p className="text-3xl text-gray-900 ">{product.price}</p>
 								</div>
-								<ReviewStars reviews={reviews} />
+								<ReviewStars
+									averageRating={product.rating}
+									totalReviews={product._count.reviews}
+								/>
 							</div>
 						</div>
 
 						<p className="text-gray-500 mt-6">{product.description}</p>
 						<div className="mt-4">
-							<ProductSizeAndColor />
+							<ProductSizeAndColor
+								colors={product.colors}
+								sizes={product.sizes}
+							/>
 						</div>
 						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
 							<Button type="button" fullWidth size="xl">
@@ -156,7 +164,7 @@ export function ProductDetails() {
 							<h3 className="text-sm font-medium text-gray-900">Highlights</h3>
 							<div className="mt-4 prose prose-sm text-gray-500">
 								<ul role="list">
-									{product.highlights.map((highlight) => (
+									{product.features.map((highlight) => (
 										<li key={highlight}>{highlight}</li>
 									))}
 								</ul>
@@ -166,7 +174,10 @@ export function ProductDetails() {
 						<ShareSection />
 					</div>
 
-					<ProductReviews reviews={reviews} />
+					<ProductReviews
+						reviews={product.reviews}
+						totalReviews={product._count.reviews}
+					/>
 				</div>
 			</div>
 		</div>

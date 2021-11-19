@@ -27,7 +27,7 @@ export function ProductCard({
 }) {
 	return (
 		<Link
-			href={`/product/${product.brand}/${product.id}`}
+			href={`/product/${product.id}/${product.slug}`}
 			key={product.id}
 			className="group relative no-underline "
 		>

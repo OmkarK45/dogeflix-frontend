@@ -32,6 +32,9 @@ export interface Review {
 	comment: string
 	created_at: string
 	updated_at: string
+	user: {
+		name: string
+	}
 }
 
 export interface CartItem {

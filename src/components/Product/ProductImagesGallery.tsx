@@ -1,30 +1,22 @@
 import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 
-interface ProductImage {
-	id: number
-	name: string
-	src: string
-	alt: string
-}
-
-export function ProductImagesGallery({ images }: { images: ProductImage[] }) {
+export function ProductImagesGallery({ images }: { images: string[] }) {
 	return (
 		<Tab.Group as="div" className="flex flex-col-reverse">
 			{/* Image selector */}
 			<div className="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
 				<Tab.List className="grid grid-cols-4 gap-6">
-					{images.map((image) => (
+					{images.map((image, idx) => (
 						<Tab
-							key={image.id}
+							key={idx}
 							className="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none "
 						>
 							{({ selected }) => (
 								<>
-									<span className="sr-only">{image.name}</span>
 									<span className="absolute inset-0 rounded-md overflow-hidden">
 										<img
-											src={image.src}
+											src={image}
 											alt=""
 											className="w-full h-full object-center object-contain"
 										/>
@@ -44,11 +36,10 @@ export function ProductImagesGallery({ images }: { images: ProductImage[] }) {
 			</div>
 
 			<Tab.Panels className="w-full aspect-w-1 aspect-h-1">
-				{images.map((image) => (
-					<Tab.Panel key={image.id}>
+				{images.map((image, idx) => (
+					<Tab.Panel key={idx}>
 						<img
-							src={image.src}
-							alt={image.alt}
+							src={image}
 							className="w-full h-full object-center object-contain sm:rounded-lg "
 						/>
 					</Tab.Panel>
