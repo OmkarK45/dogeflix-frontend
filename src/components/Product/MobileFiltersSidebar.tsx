@@ -2,7 +2,7 @@ import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon, XIcon } from '@heroicons/react/outline'
 import { Fragment } from 'react'
 import { GradientBar } from '../ui/GradientBar'
-import { filters } from './ProductsList'
+import { filters } from './DesktopFiltersSidebar'
 
 export function MobileFiltersSidebar({
 	open,

@@ -11,8 +11,11 @@ export interface ProductType {
 	user: string
 	slug: string
 	user_id: string
+
+	category: string[]
 	sizes: string[]
 	colors: string[]
+
 	features: string[]
 	reviews: Review[]
 	rating: number

@@ -10,52 +10,23 @@ import { fetcher } from '~/lib/fetchJson'
 import { ProductType } from '~/types'
 import { Button } from '../ui/Button'
 import Spinner from '../ui/Spinner'
-import { getSortedProducts } from '~/lib/sort'
-
-export const filters = [
-	{
-		id: 'color',
-		name: 'Color',
-		options: [
-			{ value: 'white', label: 'White', checked: false },
-			{ value: 'beige', label: 'Beige', checked: false },
-			{ value: 'blue', label: 'Blue', checked: true },
-			{ value: 'brown', label: 'Brown', checked: false },
-			{ value: 'green', label: 'Green', checked: false },
-			{ value: 'purple', label: 'Purple', checked: false },
-		],
-	},
-	{
-		id: 'category',
-		name: 'Category',
-		options: [
-			{ value: 'new-arrivals', label: 'New Arrivals', checked: false },
-			{ value: 'sale', label: 'Sale', checked: false },
-			{ value: 'travel', label: 'Travel', checked: true },
-			{ value: 'organization', label: 'Organization', checked: false },
-			{ value: 'accessories', label: 'Accessories', checked: false },
-		],
-	},
-	{
-		id: 'size',
-		name: 'Size',
-		options: [
-			{ value: '2l', label: '2L', checked: false },
-			{ value: '6l', label: '6L', checked: false },
-			{ value: '12l', label: '12L', checked: false },
-			{ value: '18l', label: '18L', checked: false },
-			{ value: '20l', label: '20L', checked: false },
-			{ value: '40l', label: '40L', checked: true },
-		],
-	},
-]
+import { getFilteredProducts, getSortedProducts } from '~/lib/sort'
+import { useRouter } from 'next/router'
 
 const PAGE_SIZE = 10
 
+//  router.query.sortType - SortType
+// router.query.filterType- FiltersType
+
 export function ProductsList() {
+	const router = useRouter()
+
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
 	const [sortValue, setSortValue] = useState<SortTypes>('most_popular')
+	const [sizeFilter, setSizeFilter] = useState<Array<string>>([])
+	const [colorFilter, setColorFilter] = useState<Array<string>>([])
+	const [categoryFilter, setCategoryFilter] = useState<Array<string>>([])
 
 	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite<
 		Array<ProductType>
@@ -77,6 +48,14 @@ export function ProductsList() {
 
 	const sortedProducts = getSortedProducts(products, sortValue)
 
+	const filteredProducts = getFilteredProducts(sortedProducts, {
+		category: categoryFilter,
+		color: colorFilter,
+		size: sizeFilter,
+	})
+
+	console.log(filteredProducts)
+
 	const isLoadingMore =
 		isLoadingInitialData ||
 		(size > 0 && products && typeof products[size - 1] === 'undefined')
@@ -86,12 +65,8 @@ export function ProductsList() {
 	const isReachingEnd =
 		isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
 
-	const isRefreshing = isValidating && data && data.length === size
-
 	return (
 		<div className="bg-white">
-			<div>CURRENT SORT{JSON.stringify(sortValue)}</div>
-
 			<div>
 				{/* Mobile filter dialog */}
 				<MobileFiltersSidebar
@@ -125,7 +100,14 @@ export function ProductsList() {
 
 						<div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
 							{/* Filters */}
-							<DesktopFiltersSidebar />
+							<DesktopFiltersSidebar
+								categoryFilter={categoryFilter}
+								colorFilter={colorFilter}
+								sizeFilter={sizeFilter}
+								setCategoryFilter={setCategoryFilter}
+								setColorFilter={setColorFilter}
+								setSizeFilter={setSizeFilter}
+							/>
 							{/* {sortedProducts.map((product) => (
 								<span key={product.id}>{product.price}</span>
 							))} */}
@@ -134,7 +116,7 @@ export function ProductsList() {
 								<div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
 									{/* TODO: show shimmer while this loads */}
 
-									{sortedProducts.map((product, idx) => (
+									{filteredProducts.map((product, idx) => (
 										<ProductCard product={product} key={idx} />
 									))}
 								</div>

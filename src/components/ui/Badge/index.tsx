@@ -17,6 +17,7 @@ const BadgeVariants = {
 const BadgeSizes = {
 	sm: 'px-2 py-0.5 text-xs',
 	md: 'px-2 py-1',
+	xs: 'px-1 py-0.5 text-xs',
 }
 interface Props {
 	variant: keyof typeof BadgeVariants
