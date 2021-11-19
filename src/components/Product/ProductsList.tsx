@@ -12,6 +12,7 @@ import { Button } from '../ui/Button'
 import Spinner from '../ui/Spinner'
 import { getFilteredProducts, getSortedProducts } from '~/lib/sort'
 import { useRouter } from 'next/router'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
 const PAGE_SIZE = 10
 
@@ -72,6 +73,12 @@ export function ProductsList() {
 				<MobileFiltersSidebar
 					open={mobileFiltersOpen}
 					setOpen={setMobileFiltersOpen}
+					sizeFilter={sizeFilter}
+					setSizeFilter={setSizeFilter}
+					colorFilter={colorFilter}
+					setColorFilter={setColorFilter}
+					categoryFilter={categoryFilter}
+					setCategoryFilter={setCategoryFilter}
 				/>
 
 				<main className=" mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,9 +115,6 @@ export function ProductsList() {
 								setColorFilter={setColorFilter}
 								setSizeFilter={setSizeFilter}
 							/>
-							{/* {sortedProducts.map((product) => (
-								<span key={product.id}>{product.price}</span>
-							))} */}
 							{/* Product grid */}
 							<div className="lg:col-span-3 mt-4 md:mt-0">
 								<div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
@@ -119,6 +123,15 @@ export function ProductsList() {
 									{filteredProducts.map((product, idx) => (
 										<ProductCard product={product} key={idx} />
 									))}
+
+									{filteredProducts.length === 0 && (
+										<div className="mx-auto col-span-full">
+											<ErrorFallback
+												message="Hmm. We ran out of products for that one."
+												noAction
+											/>
+										</div>
+									)}
 								</div>
 								<div className="flex items-center justify-center py-6">
 									<Button

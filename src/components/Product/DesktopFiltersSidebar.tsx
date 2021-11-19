@@ -1,6 +1,8 @@
+import React, { useRef } from 'react'
+
 import { Disclosure } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/outline'
-import React, { useState } from 'react'
+import { Badge } from '../ui/Badge'
 
 // 'red', 'blue', 'green', 'yellow', 'black', 'white'
 export const filters = [
@@ -41,7 +43,7 @@ export const filters = [
 	},
 ]
 
-interface FilterProps {
+export interface FilterProps {
 	sizeFilter: Array<string>
 	colorFilter: Array<string>
 	categoryFilter: Array<string>
@@ -58,6 +60,8 @@ export function DesktopFiltersSidebar({
 	setColorFilter,
 	setCategoryFilter,
 }: FilterProps) {
+	const formRef = useRef<HTMLFormElement>(null)
+
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 		const { name, value, checked } = e.target
 		if (name === 'size') {
@@ -80,8 +84,65 @@ export function DesktopFiltersSidebar({
 			}
 		}
 	}
+
+	function handleFilterClear() {
+		if (!formRef.current) return
+
+		formRef.current.reset()
+		setSizeFilter([])
+		setColorFilter([])
+		setCategoryFilter([])
+	}
+
 	return (
-		<form className="hidden lg:block sticky top-30">
+		<form ref={formRef} className="hidden lg:block sticky top-30">
+			<div>
+				{sizeFilter.length > 0 ||
+				colorFilter.length > 0 ||
+				categoryFilter.length > 0 ? (
+					<>
+						<div className="flex justify-between mb-2">
+							<p className="text-gray-500 text-sm">Applied Filters</p>
+							<button
+								className="text-sm text-gray-500"
+								onClick={handleFilterClear}
+							>
+								Clear All
+							</button>
+						</div>
+						<div className="flex  flex-wrap gap-2">
+							{sizeFilter.length > 0 &&
+								sizeFilter.map((size) => {
+									return (
+										<Badge key={size} variant="blue">
+											Size: {size}
+										</Badge>
+									)
+								})}
+						</div>
+						<div className="flex my-1 flex-wrap gap-2">
+							{colorFilter.length > 0 &&
+								colorFilter.map((color) => {
+									return (
+										<Badge key={color} variant="orange">
+											Color: {color}
+										</Badge>
+									)
+								})}
+						</div>
+						<div className="flex flex-wrap gap-2">
+							{categoryFilter.length > 0 &&
+								categoryFilter.map((category) => {
+									return (
+										<Badge key={category} variant="pink">
+											Category: {category}
+										</Badge>
+									)
+								})}
+						</div>
+					</>
+				) : null}
+			</div>
 			{filters.map((section) => (
 				<Disclosure
 					as="div"

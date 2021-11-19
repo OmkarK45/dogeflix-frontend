@@ -1,16 +1,46 @@
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { MinusSmIcon, PlusSmIcon, XIcon } from '@heroicons/react/outline'
 import { Fragment } from 'react'
-import { GradientBar } from '../ui/GradientBar'
-import { filters } from './DesktopFiltersSidebar'
+import { FilterProps, filters } from './DesktopFiltersSidebar'
+
+interface MobileFiltersSidebarProps extends FilterProps {
+	open: boolean
+	setOpen: (open: boolean) => void
+}
 
 export function MobileFiltersSidebar({
 	open,
 	setOpen,
-}: {
-	open: boolean
-	setOpen: (open: boolean) => void
-}) {
+	categoryFilter,
+	colorFilter,
+	sizeFilter,
+	setCategoryFilter,
+	setColorFilter,
+	setSizeFilter,
+}: MobileFiltersSidebarProps) {
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		const { name, value, checked } = e.target
+		if (name === 'size') {
+			if (checked) {
+				setSizeFilter([...sizeFilter, value])
+			} else {
+				setSizeFilter(sizeFilter.filter((item) => item !== value))
+			}
+		} else if (name === 'color') {
+			if (checked) {
+				setColorFilter([...colorFilter, value])
+			} else {
+				setColorFilter(colorFilter.filter((item) => item !== value))
+			}
+		} else if (name === 'category') {
+			if (checked) {
+				setCategoryFilter([...categoryFilter, value])
+			} else {
+				setCategoryFilter(categoryFilter.filter((item) => item !== value))
+			}
+		}
+	}
+
 	return (
 		<Transition.Root show={open} as={Fragment}>
 			<Dialog
@@ -91,11 +121,11 @@ export function MobileFiltersSidebar({
 														>
 															<input
 																id={`filter-mobile-${section.id}-${optionIdx}`}
-																name={`${section.id}[]`}
+																name={`${section.id}`}
 																defaultValue={option.value}
 																type="checkbox"
-																defaultChecked={option.checked}
-																className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+																onChange={handleChange}
+																className="h-4 w-4 border-gray-300 rounded text-brand-600 focus:ring-brand-500"
 															/>
 															<label
 																htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
