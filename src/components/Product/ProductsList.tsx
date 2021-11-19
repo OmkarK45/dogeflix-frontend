@@ -2,7 +2,7 @@ import { ProfilerProps, useState } from 'react'
 import { FilterIcon } from '@heroicons/react/solid'
 import { DesktopFiltersSidebar } from './DesktopFiltersSidebar'
 import { MobileFiltersSidebar } from './MobileFiltersSidebar'
-import { SortMenu } from './SortMenu'
+import { SortMenu, SortTypes } from './SortMenu'
 import { ProductCard } from './ProductCard'
 import { Heading } from '../ui/Heading'
 import useSWRInfinite from 'swr/infinite'
@@ -10,14 +10,6 @@ import { fetcher } from '~/lib/fetchJson'
 import { ProductType } from '~/types'
 import { Button } from '../ui/Button'
 import Spinner from '../ui/Spinner'
-
-export const sortOptions = [
-	{ name: 'Most Popular', href: '#', current: true },
-	{ name: 'Best Rating', href: '#', current: false },
-	{ name: 'Newest', href: '#', current: false },
-	{ name: 'Price: Low to High', href: '#', current: false },
-	{ name: 'Price: High to Low', href: '#', current: false },
-]
 
 export const filters = [
 	{
@@ -62,6 +54,10 @@ const PAGE_SIZE = 10
 export function ProductsList() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
+	const [sortedProducts, setSortedProducts] = useState<ProductType[]>([])
+
+	const [sortValue, setSortValue] = useState<SortTypes>('most_popular')
+
 	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite<
 		Array<ProductType>
 	>(
@@ -93,6 +89,7 @@ export function ProductsList() {
 
 	return (
 		<div className="bg-white">
+			<div>CURRENT SORT{JSON.stringify(sortValue)}</div>
 			<div>
 				{/* Mobile filter dialog */}
 				<MobileFiltersSidebar
@@ -104,7 +101,7 @@ export function ProductsList() {
 					<div className="w-full bg-white z-10 flex items-center justify-between sticky top-0 pt-4 pb-6 border-b border-gray-200">
 						<Heading size="h3">Explore.</Heading>
 						<div className="flex items-center">
-							<SortMenu />
+							<SortMenu setSortValue={setSortValue} sortValue={sortValue} />
 							<button
 								type="button"
 								className="p-2 -m-2 ml-4 sm:ml-6 text-gray-400 hover:text-gray-500 lg:hidden"
