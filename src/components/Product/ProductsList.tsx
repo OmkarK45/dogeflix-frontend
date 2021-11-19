@@ -10,6 +10,7 @@ import { fetcher } from '~/lib/fetchJson'
 import { ProductType } from '~/types'
 import { Button } from '../ui/Button'
 import Spinner from '../ui/Spinner'
+import { getSortedProducts } from '~/lib/sort'
 
 export const filters = [
 	{
@@ -54,8 +55,6 @@ const PAGE_SIZE = 10
 export function ProductsList() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
-	const [sortedProducts, setSortedProducts] = useState<ProductType[]>([])
-
 	const [sortValue, setSortValue] = useState<SortTypes>('most_popular')
 
 	const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite<
@@ -76,6 +75,8 @@ export function ProductsList() {
 		  [].concat(...flattenedData)
 		: ([] as ProductType[])
 
+	const sortedProducts = getSortedProducts(products, sortValue)
+
 	const isLoadingMore =
 		isLoadingInitialData ||
 		(size > 0 && products && typeof products[size - 1] === 'undefined')
@@ -90,6 +91,7 @@ export function ProductsList() {
 	return (
 		<div className="bg-white">
 			<div>CURRENT SORT{JSON.stringify(sortValue)}</div>
+
 			<div>
 				{/* Mobile filter dialog */}
 				<MobileFiltersSidebar
@@ -124,12 +126,15 @@ export function ProductsList() {
 						<div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
 							{/* Filters */}
 							<DesktopFiltersSidebar />
-
+							{/* {sortedProducts.map((product) => (
+								<span key={product.id}>{product.price}</span>
+							))} */}
 							{/* Product grid */}
 							<div className="lg:col-span-3 mt-4 md:mt-0">
 								<div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
 									{/* TODO: show shimmer while this loads */}
-									{products.map((product, idx) => (
+
+									{sortedProducts.map((product, idx) => (
 										<ProductCard product={product} key={idx} />
 									))}
 								</div>

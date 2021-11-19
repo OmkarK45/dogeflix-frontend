@@ -82,18 +82,6 @@ export function ReviewStars({ reviews }: { reviews: Review }) {
 				</p>
 			</div>
 
-			<div className="ml-1 flex items-center ">
-				{[0, 1, 2, 3, 4].map((rating) => (
-					<StarIcon
-						key={rating}
-						className={clsx(
-							reviews.average > rating ? 'text-yellow-400' : 'text-gray-200',
-							'h-5 w-5 flex-shrink-0'
-						)}
-						aria-hidden="true"
-					/>
-				))}
-			</div>
 			<div aria-hidden="true" className="ml-4 text-sm text-gray-300">
 				·
 			</div>
@@ -106,5 +94,22 @@ export function ReviewStars({ reviews }: { reviews: Review }) {
 				</a>
 			</div>
 		</>
+	)
+}
+
+export function RatingStars({ averageRating }: { averageRating: number }) {
+	return (
+		<div className="flex items-center">
+			{[0, 1, 2, 3, 4].map((rating) => (
+				<StarIcon
+					key={rating}
+					className={clsx(
+						averageRating > rating ? 'text-yellow-400' : 'text-gray-200',
+						'h-5 w-5 flex-shrink-0'
+					)}
+					aria-hidden="true"
+				/>
+			))}
+		</div>
 	)
 }

@@ -15,6 +15,10 @@ export interface ProductType {
 	colors: string[]
 	features: string[]
 	reviews: Review[]
+	rating: number
+	_count: {
+		reviews: number
+	}
 }
 
 export interface Review {

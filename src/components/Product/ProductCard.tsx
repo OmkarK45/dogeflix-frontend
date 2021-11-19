@@ -1,12 +1,36 @@
 import { ProductType } from '~/types'
+
+import { Badge } from '../ui/Badge'
 import { Link } from '../ui/Link'
+import { RupeeIcon } from '../ui/RupeeIcon'
+
+import { RatingStars } from './ProductReviews'
+
+function calculateOriginalPrice(price: number, discount: number) {
+	let originalPrice = price
+
+	if (discount) {
+		originalPrice = price - (price * discount) / 100
+	}
+
+	return originalPrice.toFixed(2)
+}
 
 export function ProductCard({
 	product,
 }: {
 	product: Pick<
 		ProductType,
-		'images' | 'id' | 'title' | 'price' | 'slug' | 'brand'
+		| 'images'
+		| 'id'
+		| 'title'
+		| 'price'
+		| 'slug'
+		| 'brand'
+		| 'rating'
+		| 'reviews'
+		| '_count'
+		| 'discount'
 	>
 }) {
 	return (
@@ -26,7 +50,25 @@ export function ProductCard({
 				<span className="absolute inset-0" />
 				{product.title}
 			</h3>
-			<p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
+			<div className="mt-1 flex space-x-2">
+				<p className="text-gray-700 text-sm">{product.rating}</p>
+				<RatingStars averageRating={product.rating} />
+				<p className="text-sm text-gray-500">
+					({product._count.reviews}{' '}
+					{product._count.reviews === 1 ? 'review' : 'reviews'})
+				</p>
+			</div>
+			<span className="mt-1 flex items-center space-x-2 text-xl font-medium text-gray-900">
+				<span className="flex items-center">
+					<RupeeIcon className="text-gray-900 w-6 h-6" />
+					<p>{calculateOriginalPrice(product.price, product.discount)}</p>
+					<del className="text-sm ml-2 text-gray-500">{product.price}</del>
+				</span>
+
+				<Badge variant="orange" size="sm">
+					{product.discount}% Off
+				</Badge>
+			</span>
 		</Link>
 	)
 }
