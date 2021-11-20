@@ -24,6 +24,7 @@ import { Button } from '../ui/Button'
 import { Link } from '../ui/Link'
 import { RupeeIcon } from '../ui/RupeeIcon'
 import { Badge } from '../ui/Badge'
+import { WishlistButton } from './WishlistButton'
 
 export function ProductDetails({ product }: { product: ProductType }) {
 	const { user } = useUser({
@@ -104,9 +105,10 @@ export function ProductDetails({ product }: { product: ProductType }) {
 									<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
 										{data.title}{' '}
 									</h1>
-									<button className="bg-red-100 p-2 rounded-full outline-none transition-transform duration-300 hover:scale-150 active:scale-95">
-										<HeartIcon className="w-5 h-5 text-red-500" />
-									</button>
+									<WishlistButton
+										product_id={data.id}
+										user_id={user?.data.user?.id}
+									/>
 								</div>
 								<h2 id="information-heading" className="sr-only">
 									Product information
@@ -151,7 +153,7 @@ export function ProductDetails({ product }: { product: ProductType }) {
 								{data.price}
 							</Button>
 							<Button
-								onClick={handleAddToCart}
+								onClick={alreadyInCart ? () => {} : handleAddToCart}
 								type="button"
 								variant="dark"
 								size="xl"

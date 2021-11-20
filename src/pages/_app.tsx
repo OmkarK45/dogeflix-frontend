@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 			}}
 		>
 			<NProgress />
-			<Toaster position="top-right" toastOptions={toastOptions} />
+			<Toaster position="bottom-right" toastOptions={toastOptions} />
 			<Component {...pageProps} />
 		</SWRConfig>
 	)
