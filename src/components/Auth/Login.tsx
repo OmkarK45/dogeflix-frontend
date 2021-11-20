@@ -1,4 +1,4 @@
-import { object, string } from 'zod'
+import { object, string, z } from 'zod'
 import { Input } from '../ui/Input'
 import Form, { useZodForm } from '~/components/ui/Form/Form'
 import { Link } from '../ui/Link'
@@ -6,18 +6,50 @@ import { Link } from '../ui/Link'
 import { AuthLayout } from './AuthLayout'
 import { Card } from '../ui/Card'
 
-import { useEffect } from 'react'
 import FormSubmitButton from '../ui/Form/SubmitButton'
+import useUser from '~/lib/useUser'
+import fetchJson, { FetchError } from '~/lib/fetchJson'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 
-const loginSchema = object({
+const LoginSchema = object({
 	email: string().email(),
 	password: string().min(6),
 })
 
 export function LoginForm() {
-	const form = useZodForm({
-		schema: loginSchema,
+	const { mutateUser } = useUser({
+		redirectTo: '/products',
+		redirectIfFound: true,
 	})
+
+	const form = useZodForm({
+		schema: LoginSchema,
+	})
+
+	async function handleSubmit(values: z.infer<typeof LoginSchema>) {
+		const body = {
+			email: values.email,
+			password: values.password,
+		}
+
+		try {
+			mutateUser(
+				await fetchJson('/api/login', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(body),
+					credentials: 'include',
+				})
+			)
+		} catch (error) {
+			if (error instanceof FetchError) {
+				toast.error(error.data.message)
+			} else {
+				toast.error("We are sorry but something isn't right. Please try again.")
+			}
+		}
+	}
 
 	return (
 		<AuthLayout
@@ -26,7 +58,7 @@ export function LoginForm() {
 		>
 			<Form
 				form={form}
-				onSubmit={() => console.log('stuff')}
+				onSubmit={async (values) => await handleSubmit(values)}
 				className="w-full"
 			>
 				<Input

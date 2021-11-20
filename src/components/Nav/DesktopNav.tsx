@@ -10,6 +10,9 @@ import { Link } from '../ui/Link'
 import { MobileMenu } from './MobileMenu'
 import { MegaMenu } from './MegaMenu'
 import { HeartIcon } from '@heroicons/react/solid'
+import { SearchBar } from '../Search/SearchBar'
+import clsx from 'clsx'
+import { ProfileDropdown } from '../User/ProfileDropdown'
 
 export const navigation = {
 	categories: [
@@ -95,7 +98,8 @@ function classNames(...classes: string[]) {
 
 export function Navbar() {
 	const [open, setOpen] = useState(false)
-
+	const [searchOpen, setSearchOpen] = useState(false)
+	console.log(searchOpen)
 	return (
 		<div className="bg-white">
 			{/* Mobile menu */}
@@ -121,7 +125,6 @@ export function Navbar() {
 							</div>
 						</div>
 					</div>
-
 					{/* Secondary navigation */}
 					<div className="bg-white">
 						<div className=" mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,11 +143,6 @@ export function Navbar() {
 										</Link>
 									</div>
 
-									<div className="hidden h-full lg:flex bg-white z-20">
-										{/* Flyout menus */}
-										<MegaMenu />
-									</div>
-
 									{/* Mobile menu and search (lg-) */}
 									<div className="flex-1  flex items-center lg:hidden">
 										<button
@@ -156,18 +154,21 @@ export function Navbar() {
 										</button>
 
 										{/* Search */}
-										<a
-											href="#"
-											className="ml-2 p-2 text-gray-400 hover:text-gray-500"
+										<button
+											className="p-2 ml-2"
+											onClick={() => setSearchOpen((prev) => !prev)}
 										>
-											<SearchIcon className="w-6 h-6" aria-hidden="true" />
-										</a>
+											<SearchIcon
+												className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
+												aria-hidden="true"
+											/>
+										</button>
 									</div>
 
 									{/* Logo (lg-) */}
 									<Link href="/products" className="lg:hidden no-underline">
 										<span className="flex items-center space-x-2">
-											<ShoppingBagIcon className="h-8 w-auto  text-yellow-600" />
+											<ShoppingBagIcon className="h-8 w-auto hidden lg:block text-yellow-600" />
 											<h5 className="mt-1 text-xl font-bold tracking-tighter">
 												DogeMart
 											</h5>
@@ -175,14 +176,14 @@ export function Navbar() {
 									</Link>
 
 									<div className="flex-1 flex items-center justify-end">
-										<a
-											href="#"
-											className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block"
-										>
-											Search
-										</a>
+										<div className="hidden lg:block">
+											<SearchBar />
+										</div>
 
 										<div className="flex items-center lg:ml-8">
+											<div className="hidden md:block">
+												<ProfileDropdown />
+											</div>
 											{/* Cart */}
 											<div className="ml-4 flow-root lg:ml-8">
 												<Link
@@ -218,6 +219,15 @@ export function Navbar() {
 							</div>
 						</div>
 					</div>
+					{searchOpen ? (
+						<div
+							className={clsx(
+								'block md:hidden w-full py-2 px-3 transition-all duration-500 '
+							)}
+						>
+							<SearchBar />
+						</div>
+					) : null}
 				</nav>
 			</header>
 		</div>

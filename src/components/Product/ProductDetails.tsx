@@ -13,91 +13,11 @@ import { ProductImagesGallery } from './ProductImagesGallery'
 import { ProductSizeAndColor } from './ProductSizeAndColor'
 import { ProductReviews, RatingStars, ReviewStars } from './ProductReviews'
 import { ProductType } from '~/types'
-
-// export const product = {
-// 	name: 'Louis Vuitton Handbag',
-// 	version: { name: '1.0', date: 'June 5, 2021', datetime: '2021-06-05' },
-// 	price: '$220',
-// 	description:
-// 		'The Speedy Bandoulière 20 is an on-trend compact handbag, just the right size to carry daily essentials. It’s made from smooth grained Monogram Empreinte leather, embossed with an Oversized Monogram pattern. The hardware and padlock are a golden color.',
-// 	highlights: [
-// 		'Embossed grained cowhide leather',
-// 		'Cowhide-leather trim',
-// 		'Microfiber lining',
-// 	],
-// 	images: [
-// 		{
-// 			id: 1,
-// 			name: 'Angled view',
-// 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
-// 			alt: 'Angled front view with bag zipped and handles upright.',
-// 		},
-// 		{
-// 			id: 2,
-// 			name: 'Angled view',
-// 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
-// 			alt: 'Angled front view with bag zipped and handles upright.',
-// 		},
-// 		{
-// 			id: 3,
-// 			name: 'Angled view',
-// 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
-// 			alt: 'Angled front view with bag zipped and handles upright.',
-// 		},
-// 		// More images...
-// 	],
-// 	sizes: [
-// 		{ name: 'XXS', inStock: true },
-// 		{ name: 'XS', inStock: true },
-// 		{ name: 'S', inStock: true },
-// 		{ name: 'M', inStock: true },
-// 		{ name: 'L', inStock: true },
-// 		{ name: 'XL', inStock: false },
-// 	],
-// 	colors: [
-// 		{ name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
-// 		{
-// 			name: 'Heather Grey',
-// 			bgColor: 'bg-gray-400',
-// 			selectedColor: 'ring-gray-400',
-// 		},
-// 	],
-// 	imageAlt:
-// 		'Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles.',
-// }
-export const reviews = {
-	average: 4,
-	featured: [
-		{
-			id: 1,
-			rating: 5,
-			content: `
-        This icon pack is just what I need for my latest project. There's an icon for just about anything I could ever need. Love the playful look!
-      `,
-			date: 'July 16, 2021',
-			datetime: '2021-07-16',
-			author: 'Emily Selman',
-			avatarSrc:
-				'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-		},
-		{
-			id: 2,
-			rating: 5,
-			content: `
-        Blown away by how polished this icon pack is. Everything looks so consistent and each SVG is optimized out of the box so I can use it directly with confidence. It would take me several hours to create a single icon this good, so it's a steal at this price.
-      `,
-			date: 'July 12, 2021',
-			datetime: '2021-07-12',
-			author: 'Hector Gibbons',
-			avatarSrc:
-				'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-		},
-		// More reviews...
-	],
-}
+import { Link } from '../ui/Link'
+import { RupeeIcon } from '../ui/RupeeIcon'
+import { calculateOriginalPrice } from '~/lib/price'
 
 export function ProductDetails({ product }: { product: ProductType }) {
-	// console.log(product.images)
 	return (
 		<div className="bg-white">
 			<div className="mx-auto  px-4 py-7 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -116,7 +36,7 @@ export function ProductDetails({ product }: { product: ProductType }) {
 						<div className="flex flex-col">
 							<div className="mt-4">
 								<Badge variant="orange" className="mb-2 relative shine">
-									Louis Vuitton
+									{product.brand}
 								</Badge>
 								<div className="flex justify-between items-center">
 									<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
@@ -131,14 +51,33 @@ export function ProductDetails({ product }: { product: ProductType }) {
 								</h2>
 							</div>
 
-							<div className="flex items-center mt-4">
-								<div className="mr-2">
-									<p className="text-3xl text-gray-900 ">{product.price}</p>
+							<div className="flex items-center justify-between mt-4">
+								<div className="flex mr-2 items-center">
+									<RupeeIcon className="text-gray-900 w-8 h-8 -ml-1" />
+									<p className="text-3xl text-gray-900 ">
+										{calculateOriginalPrice(product.price, product.discount)}
+									</p>
+									<del className="text-lg ml-2 text-gray-500">
+										{product.price}
+									</del>
+									<p className="ml-2 text-red-700 font-bold">
+										{product.discount}% Off
+									</p>
 								</div>
-								<ReviewStars
-									averageRating={product.rating}
-									totalReviews={product._count.reviews}
-								/>
+								<div>
+									<div className="flex items-center space-x-2">
+										<p>{product.rating}</p>
+										<RatingStars averageRating={product.rating} />{' '}
+									</div>
+									<div className="flex">
+										<Link
+											href="#reviews"
+											className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+										>
+											See all {product._count.reviews} reviews
+										</Link>
+									</div>
+								</div>
 							</div>
 						</div>
 

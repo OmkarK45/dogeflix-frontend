@@ -1,10 +1,8 @@
 import type { NextPage } from 'next'
 
-import styles from '../styles/Home.module.css'
 import useUser from '../lib/useUser'
 import fetchJson, { FetchError } from '../lib/fetchJson'
 import { useState } from 'react'
-import { LoginForm } from '~/components/Auth/Login'
 
 const Home: NextPage = () => {
 	const [errorMsg, setErrorMsg] = useState('')

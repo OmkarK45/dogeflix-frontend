@@ -33,7 +33,7 @@ export function ProductCard({
 		>
 			<div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden lg:h-72 xl:h-80">
 				<img
-					src={product.images[1]}
+					src={product.images[0]}
 					alt={`TODO`}
 					className="w-full h-full object-center object-cover group-hover:scale-125 duration-500"
 				/>

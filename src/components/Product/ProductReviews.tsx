@@ -25,7 +25,10 @@ export function ProductReviews({
 	totalReviews: number
 }) {
 	return (
-		<div className="w-full max-w-2xl mx-auto mt-16 lg:max-w-none lg:mt-0 lg:col-span-4">
+		<div
+			id="reviews"
+			className="w-full max-w-2xl mx-auto mt-16 lg:max-w-none lg:mt-0 lg:col-span-4"
+		>
 			<div className="border-b border-gray-200"></div>
 			<Heading size="h5" className="py-6">
 				Customer Reviews ({totalReviews})
