@@ -40,7 +40,7 @@ export function MobileMenu({
 	setOpen: (open: boolean) => void
 }) {
 	const { user } = useUser({
-		redirectTo: '/',
+		redirectIfFound: false,
 	})
 
 	return (

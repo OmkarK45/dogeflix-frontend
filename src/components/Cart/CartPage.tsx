@@ -1,4 +1,10 @@
+import router from 'next/router'
+import useSWR from 'swr'
+import { fetcher } from '~/lib/fetchJson'
+import { CartItems } from '~/types'
 import { Button } from '../ui/Button'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
 import { CartItem } from './CartItem'
@@ -86,19 +92,40 @@ export const products = [
 	},
 ]
 
-export function Cart() {
+export function Cart({ cartItems }: { cartItems: CartItems }) {
+	const { data: cartItemsData, error } = useSWR<CartItems>(
+		'/api/cart',
+		fetcher,
+		{
+			fallbackData: cartItems,
+		}
+	)
+
+	if (!cartItemsData) {
+		return <LoadingFallback />
+	}
+
 	return (
-		<div className="bg-white">
+		<div className="bg-white min-h-screen">
 			<div className="max-w-2xl mx-auto  px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 				<div className="sticky top-0 py-6 min-w-full bg-white z-10">
-					<Heading size="h3">Shopping Cart</Heading>
+					<Heading size="h3">Shopping Cart ({cartItemsData.length})</Heading>
 				</div>
 				<form className="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
 					<section aria-labelledby="cart-heading" className="lg:col-span-7">
 						<ul className="border-t border-b border-gray-200 divide-y divide-gray-200">
-							{products.map((product, productIdx) => (
+							{cartItemsData.length === 0 && (
+								<ErrorFallback
+									action={() =>
+										router.push('/products', undefined, { shallow: true })
+									}
+									buttonText="Take me to shop."
+									message="Your cart is empty!"
+								/>
+							)}
+							{cartItemsData.map((product, productIdx) => (
 								<CartItem
-									product={product}
+									item={product}
 									key={productIdx}
 									productIdx={productIdx}
 								/>

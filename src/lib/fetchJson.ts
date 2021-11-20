@@ -6,13 +6,12 @@ axios.defaults.withCredentials = true
 
 export { axios }
 
-export const fetcher = (
+export const fetcher = <T = any>(
 	url: string,
-	options: AxiosRequestConfig<any> | undefined,
-	token?: string
-) => {
+	options: AxiosRequestConfig<any> | undefined
+): Promise<T> => {
 	return axios
-		.get(BASE_URL + url, {
+		.get<T | any>(BASE_URL + url, {
 			...options,
 			withCredentials: true,
 		})
@@ -22,10 +21,10 @@ export const fetcher = (
 export const mutationFn = (
 	url: string,
 	data: any,
-	options: AxiosRequestConfig<any> | undefined
+	options?: AxiosRequestConfig<any> | undefined
 ) =>
 	axios
-		.post(url, data, {
+		.post(BASE_URL + url, data, {
 			...options,
 			withCredentials: true,
 		})

@@ -1,8 +1,17 @@
 import { StarIcon } from '@heroicons/react/solid'
 import clsx from 'clsx'
 import format from 'date-fns/format'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import { fetcher } from '~/lib/fetchJson'
+import useUser from '~/lib/useUser'
+import { Card } from '../ui/Card'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 
 import { Heading } from '../ui/Heading'
+import { Link } from '../ui/Link'
+import { ReviewForm } from './ReviewForm'
 
 interface Review {
 	id: string
@@ -24,6 +33,12 @@ export function ProductReviews({
 	reviews: Review[]
 	totalReviews: number
 }) {
+	const router = useRouter()
+
+	const { user } = useUser({
+		redirectIfFound: false,
+	})
+
 	return (
 		<div
 			id="reviews"
@@ -34,7 +49,26 @@ export function ProductReviews({
 				Customer Reviews ({totalReviews})
 			</Heading>
 			<div className="border-b border-gray-200"></div>
+			{user?.isLoggedIn ? (
+				<ReviewForm />
+			) : (
+				<Card className="font-medium py-3 my-3" rounded="lg">
+					<Card.Body>
+						<Link
+							target="_blank"
+							rel="noreferrer noopener"
+							href={`/auth/login`}
+						>
+							Sign In
+						</Link>{' '}
+						to post review
+					</Card.Body>
+				</Card>
+			)}
 			<div>
+				{reviews.length === 0 && (
+					<ErrorFallback noAction message="No reviews on this product yet." />
+				)}
 				{reviews.map((review, reviewIdx) => (
 					<div key={review.id} className="flex text-sm text-gray-500 space-x-4">
 						<div className="flex-none py-10">

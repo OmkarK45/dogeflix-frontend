@@ -10,7 +10,7 @@ import { Menu, MenuItem } from '../ui/Dropdown'
 
 export function ProfileDropdown() {
 	const { user } = useUser({
-		redirectTo: '/',
+		redirectIfFound: false,
 	})
 
 	return (

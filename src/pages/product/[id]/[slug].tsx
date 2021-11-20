@@ -20,10 +20,11 @@ export default function ProductDetailsPage({
 ProductDetailsPage.getInitialProps = async (ctx: NextPageContext) => {
 	const { id } = ctx.query
 
-	const product = await fetcher(`/api/products/${id}`, {
+	const product = await fetcher<ProductType>(`/api/products/${id}`, {
 		method: 'GET',
 	})
 
+	console.log('called')
 	return {
 		product,
 	}

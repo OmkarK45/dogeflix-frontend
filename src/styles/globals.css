@@ -14,6 +14,10 @@ form {
 	margin-block-end: 0;
 }
 
+.cursor-newtab {
+	cursor: url('/images/new-tab.png') 10 10, pointer;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

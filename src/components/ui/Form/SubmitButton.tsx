@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form'
 import { Button } from '../Button'
 import { Props as ButtonProps } from '../Button'
-import Spinner from '../Spinner'
+import { Spinner } from '../Spinner'
 
 const FormSubmitButton = ({ children, disabled, ...props }: ButtonProps) => {
 	const { formState } = useFormContext()

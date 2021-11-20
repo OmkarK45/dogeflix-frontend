@@ -1,7 +1,7 @@
 import { forwardRef, LegacyRef } from 'react'
 import { Card } from '../Card'
 import { GradientBar } from '../GradientBar'
-import Spinner from '../Spinner'
+import { Spinner } from '../Spinner'
 
 export const LoadingFallback = forwardRef<HTMLDivElement>((_, ref) => {
 	console.log('LOADING CALLED')

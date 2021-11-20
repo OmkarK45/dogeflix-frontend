@@ -1,23 +1,85 @@
+import useSWR, { useSWRConfig } from 'swr'
+import { useRouter } from 'next/router'
 import {
 	ArrowLeftIcon,
 	HeartIcon,
 	LightningBoltIcon,
 	ShoppingCartIcon,
 } from '@heroicons/react/solid'
+import toast from 'react-hot-toast'
+import { CheckCircleIcon } from '@heroicons/react/outline'
+import clsx from 'clsx'
 
-import { Button } from '../ui/Button'
-import { Badge } from '../ui/Badge'
+import { calculateOriginalPrice } from '~/lib/price'
+import { CartItems, ProductType } from '~/types'
+import { fetcher, mutationFn } from '~/lib/fetchJson'
+import useUser from '~/lib/useUser'
+
 import { ShareSection } from '../Common/ShareSection'
-
 import { ProductImagesGallery } from './ProductImagesGallery'
 import { ProductSizeAndColor } from './ProductSizeAndColor'
-import { ProductReviews, RatingStars, ReviewStars } from './ProductReviews'
-import { ProductType } from '~/types'
+import { ProductReviews, RatingStars } from './ProductReviews'
+
+import { Button } from '../ui/Button'
 import { Link } from '../ui/Link'
 import { RupeeIcon } from '../ui/RupeeIcon'
-import { calculateOriginalPrice } from '~/lib/price'
+import { Badge } from '../ui/Badge'
 
 export function ProductDetails({ product }: { product: ProductType }) {
+	const { user } = useUser({
+		redirectIfFound: false,
+	})
+
+	const router = useRouter()
+
+	const { data } = useSWR<ProductType>(
+		`/api/products/${router.query.id}`,
+		fetcher,
+		{
+			fallbackData: product,
+		}
+	)
+
+	const { data: cartData, mutate: cartMutate } = useSWR<CartItems>(
+		'/api/cart',
+		fetcher
+	)
+
+	if (!data) return null
+
+	if (!cartData) return null
+
+	const alreadyInCart =
+		cartData?.length > 0 &&
+		cartData.find((item) => item.product_id === router.query.id)
+
+	async function handleAddToCart() {
+		if (alreadyInCart) {
+			return toast('Product is already in cart!')
+		}
+
+		await cartMutate(
+			[
+				...(cartData || ([] as CartItems)),
+				{
+					id: router.query.id as string,
+					product_id: router.query.id as string,
+					product: data!,
+					quantity: 1,
+					user_id: user?.data?.user?.id!,
+				},
+			],
+			false
+		)
+
+		toast.success('Product added to cart!')
+
+		await mutationFn('/api/cart/add', {
+			productId: router.query.id as string,
+			quantity: 1,
+		})
+	}
+
 	return (
 		<div className="bg-white">
 			<div className="mx-auto  px-4 py-7 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -28,7 +90,7 @@ export function ProductDetails({ product }: { product: ProductType }) {
 				<div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
 					{/* Product image */}
 					<div className="lg:row-end-1 lg:col-span-4">
-						<ProductImagesGallery images={product.images} />
+						<ProductImagesGallery images={data.images} />
 					</div>
 
 					{/* Product details */}
@@ -36,11 +98,11 @@ export function ProductDetails({ product }: { product: ProductType }) {
 						<div className="flex flex-col">
 							<div className="mt-4">
 								<Badge variant="orange" className="mb-2 relative shine">
-									{product.brand}
+									{data.brand}
 								</Badge>
 								<div className="flex justify-between items-center">
 									<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-										{product.title}{' '}
+										{data.title}{' '}
 									</h1>
 									<button className="bg-red-100 p-2 rounded-full outline-none transition-transform duration-300 hover:scale-150 active:scale-95">
 										<HeartIcon className="w-5 h-5 text-red-500" />
@@ -55,47 +117,58 @@ export function ProductDetails({ product }: { product: ProductType }) {
 								<div className="flex mr-2 items-center">
 									<RupeeIcon className="text-gray-900 w-8 h-8 -ml-1" />
 									<p className="text-3xl text-gray-900 ">
-										{calculateOriginalPrice(product.price, product.discount)}
+										{calculateOriginalPrice(data.price, data.discount)}
 									</p>
-									<del className="text-lg ml-2 text-gray-500">
-										{product.price}
-									</del>
+									<del className="text-lg ml-2 text-gray-500">{data.price}</del>
 									<p className="ml-2 text-red-700 font-bold">
-										{product.discount}% Off
+										{data.discount}% Off
 									</p>
 								</div>
 								<div>
 									<div className="flex items-center space-x-2">
-										<p>{product.rating}</p>
-										<RatingStars averageRating={product.rating} />{' '}
+										<p>{data.rating}</p>
+										<RatingStars averageRating={data.rating} />{' '}
 									</div>
 									<div className="flex">
 										<Link
 											href="#reviews"
 											className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
 										>
-											See all {product._count.reviews} reviews
+											See all {data._count.reviews} reviews
 										</Link>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<p className="text-gray-500 mt-6">{product.description}</p>
+						<p className="text-gray-500 mt-6">{data.description}</p>
 						<div className="mt-4">
-							<ProductSizeAndColor
-								colors={product.colors}
-								sizes={product.sizes}
-							/>
+							<ProductSizeAndColor colors={data.colors} sizes={data.sizes} />
 						</div>
 						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
 							<Button type="button" fullWidth size="xl">
 								<LightningBoltIcon className="w-5 h-5 mr-2" /> Buy now{' '}
-								{product.price}
+								{data.price}
 							</Button>
-							<Button type="button" variant="dark" size="xl">
-								<ShoppingCartIcon className="w-5 h-5 text-gray-500 mr-2" /> Add
-								to cart
+							<Button
+								onClick={handleAddToCart}
+								type="button"
+								variant="dark"
+								size="xl"
+								className={clsx(alreadyInCart && 'cursor-newtab')}
+								href={alreadyInCart ? '/cart' : '#'}
+							>
+								{alreadyInCart ? (
+									<>
+										<CheckCircleIcon className="w-5 h-5 text-gray-500 mr-2" />
+										Added to Cart
+									</>
+								) : (
+									<>
+										<ShoppingCartIcon className="w-5 h-5 text-gray-500 mr-2" />
+										Add to cart
+									</>
+								)}
 							</Button>
 						</div>
 
@@ -103,7 +176,7 @@ export function ProductDetails({ product }: { product: ProductType }) {
 							<h3 className="text-sm font-medium text-gray-900">Highlights</h3>
 							<div className="mt-4 prose prose-sm text-gray-500">
 								<ul role="list">
-									{product.features.map((highlight) => (
+									{data.features.map((highlight) => (
 										<li key={highlight}>{highlight}</li>
 									))}
 								</ul>
@@ -114,8 +187,8 @@ export function ProductDetails({ product }: { product: ProductType }) {
 					</div>
 
 					<ProductReviews
-						reviews={product.reviews}
-						totalReviews={product._count.reviews}
+						reviews={data.reviews}
+						totalReviews={data._count.reviews}
 					/>
 				</div>
 			</div>

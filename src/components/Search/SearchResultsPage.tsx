@@ -1,3 +1,11 @@
+import { Navbar } from '../Nav/DesktopNav'
+import { ProductsList } from '../Product/ProductsList'
+
 export function SearchResultsPage() {
-	return <h1>Search Results Page</h1>
+	return (
+		<>
+			<Navbar />
+			<ProductsList />
+		</>
+	)
 }

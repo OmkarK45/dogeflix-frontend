@@ -1,105 +1,25 @@
-import { Fragment, useState } from 'react'
-import { Popover, Transition } from '@headlessui/react'
-import {
-	MenuIcon,
-	SearchIcon,
-	ShoppingBagIcon,
-	XIcon,
-} from '@heroicons/react/outline'
-import { Link } from '../ui/Link'
-import { MobileMenu } from './MobileMenu'
-import { MegaMenu } from './MegaMenu'
+import { useState } from 'react'
 import { HeartIcon } from '@heroicons/react/solid'
-import { SearchBar } from '../Search/SearchBar'
+import { MenuIcon, SearchIcon, ShoppingBagIcon } from '@heroicons/react/outline'
 import clsx from 'clsx'
+
+import useUser from '~/lib/useUser'
+
+import { MobileMenu } from './MobileMenu'
+import { SearchBar } from '../Search/SearchBar'
 import { ProfileDropdown } from '../User/ProfileDropdown'
 
-export const navigation = {
-	categories: [
-		{
-			name: 'Women',
-			featured: [
-				{
-					name: 'New Arrivals',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-					imageAlt:
-						'Models sitting back to back, wearing Basic Tee in black and bone.',
-				},
-				{
-					name: 'Basic Tees',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-					imageAlt:
-						'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-				},
-				{
-					name: 'Accessories',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
-					imageAlt:
-						'Model wearing minimalist watch with black wristband and white watch face.',
-				},
-				{
-					name: 'Carry',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
-					imageAlt:
-						'Model opening tan leather long wallet with credit card pockets and cash pouch.',
-				},
-			],
-		},
-		{
-			name: 'Men',
-			featured: [
-				{
-					name: 'New Arrivals',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
-					imageAlt:
-						'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
-				},
-				{
-					name: 'Basic Tees',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
-					imageAlt: 'Model wearing light heather gray t-shirt.',
-				},
-				{
-					name: 'Accessories',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
-					imageAlt:
-						'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
-				},
-				{
-					name: 'Carry',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
-					imageAlt:
-						'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
-				},
-			],
-		},
-	],
-}
-
-function classNames(...classes: string[]) {
-	return classes.filter(Boolean).join(' ')
-}
+import { GradientBar } from '../ui/GradientBar'
+import { Link } from '../ui/Link'
 
 export function Navbar() {
+	const { user } = useUser({
+		redirectIfFound: false,
+	})
+
 	const [open, setOpen] = useState(false)
 	const [searchOpen, setSearchOpen] = useState(false)
-	console.log(searchOpen)
+
 	return (
 		<div className="bg-white">
 			{/* Mobile menu */}
@@ -107,24 +27,28 @@ export function Navbar() {
 
 			<header className="relative">
 				<nav aria-label="Top">
-					<div className=" bg-gradient-to-r from-pink-600 to-yellow-500 bg-blend-darken bg-opacity-30">
-						<div className="mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
-							<div className="flex items-center space-x-6">
-								<Link
-									href="/auth/login"
-									className="-m-2 p-2 block font-medium text-white no-underline"
-								>
-									Sign in
-								</Link>
-								<Link
-									href="/auth/signup"
-									className="-m-2 p-2 block font-medium text-white no-underline"
-								>
-									Create an account
-								</Link>
+					{user?.isLoggedIn ? (
+						<GradientBar color="pink" />
+					) : (
+						<div className=" bg-gradient-to-r from-pink-600 to-yellow-500 bg-blend-darken bg-opacity-30">
+							<div className="mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+								<div className="flex items-center space-x-6">
+									<Link
+										href="/auth/login"
+										className="-m-2 p-2 block font-medium text-white no-underline"
+									>
+										Sign in
+									</Link>
+									<Link
+										href="/auth/signup"
+										className="-m-2 p-2 block font-medium text-white no-underline"
+									>
+										Create an account
+									</Link>
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 					{/* Secondary navigation */}
 					<div className="bg-white">
 						<div className=" mx-auto px-4 sm:px-6 lg:px-8">
@@ -181,9 +105,11 @@ export function Navbar() {
 										</div>
 
 										<div className="flex items-center lg:ml-8">
-											<div className="hidden md:block">
-												<ProfileDropdown />
-											</div>
+											{user?.isLoggedIn ? (
+												<div className="hidden md:block">
+													<ProfileDropdown />
+												</div>
+											) : null}
 											{/* Cart */}
 											<div className="ml-4 flow-root lg:ml-8">
 												<Link

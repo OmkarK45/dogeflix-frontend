@@ -16,4 +16,4 @@ const Spinner = ({ className = 'w-5 h-5', label = 'Loading...' }: Props) => {
 	)
 }
 
-export default Spinner
+export { Spinner }

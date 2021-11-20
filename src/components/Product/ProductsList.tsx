@@ -1,27 +1,24 @@
-import { ProfilerProps, useState } from 'react'
+import { useState } from 'react'
+import useSWRInfinite from 'swr/infinite'
 import { FilterIcon } from '@heroicons/react/solid'
+
+import { getFilteredProducts, getSortedProducts } from '~/lib/sort'
+import { fetcher } from '~/lib/fetchJson'
+import { ProductType } from '~/types'
+
 import { DesktopFiltersSidebar } from './DesktopFiltersSidebar'
 import { MobileFiltersSidebar } from './MobileFiltersSidebar'
 import { SortMenu, SortTypes } from './SortMenu'
 import { ProductCard } from './ProductCard'
+
 import { Heading } from '../ui/Heading'
-import useSWRInfinite from 'swr/infinite'
-import { fetcher } from '~/lib/fetchJson'
-import { ProductType } from '~/types'
 import { Button } from '../ui/Button'
-import Spinner from '../ui/Spinner'
-import { getFilteredProducts, getSortedProducts } from '~/lib/sort'
-import { useRouter } from 'next/router'
+import { Spinner } from '../ui/Spinner'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
 const PAGE_SIZE = 10
 
-//  router.query.sortType - SortType
-// router.query.filterType- FiltersType
-
 export function ProductsList() {
-	const router = useRouter()
-
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
 	const [sortValue, setSortValue] = useState<SortTypes>('most_popular')

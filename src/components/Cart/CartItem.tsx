@@ -1,30 +1,20 @@
 import { CheckIcon, ClockIcon, XIcon } from '@heroicons/react/solid'
-
-interface CartProduct {
-	id: number
-	name: string
-	price: string
-	imageSrc: string
-	imageAlt: string
-	href: string
-	size?: string
-	color: string
-	inStock: boolean
-}
+import { CartItem } from '~/types'
+import { Link } from '../ui/Link'
 
 export function CartItem({
-	product,
+	item,
 	productIdx,
 }: {
-	product: CartProduct
+	item: CartItem
 	productIdx: number
 }) {
 	return (
-		<li key={product.id} className="flex py-6 sm:py-10">
+		<li key={item.id} className="flex py-6 sm:py-10">
 			<div className="flex-shrink-0">
 				<img
-					src={product.imageSrc}
-					alt={product.imageAlt}
+					src={item.product.images[0]}
+					alt="TODO"
 					className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
 				/>
 			</div>
@@ -34,30 +24,31 @@ export function CartItem({
 					<div>
 						<div className="flex justify-between">
 							<h3 className="text-sm">
-								<a
-									href={product.href}
-									className="font-medium text-gray-700 hover:text-gray-800"
+								<Link
+									href={`/product/${item.product_id}/${item.product.slug}`}
+									className="font-medium no-underline text-gray-700 hover:text-gray-800"
 								>
-									{product.name}
-								</a>
+									{item.product.title}
+								</Link>
 							</h3>
 						</div>
 						<div className="mt-1 flex text-sm">
-							<p className="text-gray-500">{product.color}</p>
-							{product.size ? (
+							{/* TODO : this color is not something which is chosen by user. I need to save color and size information in DB from cart item */}
+							<p className="text-gray-500">{item.product.colors[0]}</p>
+							{item.product.sizes[0] ? (
 								<p className="ml-4 pl-4 border-l border-gray-200 text-gray-500">
-									{product.size}
+									{item.product.sizes[0]}
 								</p>
 							) : null}
 						</div>
 						<p className="mt-1 text-sm font-medium text-gray-900">
-							{product.price}
+							{item.product.price}
 						</p>
 					</div>
 
 					<div className="mt-4 sm:mt-0 sm:pr-9">
 						<label htmlFor={`quantity-${productIdx}`} className="sr-only">
-							Quantity, {product.name}
+							Quantity, {item.quantity}
 						</label>
 						<select
 							id={`quantity-${productIdx}`}
@@ -87,7 +78,7 @@ export function CartItem({
 				</div>
 
 				<p className="mt-4 flex text-sm text-gray-700 space-x-2">
-					{product.inStock ? (
+					{item.product.stock > 0 ? (
 						<CheckIcon
 							className="flex-shrink-0 h-5 w-5 text-green-500"
 							aria-hidden="true"
@@ -99,7 +90,7 @@ export function CartItem({
 						/>
 					)}
 
-					<span>{product.inStock ?? 'In stock'}</span>
+					<span>{item.product.stock > 0 ?? 'In stock'}</span>
 				</p>
 			</div>
 		</li>
