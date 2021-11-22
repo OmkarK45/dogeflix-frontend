@@ -38,6 +38,7 @@ export function AuthLayout({ title, subtitle, children }: Props) {
 			<div className="hidden md:block absolute bottom-0 left-0 pb-2 ml-4">
 				<Patterns />
 			</div>
+			<GradientBar size="lg" />
 		</main>
 	)
 }
