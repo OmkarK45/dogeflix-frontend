@@ -44,25 +44,11 @@ const buildUsingStack: Array<TechStackInfo> = [
 			'TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.',
 	},
 	{
-		name: 'Apollo GraphQL (Server + Client)',
-		url: 'https://www.apollographql.com/',
-		icon: SiApollographql,
-		description:
-			'Apollo is a GraphQL server and client library for Node.js, Express, and Hapi.js.',
-	},
-	{
 		name: 'PostgreSQL',
 		url: 'https://www.postgresql.org/',
 		icon: SiPostgresql,
 		description:
 			'PostgreSQL is a powerful, open source object-relational database system.',
-	},
-	{
-		name: 'GiraphQL',
-		url: 'https://giraphql.com/',
-		icon: SiGraphql,
-		description:
-			'GiraphQL - A plugin based GraphQL schema builder for typescript',
 	},
 ]
 
@@ -157,12 +143,6 @@ export function Footer() {
 				<div>
 					<button onClick={() => setOpen(true)}>Built Using</button>
 				</div>
-			</div>
-			<div className="mt-4 mx-auto flex justify-center">
-				<Alert
-					status="warning"
-					message="This app is in preview beta. Not all features will work as expected. Any sensitive information will be lost."
-				/>
 			</div>
 		</div>
 	)

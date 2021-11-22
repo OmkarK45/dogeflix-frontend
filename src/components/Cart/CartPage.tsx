@@ -1,6 +1,9 @@
 import router from 'next/router'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 import useSWR from 'swr'
 import { fetcher } from '~/lib/fetchJson'
+import { calculateOriginalPrice } from '~/lib/price'
 import { CartItems } from '~/types'
 import { Button } from '../ui/Button'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
@@ -93,6 +96,8 @@ export const products = [
 ]
 
 export function Cart({ cartItems }: { cartItems: CartItems }) {
+	const [quantity, setQuantity] = useState(1)
+
 	const { data: cartItemsData, error } = useSWR<CartItems>(
 		'/api/cart',
 		fetcher,
@@ -103,6 +108,22 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 
 	if (!cartItemsData) {
 		return <LoadingFallback />
+	}
+
+	function getSubtotal(cartItems: CartItems) {
+		return cartItems.reduce((total, item) => {
+			return (
+				total +
+				parseFloat(
+					calculateOriginalPrice(item.product.price, item.product.discount)
+				) *
+					quantity
+			)
+		}, 0)
+	}
+
+	function getOrderTotal(cartItems: CartItems) {
+		return (getSubtotal(cartItems) + 5 + 8.32).toFixed(2)
 	}
 
 	return (
@@ -116,9 +137,7 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 						<ul className="border-t border-b border-gray-200 divide-y divide-gray-200">
 							{cartItemsData.length === 0 && (
 								<ErrorFallback
-									action={() =>
-										router.push('/products', undefined, { shallow: true })
-									}
+									noAction
 									buttonText="Take me to shop."
 									message="Your cart is empty!"
 								/>
@@ -128,6 +147,7 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 									item={product}
 									key={productIdx}
 									productIdx={productIdx}
+									setQuantity={setQuantity}
 								/>
 							))}
 						</ul>
@@ -145,7 +165,9 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 						<dl className="mt-6 space-y-4">
 							<div className="flex items-center justify-between">
 								<dt className="text-sm text-gray-600">Subtotal</dt>
-								<dd className="text-sm font-medium text-gray-900">$99.00</dd>
+								<dd className="text-sm font-medium text-gray-900">
+									${getSubtotal(cartItemsData)}
+								</dd>
 							</div>
 							<div className="border-t border-gray-200 pt-4 flex items-center justify-between">
 								<dt className="flex items-center text-sm text-gray-600">
@@ -163,12 +185,21 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 								<dt className="text-base font-medium text-gray-900">
 									Order total
 								</dt>
-								<dd className="text-base font-medium text-gray-900">$112.32</dd>
+								<dd className="text-base font-medium text-gray-900">
+									${getOrderTotal(cartItems)}
+								</dd>
 							</div>
 						</dl>
 
 						<div className="mt-6">
-							<Button type="submit" size="xl" fullWidth>
+							<Button
+								onClick={(e) => {
+									e.preventDefault()
+									toast.success('Thank you for shopping with us :) ')
+								}}
+								size="xl"
+								fullWidth
+							>
 								Checkout
 							</Button>
 						</div>

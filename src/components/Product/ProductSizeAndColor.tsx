@@ -3,13 +3,23 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { ProductType } from '~/types'
 
+interface ProductAndSizeProps {
+	sizes: string[]
+	colors: string[]
+	selectedSize: string
+	selectedColor: string
+	setSelectedSize: React.Dispatch<React.SetStateAction<string>>
+	setSelectedColor: React.Dispatch<React.SetStateAction<string>>
+}
+
 export function ProductSizeAndColor({
 	sizes,
 	colors,
-}: Pick<ProductType, 'sizes' | 'colors'>) {
-	const [selectedColor, setSelectedColor] = useState(colors[0])
-	const [selectedSize, setSelectedSize] = useState(sizes[0])
-
+	selectedColor,
+	setSelectedColor,
+	selectedSize,
+	setSelectedSize,
+}: ProductAndSizeProps) {
 	return (
 		<form>
 			{/* Color picker */}

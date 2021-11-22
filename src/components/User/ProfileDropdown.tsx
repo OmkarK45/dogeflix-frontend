@@ -1,3 +1,5 @@
+import router from 'next/router'
+import toast from 'react-hot-toast'
 import {
 	HiHeart,
 	HiOutlineChevronDown,
@@ -5,13 +7,20 @@ import {
 	HiOutlineLogout,
 	HiOutlineShoppingCart,
 } from 'react-icons/hi'
+import fetchJson from '~/lib/fetchJson'
 import useUser from '~/lib/useUser'
 import { Menu, MenuItem } from '../ui/Dropdown'
 
 export function ProfileDropdown() {
-	const { user } = useUser({
+	const { user, mutateUser } = useUser({
 		redirectIfFound: false,
 	})
+
+	async function handleLogout() {
+		mutateUser(await fetchJson('/api/logout', { method: 'POST' }), false)
+		toast.success('You have been logged out. You will be redirected to home.')
+		router.push('/')
+	}
 
 	return (
 		<Menu
@@ -32,7 +41,10 @@ export function ProfileDropdown() {
 					<MenuItem href={`/wishlist`} icon={<HiHeart className="w-5 h-5" />}>
 						My wishlist
 					</MenuItem>
-					<MenuItem icon={<HiOutlineLogout className="w-5 h-5" />}>
+					<MenuItem
+						onClick={handleLogout}
+						icon={<HiOutlineLogout className="w-5 h-5" />}
+					>
 						Signout
 					</MenuItem>
 				</>

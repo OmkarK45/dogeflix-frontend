@@ -1,19 +1,15 @@
-import useSWR, { useSWRConfig } from 'swr'
+import { useState } from 'react'
+import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import {
-	ArrowLeftIcon,
-	HeartIcon,
-	LightningBoltIcon,
-	ShoppingCartIcon,
-} from '@heroicons/react/solid'
+import { ArrowLeftIcon, ShoppingCartIcon } from '@heroicons/react/solid'
 import toast from 'react-hot-toast'
 import { CheckCircleIcon } from '@heroicons/react/outline'
 import clsx from 'clsx'
 
+import useUser from '~/lib/useUser'
 import { calculateOriginalPrice } from '~/lib/price'
 import { CartItems, ProductType } from '~/types'
 import { fetcher, mutationFn } from '~/lib/fetchJson'
-import useUser from '~/lib/useUser'
 
 import { ShareSection } from '../Common/ShareSection'
 import { ProductImagesGallery } from './ProductImagesGallery'
@@ -25,6 +21,8 @@ import { Link } from '../ui/Link'
 import { RupeeIcon } from '../ui/RupeeIcon'
 import { Badge } from '../ui/Badge'
 import { WishlistButton } from './WishlistButton'
+import { Footer } from '../Common/Footer'
+import { GradientBar } from '../ui/GradientBar'
 
 export function ProductDetails({ product }: { product: ProductType }) {
 	const { user } = useUser({
@@ -46,40 +44,55 @@ export function ProductDetails({ product }: { product: ProductType }) {
 		fetcher
 	)
 
+	const [selectedColor, setSelectedColor] = useState(data?.colors[0] ?? '')
+	const [selectedSize, setSelectedSize] = useState(data?.sizes[0] ?? '')
+
 	if (!data) return null
 
-	if (!cartData) return null
-
 	const alreadyInCart =
+		cartData &&
 		cartData?.length > 0 &&
 		cartData.find((item) => item.product_id === router.query.id)
 
 	async function handleAddToCart() {
-		if (alreadyInCart) {
-			return toast('Product is already in cart!')
+		if (!user?.isLoggedIn) {
+			return toast.error('Please login to add to cart')
+		} else {
+			if (alreadyInCart) {
+				return toast('Product is already in cart!')
+			}
+
+			await cartMutate(
+				[
+					...(cartData || ([] as CartItems)),
+					{
+						id: router.query.id as string,
+						product_id: router.query.id as string,
+						product: data!,
+						quantity: 1,
+						user_id: user?.data?.user?.id!,
+						color: selectedColor,
+						size: selectedSize,
+					},
+				],
+				false
+			)
+
+			toast.success('Product added to cart!')
+
+			await mutationFn('/api/cart/add', {
+				productId: router.query.id as string,
+				quantity: 1,
+				color: selectedColor,
+				size: selectedSize,
+			})
 		}
-
-		await cartMutate(
-			[
-				...(cartData || ([] as CartItems)),
-				{
-					id: router.query.id as string,
-					product_id: router.query.id as string,
-					product: data!,
-					quantity: 1,
-					user_id: user?.data?.user?.id!,
-				},
-			],
-			false
-		)
-
-		toast.success('Product added to cart!')
-
-		await mutationFn('/api/cart/add', {
-			productId: router.query.id as string,
-			quantity: 1,
-		})
 	}
+
+	const originalPriceOfProduct = calculateOriginalPrice(
+		data.price,
+		data.discount
+	)
 
 	return (
 		<div className="bg-white">
@@ -108,6 +121,8 @@ export function ProductDetails({ product }: { product: ProductType }) {
 									<WishlistButton
 										product_id={data.id}
 										user_id={user?.data.user?.id}
+										selectedColor={selectedColor}
+										selectedSize={selectedSize}
 									/>
 								</div>
 								<h2 id="information-heading" className="sr-only">
@@ -119,7 +134,7 @@ export function ProductDetails({ product }: { product: ProductType }) {
 								<div className="flex mr-2 items-center">
 									<RupeeIcon className="text-gray-900 w-8 h-8 -ml-1" />
 									<p className="text-3xl text-gray-900 ">
-										{calculateOriginalPrice(data.price, data.discount)}
+										{originalPriceOfProduct}
 									</p>
 									<del className="text-lg ml-2 text-gray-500">{data.price}</del>
 									<p className="ml-2 text-red-700 font-bold">
@@ -145,12 +160,19 @@ export function ProductDetails({ product }: { product: ProductType }) {
 
 						<p className="text-gray-500 mt-6">{data.description}</p>
 						<div className="mt-4">
-							<ProductSizeAndColor colors={data.colors} sizes={data.sizes} />
+							<ProductSizeAndColor
+								selectedColor={selectedColor}
+								selectedSize={selectedSize}
+								setSelectedColor={setSelectedColor}
+								setSelectedSize={setSelectedSize}
+								colors={data.colors}
+								sizes={data.sizes}
+							/>
 						</div>
 						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
 							<Button type="button" fullWidth size="xl">
-								<LightningBoltIcon className="w-5 h-5 mr-2" /> Buy now{' '}
-								{data.price}
+								Buy now <RupeeIcon className="w-5 h-5" />{' '}
+								{originalPriceOfProduct}
 							</Button>
 							<Button
 								onClick={alreadyInCart ? () => {} : handleAddToCart}
@@ -194,6 +216,10 @@ export function ProductDetails({ product }: { product: ProductType }) {
 					/>
 				</div>
 			</div>
+			<div className="py-10">
+				<Footer />
+			</div>
+			<GradientBar size="lg" />
 		</div>
 	)
 }

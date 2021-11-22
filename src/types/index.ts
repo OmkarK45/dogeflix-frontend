@@ -43,6 +43,8 @@ export interface CartItem {
 	quantity: number
 	product_id: string
 	user_id: string
+	color: string
+	size: string
 }
 
 export interface WishlistItem {
@@ -50,6 +52,8 @@ export interface WishlistItem {
 	product: ProductType
 	product_id: string
 	user_id: string
+	color: string
+	size: string
 }
 
 export type CartItems = CartItem[]

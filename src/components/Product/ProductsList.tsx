@@ -15,6 +15,7 @@ import { Heading } from '../ui/Heading'
 import { Button } from '../ui/Button'
 import { Spinner } from '../ui/Spinner'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
+import { IndeterminateProgress } from '../ui/Progress'
 
 const PAGE_SIZE = 10
 
@@ -35,7 +36,7 @@ export function ProductsList() {
 
 	const isLoadingInitialData = !data && !error
 
-	if (isLoadingInitialData) return <div>loading</div>
+	if (isLoadingInitialData) return <IndeterminateProgress />
 
 	const flattenedData = data?.flat() as ProductType[]
 

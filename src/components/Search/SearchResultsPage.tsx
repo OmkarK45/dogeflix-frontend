@@ -1,11 +1,11 @@
 import { Navbar } from '../Nav/DesktopNav'
-import { ProductsList } from '../Product/ProductsList'
+import { SearchResultProducts } from './SearchResultProducts'
 
 export function SearchResultsPage() {
 	return (
 		<>
 			<Navbar />
-			<ProductsList />
+			<SearchResultProducts />
 		</>
 	)
 }

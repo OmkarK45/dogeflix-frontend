@@ -34,7 +34,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 			cookie.serialize('token', response.data.data.token, {
 				sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
 				path: '/',
-				expires: new Date(Date.now() + 60 * 60 * 1000),
+				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 				secure: process.env.NODE_ENV === 'production',
 				domain:
 					process.env.NODE_ENV === 'production' ? '.railway.app' : 'localhost',

@@ -1,19 +1,26 @@
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/outline'
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/solid'
-import clsx from 'clsx'
+
 import React from 'react'
 import toast from 'react-hot-toast'
 import useSWR from 'swr'
 
 import { fetcher, mutationFn } from '~/lib/fetchJson'
-import { ProductType, WishlistItems } from '~/types'
+import { WishlistItems } from '~/types'
 
 interface WishlistButtonProps {
 	product_id: string
 	user_id: string | null | undefined
+	selectedSize: string
+	selectedColor: string
 }
 
-export function WishlistButton({ product_id, user_id }: WishlistButtonProps) {
+export function WishlistButton({
+	product_id,
+	user_id,
+	selectedColor,
+	selectedSize,
+}: WishlistButtonProps) {
 	const { mutate, data } = useSWR<WishlistItems>('/api/wishlist', fetcher)
 	const [wishlisted, setWishlisted] = React.useState(
 		data?.find((item) => item.product_id === product_id) ? true : false
@@ -37,6 +44,8 @@ export function WishlistButton({ product_id, user_id }: WishlistButtonProps) {
 
 			await mutationFn(`/api/wishlist/add`, {
 				productId: product_id,
+				size: selectedSize,
+				color: selectedColor,
 			})
 
 			setWishlisted(true)

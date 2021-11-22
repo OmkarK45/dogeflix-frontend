@@ -1,14 +1,27 @@
 import { CheckIcon, ClockIcon, XIcon } from '@heroicons/react/solid'
+import { useState } from 'react'
+import { calculateOriginalPrice } from '~/lib/price'
 import { CartItem } from '~/types'
 import { Link } from '../ui/Link'
+import { RupeeIcon } from '../ui/RupeeIcon'
+import { RemoveFromCartModal } from './RemoveFromCartModal'
 
 export function CartItem({
 	item,
 	productIdx,
+	setQuantity,
 }: {
 	item: CartItem
 	productIdx: number
+	setQuantity: (quantity: number) => void
 }) {
+	const [modalOpen, setModalOpen] = useState(false)
+
+	const originalPriceOfProduct = calculateOriginalPrice(
+		item.product.price,
+		item.product.discount
+	)
+
 	return (
 		<li key={item.id} className="flex py-6 sm:py-10">
 			<div className="flex-shrink-0">
@@ -34,15 +47,17 @@ export function CartItem({
 						</div>
 						<div className="mt-1 flex text-sm">
 							{/* TODO : this color is not something which is chosen by user. I need to save color and size information in DB from cart item */}
-							<p className="text-gray-500">{item.product.colors[0]}</p>
+							<p className="text-gray-500 capitalize">
+								{item.color ? item.color : '--'}
+							</p>
 							{item.product.sizes[0] ? (
 								<p className="ml-4 pl-4 border-l border-gray-200 text-gray-500">
-									{item.product.sizes[0]}
+									{item.size ? item.size : '-'}
 								</p>
 							) : null}
 						</div>
-						<p className="mt-1 text-sm font-medium text-gray-900">
-							{item.product.price}
+						<p className="mt-1 text-sm font-medium text-gray-900 flex items-center">
+							<RupeeIcon className="w-5 h-5" /> {originalPriceOfProduct}
 						</p>
 					</div>
 
@@ -53,6 +68,8 @@ export function CartItem({
 						<select
 							id={`quantity-${productIdx}`}
 							name={`quantity-${productIdx}`}
+							defaultValue={item.quantity}
+							onChange={(e) => setQuantity(parseInt(e.target.value))}
 							className="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 						>
 							<option value={1}>1</option>
@@ -65,8 +82,15 @@ export function CartItem({
 							<option value={8}>8</option>
 						</select>
 
+						<RemoveFromCartModal
+							item={item}
+							open={modalOpen}
+							setOpen={setModalOpen}
+						/>
+
 						<div className="absolute top-0 right-0">
 							<button
+								onClick={() => setModalOpen(true)}
 								type="button"
 								className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500"
 							>

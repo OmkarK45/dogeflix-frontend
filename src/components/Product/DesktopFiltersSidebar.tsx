@@ -18,17 +18,7 @@ export const filters = [
 			{ value: 'black', label: 'Black', checked: false },
 		],
 	},
-	{
-		id: 'category',
-		name: 'Category [TODO]',
-		options: [
-			{ value: 'new-arrivals', label: 'New Arrivals', checked: false },
-			{ value: 'sale', label: 'Sale', checked: false },
-			{ value: 'travel', label: 'Travel', checked: true },
-			{ value: 'organization', label: 'Organization', checked: false },
-			{ value: 'accessories', label: 'Accessories', checked: false },
-		],
-	},
+
 	{
 		// ['S', 'M', 'L', 'XL', 'XXL']
 		id: 'size',

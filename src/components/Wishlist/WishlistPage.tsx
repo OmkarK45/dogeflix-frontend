@@ -15,6 +15,7 @@ export function Wishlist({
 	const { data, error } = useSWR<WishlistItemType[]>('/api/wishlist', fetcher, {
 		fallbackData: wishlistItems,
 	})
+	console.log(data)
 	return (
 		<div className="bg-white min-h-screen">
 			<div className="max-w-2xl mx-auto  px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -24,22 +25,21 @@ export function Wishlist({
 				<form className="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
 					<section aria-labelledby="cart-heading" className="lg:col-span-12">
 						<ul className="border-t border-b border-gray-200 divide-y divide-gray-200">
-							{wishlistItems.length === 0 && (
+							{data && data.length === 0 && (
 								<ErrorFallback
-									action={() =>
-										router.push('/products', undefined, { shallow: true })
-									}
+									noAction
 									buttonText="Take me to shop."
 									message="Your wishlist is empty!"
 								/>
 							)}
-							{wishlistItems.map((product, productIdx) => (
-								<WishlistItem
-									item={product}
-									key={productIdx}
-									productIdx={productIdx}
-								/>
-							))}
+							{data &&
+								data.map((product, productIdx) => (
+									<WishlistItem
+										item={product}
+										key={productIdx}
+										productIdx={productIdx}
+									/>
+								))}
 						</ul>
 					</section>
 				</form>
