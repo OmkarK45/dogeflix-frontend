@@ -112,7 +112,7 @@ export function Footer() {
 			<div className="flex space-x-2 justify-center mt-2">
 				<div>
 					<a
-						className="no-underline text-muted"
+						className="no-underline text-muted cursor-newtab"
 						target="_blank"
 						rel="noreferrer"
 						href="https://twitter.com/omkar_k45"
@@ -122,7 +122,7 @@ export function Footer() {
 				</div>
 				<div>
 					<a
-						className="no-underline text-muted"
+						className="no-underline text-muted cursor-newtab"
 						target="_blank"
 						rel="noreferrer"
 						href="https://twitter.com/omkar_k45"
@@ -132,12 +132,22 @@ export function Footer() {
 				</div>
 				<div>
 					<a
-						className="no-underline text-muted"
+						className="no-underline text-muted cursor-newtab"
 						target="_blank"
 						rel="noreferrer"
 						href="https://github.com/omkark45"
 					>
 						GitHub
+					</a>
+				</div>
+				<div>
+					<a
+						className="no-underline text-muted cursor-newtab"
+						target="_blank"
+						rel="noreferrer"
+						href="https://dogesocial.vercel.app"
+					>
+						DogeSocial - See what your friends are upto.
 					</a>
 				</div>
 				<div>
