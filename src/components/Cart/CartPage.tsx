@@ -1,3 +1,4 @@
+import { getISODay } from 'date-fns'
 import router from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -11,89 +12,6 @@ import { LoadingFallback } from '../ui/Fallbacks/LoadingFallback'
 import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
 import { CartItem } from './CartItem'
-
-export const products = [
-	{
-		id: 1,
-		name: 'Basic Tee',
-		href: '#',
-		price: '$32.00',
-		color: 'Sienna',
-		inStock: true,
-		size: 'Large',
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
-		imageAlt: "Front of men's Basic Tee in sienna.",
-	},
-	{
-		id: 2,
-		name: 'Basic Tee',
-		href: '#',
-		price: '$32.00',
-		color: 'Black',
-		inStock: false,
-		leadTime: '3–4 weeks',
-		size: 'Large',
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
-		imageAlt: "Front of men's Basic Tee in black.",
-	},
-	{
-		id: 3,
-		name: 'Nomad Tumbler',
-		href: '#',
-		price: '$35.00',
-		color: 'White',
-		inStock: true,
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-		imageAlt: 'Insulated bottle with white base and black snap lid.',
-	},
-	{
-		id: 4,
-		name: 'Nomad Tumbler',
-		href: '#',
-		price: '$35.00',
-		color: 'White',
-		inStock: true,
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-		imageAlt: 'Insulated bottle with white base and black snap lid.',
-	},
-	{
-		id: 5,
-		name: 'Nomad Tumbler',
-		href: '#',
-		price: '$35.00',
-		color: 'White',
-		inStock: true,
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-		imageAlt: 'Insulated bottle with white base and black snap lid.',
-	},
-	{
-		id: 6,
-		name: 'Nomad Tumbler',
-		href: '#',
-		price: '$35.00',
-		color: 'White',
-		inStock: true,
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-		imageAlt: 'Insulated bottle with white base and black snap lid.',
-	},
-	{
-		id: 7,
-		name: 'Nomad Tumbler',
-		href: '#',
-		price: '$35.00',
-		color: 'White',
-		inStock: true,
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-		imageAlt: 'Insulated bottle with white base and black snap lid.',
-	},
-]
 
 export function Cart({ cartItems }: { cartItems: CartItems }) {
 	const [quantity, setQuantity] = useState(1)
@@ -120,10 +38,6 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 					quantity
 			)
 		}, 0)
-	}
-
-	function getOrderTotal(cartItems: CartItems) {
-		return (getSubtotal(cartItems) + 5 + 8.32).toFixed(2)
 	}
 
 	return (
@@ -166,27 +80,27 @@ export function Cart({ cartItems }: { cartItems: CartItems }) {
 							<div className="flex items-center justify-between">
 								<dt className="text-sm text-gray-600">Subtotal</dt>
 								<dd className="text-sm font-medium text-gray-900">
-									${getSubtotal(cartItemsData)}
+									${getSubtotal(cartItemsData).toFixed(2)}
 								</dd>
 							</div>
 							<div className="border-t border-gray-200 pt-4 flex items-center justify-between">
 								<dt className="flex items-center text-sm text-gray-600">
 									<span>Shipping estimate</span>
 								</dt>
-								<dd className="text-sm font-medium text-gray-900">$5.00</dd>
+								<dd className="text-sm font-medium text-gray-900">FREE</dd>
 							</div>
 							<div className="border-t border-gray-200 pt-4 flex items-center justify-between">
 								<dt className="flex text-sm text-gray-600">
 									<span>Tax estimate</span>
 								</dt>
-								<dd className="text-sm font-medium text-gray-900">$8.32</dd>
+								<dd className="text-sm font-medium text-gray-900">$0.00</dd>
 							</div>
 							<div className="border-t border-gray-200 pt-4 flex items-center justify-between">
 								<dt className="text-base font-medium text-gray-900">
 									Order total
 								</dt>
 								<dd className="text-base font-medium text-gray-900">
-									${getOrderTotal(cartItems)}
+									${getSubtotal(cartItemsData).toFixed(2)}
 								</dd>
 							</div>
 						</dl>

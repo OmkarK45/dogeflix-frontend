@@ -13,6 +13,7 @@ import useUser from '~/lib/useUser'
 import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
 import { Logo } from '../ui/Logo'
+import { MegaMenuMobile } from './MegaMenuMobile'
 
 const navItems = [
 	{
@@ -141,6 +142,7 @@ export function MobileMenu({
 									</span>
 								</button>
 							</div>
+							<MegaMenuMobile />
 						</div>
 					</div>
 				</Transition.Child>

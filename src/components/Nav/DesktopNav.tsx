@@ -11,6 +11,7 @@ import { ProfileDropdown } from '../User/ProfileDropdown'
 
 import { GradientBar } from '../ui/GradientBar'
 import { Link } from '../ui/Link'
+import { MegaMenu } from '../Common/MegaMenu'
 
 export function Navbar() {
 	const { user } = useUser({
@@ -66,7 +67,10 @@ export function Navbar() {
 											</h6>
 										</Link>
 									</div>
-
+									<div className="hidden h-full lg:flex bg-white z-20">
+										{/* Flyout menus */}
+										<MegaMenu />
+									</div>
 									{/* Mobile menu and search (lg-) */}
 									<div className="flex-1  flex items-center lg:hidden">
 										<button
