@@ -27,37 +27,14 @@ export function HeroSection() {
 										<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
 											<div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
 												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
+													src="https://images.asos-media.com/products/dr-denim-cadell-cropped-loose-fit-jeans-in-purple/200318832-1-deeppurplecord"
 													alt=""
 													className="w-full h-full object-center object-cover"
 												/>
 											</div>
 											<div className="w-44 h-64 rounded-lg overflow-hidden">
 												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-													alt=""
-													className="w-full h-full object-center object-cover"
-												/>
-											</div>
-										</div>
-										<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-											<div className="w-44 h-64 rounded-lg overflow-hidden">
-												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-													alt=""
-													className="w-full h-full object-center object-cover"
-												/>
-											</div>
-											<div className="w-44 h-64 rounded-lg overflow-hidden">
-												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-													alt=""
-													className="w-full h-full object-center object-cover"
-												/>
-											</div>
-											<div className="w-44 h-64 rounded-lg overflow-hidden">
-												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
+													src="https://images.asos-media.com/products/asos-design-oversized-t-shirt-dress-with-frill-hem-in-rose/22707646-1-rose?$n_750w$&wid=750&fit=constrain"
 													alt=""
 													className="w-full h-full object-center object-cover"
 												/>
@@ -66,14 +43,37 @@ export function HeroSection() {
 										<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
 											<div className="w-44 h-64 rounded-lg overflow-hidden">
 												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
+													src="https://images.asos-media.com/products/asos-design-long-sleeve-wrap-top-in-white/200259444-1-white"
 													alt=""
 													className="w-full h-full object-center object-cover"
 												/>
 											</div>
 											<div className="w-44 h-64 rounded-lg overflow-hidden">
 												<img
-													src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
+													src="https://images.asos-media.com/products/urbancode-faux-leather-racer-jacket-in-black/200870523-1-black"
+													alt=""
+													className="w-full h-full object-center object-cover"
+												/>
+											</div>
+											<div className="w-44 h-64 rounded-lg overflow-hidden">
+												<img
+													src="https://images.asos-media.com/products/french-connection-slim-fit-jeans-in-mid-blue/22234606-1-blue"
+													alt=""
+													className="w-full h-full object-center object-cover"
+												/>
+											</div>
+										</div>
+										<div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
+											<div className="w-44 h-64 rounded-lg overflow-hidden">
+												<img
+													src="https://images.asos-media.com/products/wrangler-bryson-skinny-fit-jeans/23914382-1-blue"
+													alt=""
+													className="w-full h-full object-center object-cover"
+												/>
+											</div>
+											<div className="w-44 h-64 rounded-lg overflow-hidden">
+												<img
+													src="https://images.asos-media.com/products/muubaa-collar-detail-leather-jacket-in-black/201093663-1-black"
 													alt=""
 													className="w-full h-full object-center object-cover"
 												/>
