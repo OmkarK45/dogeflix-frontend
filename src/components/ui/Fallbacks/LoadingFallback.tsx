@@ -7,10 +7,7 @@ export const LoadingFallback = forwardRef<HTMLDivElement>((_, ref) => {
 	console.log('LOADING CALLED')
 	return (
 		<div ref={ref}>
-			<Card
-				rounded="lg"
-				className="dark:bg-gray-700 bg-white max-w-2xl overflow-hidden"
-			>
+			<Card rounded="lg" className="dark:bg-gray-700 ">
 				<Card.Body noPadding>
 					<GradientBar color="pink" />
 					<div className="px-4 py-3">

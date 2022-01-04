@@ -36,7 +36,7 @@ export function Status({ statusCode, href }: StatusProps) {
 			className="flex flex-col mx-auto w-full min-h-screen bg-gray-100 dark:bg-gray-800"
 		>
 			<main id="page-content" className="flex flex-auto flex-col max-w-full">
-				<div className="bg-white dark:bg-gray-900 min-h-screen flex items-center relative overflow-hidden">
+				<div className=" dark:bg-gray-900 min-h-screen flex items-center relative overflow-hidden">
 					<div className="absolute left-0 top-0 bottom-0 w-48 bg-brand-50 dark:bg-gray-800 transform skew-x-6 -ml-48 md:-ml-28"></div>
 					<div className="absolute right-0 top-0 bottom-0 w-48 bg-brand-50 dark:bg-gray-800 transform skew-x-6 -mr-48 md:-mr-28"></div>
 

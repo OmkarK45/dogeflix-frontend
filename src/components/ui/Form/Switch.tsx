@@ -20,7 +20,7 @@ export default function Toggle() {
 				aria-hidden="true"
 				className={clsx(
 					enabled ? 'translate-x-5' : 'translate-x-0',
-					'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
+					'pointer-events-none inline-block h-5 w-5 rounded-full transform ring-0 transition ease-in-out duration-200'
 				)}
 			/>
 		</Switch>

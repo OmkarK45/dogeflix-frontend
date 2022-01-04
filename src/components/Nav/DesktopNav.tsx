@@ -20,16 +20,14 @@ export function Navbar() {
 	const [searchOpen, setSearchOpen] = useState(false)
 
 	return (
-		<div className="bg-white">
+		<div>
 			{/* Mobile menu */}
 			<MobileMenu open={open} setOpen={setOpen} />
 
 			<header className="relative">
 				<nav aria-label="Top">
-					{user?.isLoggedIn ? (
-						<GradientBar color="pink" />
-					) : (
-						<div className=" bg-gradient-to-r from-pink-600 to-yellow-500 bg-blend-darken bg-opacity-30">
+					{!user?.isLoggedIn && (
+						<div className=" bg-gradient-to-r from-purple-900 to-pink-500 bg-blend-darken bg-opacity-30">
 							<div className="mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
 								<div className="flex items-center space-x-6">
 									<Link
@@ -49,9 +47,9 @@ export function Navbar() {
 						</div>
 					)}
 					{/* Secondary navigation */}
-					<div className="bg-white">
+					<div>
 						<div className=" mx-auto px-4 sm:px-6 lg:px-8">
-							<div className="border-b border-gray-200">
+							<div>
 								<div className="h-16 flex items-center justify-between">
 									{/* Logo (lg+) */}
 									<div className="hidden lg:flex-1 lg:flex lg:items-center">
@@ -59,20 +57,18 @@ export function Navbar() {
 											href="/products"
 											className="flex items-center space-x-2 no-underline"
 										>
-											<ShoppingBagIcon className="h-8 w-auto  text-yellow-600" />
+											<ShoppingBagIcon className="h-8 w-auto " />
 											<h6 className="mt-1 text-2xl font-bold tracking-tight">
 												DogeFlix
 											</h6>
 										</Link>
 									</div>
-									<div className="hidden h-full lg:flex bg-white z-20">
-										{/* Flyout menus */}
-									</div>
+
 									{/* Mobile menu and search (lg-) */}
 									<div className="flex-1  flex items-center lg:hidden">
 										<button
 											type="button"
-											className="-ml-2 bg-white p-2 rounded-md text-gray-400"
+											className="-ml-2  p-2 rounded-md text-gray-400"
 											onClick={() => setOpen(true)}
 										>
 											<MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -109,29 +105,6 @@ export function Navbar() {
 													<ProfileDropdown />
 												</div>
 											) : null}
-											{/* Cart */}
-											<div className="ml-4 flow-root lg:ml-8">
-												<Link
-													href="/cart"
-													className="group -m-2 p-2 flex items-center no-underline"
-												>
-													<ShoppingBagIcon
-														className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-														aria-hidden="true"
-													/>
-												</Link>
-											</div>
-											<div className="ml-4 flow-root lg:ml-8">
-												<Link
-													href="/wishlist"
-													className="group -m-2 p-2 flex items-center no-underline"
-												>
-													<HeartIcon
-														className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-														aria-hidden="true"
-													/>
-												</Link>
-											</div>
 										</div>
 									</div>
 								</div>

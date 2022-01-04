@@ -24,8 +24,8 @@ const ButtonVariants = {
 	secondary:
 		'border-brand-200 bg-brand-50 text-brand-700 hover:text-brand-700 hover:bg-brand-200 hover:border-brand-300 focus:ring focus:ring-brand-500 focus:ring-opacity-50 active:bg-brand-200 active:border-brand-200',
 	white:
-		'border border-gray-300 text-gray-700 bg-white hover:bg-gray-300 focus:outline-none focus:ring-offset-2 focus:ring-brand-500',
-	dark: 'border border-gray-300 dark:border-gray-800 dark:text-gray-100 bg-white shadow-sm dark:bg-gray-700 hover:bg-gray-50 hover:dark:bg-gray-800 focus:outline-none focus:ring focus:ring-gray-500 active:bg-gray-200 active:dark:bg-gray-800',
+		'border border-gray-300 text-gray-700 g-gray-300 focus:outline-none focus:ring-offset-2 focus:ring-brand-500',
+	dark: 'border border-gray-300 dark:border-gray-800 dark:text-gray-100 sm dark:bg-gray-700 hover:bg-gray-50 hover:dark:bg-gray-800 focus:outline-none focus:ring focus:ring-gray-500 active:bg-gray-200 active:dark:bg-gray-800',
 	danger:
 		'text-white bg-red-700 hover:bg-red-800 border border-red-800 focus:outline-none',
 	orange: '',
@@ -51,7 +51,7 @@ export function Button({
 				'inline-flex justify-center items-center font-medium shadow-sm focus:outline-none',
 				rounded !== 'full' ? sizeStyles : '',
 				variantStyles,
-				rounded === 'full' ? 'rounded-full p-2' : `rounded-${rounded}`,
+				rounded === 'full' ? 'rounded-full px-4 py-3' : `rounded-${rounded}`,
 				!rounded && 'rounded-md',
 				fullWidth && 'w-full',
 				disabled && 'cursor-not-allowed',

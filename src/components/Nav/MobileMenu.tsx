@@ -71,7 +71,7 @@ export function MobileMenu({
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<div className="relative max-w-xs w-full bg-white shadow-xl pb-12 flex flex-col overflow-y-auto">
+					<div className="relative max-w-xs w-full  shadow-xl pb-12 flex flex-col overflow-y-auto">
 						<div className="px-4 pt-5 pb-2 flex">
 							<button
 								type="button"

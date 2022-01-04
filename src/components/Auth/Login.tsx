@@ -19,7 +19,7 @@ const LoginSchema = object({
 
 export function LoginForm() {
 	const { mutateUser } = useUser({
-		redirectTo: '/products',
+		redirectTo: '/',
 		redirectIfFound: true,
 	})
 

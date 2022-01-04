@@ -58,7 +58,7 @@ const Modal = ({ isOpen, onClose, children, className }: Props) => {
 						>
 							<div
 								className={clsx(
-									'inline-block w-full bg-white sm:my-8 dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all  lg:align-top sm:max-w-lg sm:w-full ',
+									'inline-block w-full -gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all  lg:align-top sm:max-w-lg sm:w-full ',
 									className
 								)}
 							>

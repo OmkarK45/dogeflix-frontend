@@ -12,9 +12,12 @@ export default function LandingPage() {
 				cardType="summary_large_image"
 				path="/"
 			/>
-			<Navbar />
-			{/* probably add carousel here as well for now, create the MVP */}
-			<HeroSection />
+			<div className="hero-bg bg-[#0F003A]">
+				<Navbar />
+				{/* probably add carousel here as well for now, create the MVP */}
+				<HeroSection />
+			</div>
+			<div>ok</div>
 		</>
 	)
 }

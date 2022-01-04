@@ -14,7 +14,7 @@ export const SelectOption = ({ value, label, selectedIcon }: SelectOption) => {
 			className={({ active }) =>
 				clsx(
 					'cursor-pointer select-none relative py-2 pl-10 pr-4 font-semibold',
-					active ? 'bg-gray-100' : 'bg-white'
+					active ? 'bg-gray-100' : ''
 				)
 			}
 			value={value}
