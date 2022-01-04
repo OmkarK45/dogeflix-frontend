@@ -6,12 +6,10 @@ import clsx from 'clsx'
 import useUser from '~/lib/useUser'
 
 import { MobileMenu } from './MobileMenu'
-import { SearchBar } from '../Search/SearchBar'
 import { ProfileDropdown } from '../User/ProfileDropdown'
 
 import { GradientBar } from '../ui/GradientBar'
 import { Link } from '../ui/Link'
-import { MegaMenu } from '../Common/MegaMenu'
 
 export function Navbar() {
 	const { user } = useUser({
@@ -63,13 +61,12 @@ export function Navbar() {
 										>
 											<ShoppingBagIcon className="h-8 w-auto  text-yellow-600" />
 											<h6 className="mt-1 text-2xl font-bold tracking-tight">
-												DogeMart
+												DogeFlix
 											</h6>
 										</Link>
 									</div>
 									<div className="hidden h-full lg:flex bg-white z-20">
 										{/* Flyout menus */}
-										<MegaMenu />
 									</div>
 									{/* Mobile menu and search (lg-) */}
 									<div className="flex-1  flex items-center lg:hidden">
@@ -98,15 +95,13 @@ export function Navbar() {
 										<span className="flex items-center space-x-2">
 											<ShoppingBagIcon className="h-8 w-auto hidden lg:block text-yellow-600" />
 											<h5 className="mt-1 text-xl font-bold tracking-tighter">
-												DogeMart
+												DogeFlix
 											</h5>
 										</span>
 									</Link>
 
 									<div className="flex-1 flex items-center justify-end">
-										<div className="hidden lg:block">
-											<SearchBar />
-										</div>
+										<div className="hidden lg:block">search here</div>
 
 										<div className="flex items-center lg:ml-8">
 											{user?.isLoggedIn ? (
@@ -149,7 +144,7 @@ export function Navbar() {
 								'block md:hidden w-full py-2 px-3 transition-all duration-500 '
 							)}
 						>
-							<SearchBar />
+							search here{' '}
 						</div>
 					) : null}
 				</nav>

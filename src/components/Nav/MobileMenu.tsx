@@ -13,7 +13,6 @@ import useUser from '~/lib/useUser'
 import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
 import { Logo } from '../ui/Logo'
-import { MegaMenuMobile } from './MegaMenuMobile'
 
 const navItems = [
 	{
@@ -88,7 +87,7 @@ export function MobileMenu({
 						<div className="flex items-center space-x-2 pb-4 px-2">
 							<Logo className="h-10 w-10 text-brand-600" />
 							<Heading className="not-italic" size="h4">
-								DogeMart
+								DogeFlix
 							</Heading>
 						</div>
 						<div className="border-t border-gray-200 py-6 px-4 space-y-6">
@@ -142,7 +141,6 @@ export function MobileMenu({
 									</span>
 								</button>
 							</div>
-							<MegaMenuMobile />
 						</div>
 					</div>
 				</Transition.Child>
