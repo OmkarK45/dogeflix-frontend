@@ -5,6 +5,7 @@ type Props = {
 	size?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 	children: React.ReactNode
 	className?: string
+	noItalics?: boolean
 }
 
 const variants = {
@@ -15,13 +16,19 @@ const variants = {
 	h5: 'text-2xl',
 }
 
-export function Heading({ size: Size = 'h1', children, className }: Props) {
+export function Heading({
+	size: Size = 'h1',
+	children,
+	className,
+	noItalics,
+}: Props) {
 	return (
 		<Size
 			className={clsx(
 				'font-bold italic dark:text-white',
 				variants[Size],
-				className
+				className,
+				{ 'not-italic': noItalics }
 			)}
 		>
 			{children}

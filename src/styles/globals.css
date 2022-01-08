@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://rsms.me/inter/inter.css');
+
 @tailwind base;
 @tailwind components;
 
@@ -16,7 +17,7 @@ html {
 }
 body {
 	@apply text-gray-100 bg-gray-900 antialiased font-sans;
-	font-feature-settings: 'cv11', 'cv04', 'cv02', 'cv03', 'cv09';
+	/* font-feature-settings: 'cv11', 'cv04', 'cv02', 'cv03', 'cv09'; */
 }
 
 form {
@@ -56,42 +57,31 @@ input:-webkit-autofill:active {
 	@apply bg-brand-600 fixed z-50 top-0 left-0 w-full h-1;
 }
 
-.shine:after {
-	content: '';
-	position: absolute;
-	top: -110%;
-	left: -100%;
-	width: 50px;
-	height: 100%;
-	opacity: 0;
-	transform: rotate(45deg);
-
-	background: rgba(255, 255, 255, 0.13);
-	/* background: red; */
-	background: linear-gradient(
-		to right,
-		rgba(255, 255, 255, 0.13) 0%,
-		rgba(255, 255, 255, 0.13) 77%,
-		rgba(255, 255, 255, 0.5) 92%,
-		rgba(255, 255, 255, 0) 100%
-	);
+.row .swiper-container {
+	padding: 30px 0;
+}
+.row .swiper-wrapper {
+	@apply py-16;
 }
 
-/* Hover state - trigger effect */
-
-.shine:hover:after {
-	opacity: 1;
-	top: -30%;
-	left: 50%;
-	transition-property: left, top, opacity;
-	transition-duration: 0.7s, 0.7s, 0.15s;
-	transition-timing-function: ease;
+.row .swiper-slide {
+	min-height: 150px;
+	max-height: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.3s ease 0s;
 }
 
-/* Active state */
+.row .swiper-slide:hover {
+	z-index: 10;
+	margin-left: 40px !important;
+	margin-right: 49px !important;
+}
 
-.icon:active:after {
-	opacity: 0;
+.row .swiper-pagination {
+	position: relative;
+	bottom: 0 !important;
 }
 
 @tailwind utilities;

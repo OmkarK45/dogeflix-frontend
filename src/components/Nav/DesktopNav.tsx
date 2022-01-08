@@ -27,7 +27,7 @@ export function Navbar() {
 			<header className="relative">
 				<nav aria-label="Top">
 					{!user?.isLoggedIn && (
-						<div className=" bg-gradient-to-r from-purple-900 to-pink-500 bg-blend-darken bg-opacity-30">
+						<div className=" bg-gray-900	border-b border-gray-700 bg-blend-darken bg-opacity-30">
 							<div className="mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
 								<div className="flex items-center space-x-6">
 									<Link
@@ -54,7 +54,7 @@ export function Navbar() {
 									{/* Logo (lg+) */}
 									<div className="hidden lg:flex-1 lg:flex lg:items-center">
 										<Link
-											href="/products"
+											href="/"
 											className="flex items-center space-x-2 no-underline"
 										>
 											<ShoppingBagIcon className="h-8 w-auto " />
@@ -87,7 +87,7 @@ export function Navbar() {
 									</div>
 
 									{/* Logo (lg-) */}
-									<Link href="/products" className="lg:hidden no-underline">
+									<Link href="/" className="lg:hidden no-underline">
 										<span className="flex items-center space-x-2">
 											<ShoppingBagIcon className="h-8 w-auto hidden lg:block text-yellow-600" />
 											<h5 className="mt-1 text-xl font-bold tracking-tighter">
@@ -96,8 +96,10 @@ export function Navbar() {
 										</span>
 									</Link>
 
-									<div className="flex-1 flex items-center justify-end">
-										<div className="hidden lg:block">search here</div>
+									<div className="flex-1 flex items-center justify-end space-x-3">
+										<div className="hidden lg:block">search </div>
+										<div className="hidden lg:block"> playlists </div>
+										<div className="hidden lg:block"> favorites </div>
 
 										<div className="flex items-center lg:ml-8">
 											{user?.isLoggedIn ? (
