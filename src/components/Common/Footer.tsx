@@ -87,7 +87,7 @@ export function Footer() {
 												</p>
 											</div>
 											<div>
-												<Button href={stack.url} variant="dark" rounded="lg">
+												<Button href={stack.url} variant="ghost" rounded="lg">
 													Visit 🡥
 												</Button>
 											</div>
@@ -108,7 +108,7 @@ export function Footer() {
 					</div>
 				</Modal.Content>
 			</Modal>
-			<p>&copy; DogeMart, 2021</p>
+			<p>&copy; DogeFlix, {new Date().getFullYear()}</p>
 			<div className="flex space-x-2 justify-center mt-2">
 				<div>
 					<a
@@ -145,9 +145,29 @@ export function Footer() {
 						className="no-underline text-muted cursor-newtab"
 						target="_blank"
 						rel="noreferrer"
+						href="https://doge-ui.netlify.app"
+					>
+						DogeUI
+					</a>
+				</div>
+				<div>
+					<a
+						className="no-underline text-muted cursor-newtab"
+						target="_blank"
+						rel="noreferrer"
 						href="https://dogesocial.vercel.app"
 					>
-						DogeSocial - See what your friends are upto.
+						DogeSocial
+					</a>
+				</div>
+				<div>
+					<a
+						className="no-underline text-muted cursor-newtab"
+						target="_blank"
+						rel="noreferrer"
+						href="https://dogemart.up.railway.app"
+					>
+						DogeMart
 					</a>
 				</div>
 				<div>

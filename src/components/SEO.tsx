@@ -9,7 +9,7 @@ interface Props {
 	cardType?: 'summary_large_image' | 'summary'
 }
 
-export const BASE_URL = 'https://dogemart.up.railway.app'
+export const BASE_URL = 'https://dogeflix.up.railway.app'
 
 export const SEO: React.FC<Props> = ({
 	title,

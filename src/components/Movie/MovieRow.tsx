@@ -26,7 +26,7 @@ export function MovieRow({
 	movies: Movie[]
 }) {
 	return (
-		<div className="px-4 md:px-10 ">
+		<div className="px-4 md:px-10 container max-w-7xl mx-auto">
 			<div className="pb-5 border-b border-gray-700 flex items-center space-x-2">
 				<h3 className="text-2xl leading-6 font-bold ">{title}</h3>
 				<Button variant="ghost">

@@ -1,6 +1,10 @@
+import { Footer } from '~/components/Common/Footer'
 import { HeroSection } from '~/components/Hero'
+import { CTA } from '~/components/Hero/CTA'
+import { Logos } from '~/components/Hero/Logos'
 import { Navbar } from '~/components/Nav/DesktopNav'
 import { SEO } from '~/components/SEO'
+import { GradientBar } from '~/components/ui/GradientBar'
 
 export default function LandingPage() {
 	return (
@@ -14,10 +18,12 @@ export default function LandingPage() {
 			/>
 			<div className="hero-bg bg-[#0F003A]">
 				<Navbar />
-				{/* probably add carousel here as well for now, create the MVP */}
 				<HeroSection />
 			</div>
-			<div>ok</div>
+			<Logos />
+			<div className="my-12">
+				<CTA />
+			</div>
 		</>
 	)
 }
