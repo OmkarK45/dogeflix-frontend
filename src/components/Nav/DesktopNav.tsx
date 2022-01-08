@@ -28,7 +28,7 @@ export function Navbar() {
 				<nav aria-label="Top">
 					{!user?.isLoggedIn && (
 						<div className=" bg-gray-900	border-b border-gray-700 bg-blend-darken bg-opacity-30">
-							<div className="mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+							<div className="mx-auto max-w-7xl  h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
 								<div className="flex items-center space-x-6">
 									<Link
 										href="/auth/login"
@@ -48,7 +48,7 @@ export function Navbar() {
 					)}
 					{/* Secondary navigation */}
 					<div>
-						<div className=" mx-auto px-4 sm:px-6 lg:px-8">
+						<div className="md:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 							<div>
 								<div className="h-16 flex items-center justify-between">
 									{/* Logo (lg+) */}

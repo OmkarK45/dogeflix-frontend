@@ -13,6 +13,7 @@ import SwiperCore, { FreeMode, Navigation, Pagination } from 'swiper'
 import { Movie } from '~/lib/types'
 import { Heading } from '../ui/Heading'
 import { Button } from '../ui/Button'
+import { HiArrowRight } from 'react-icons/hi'
 
 // install Swiper modules
 SwiperCore.use([FreeMode, Pagination, Navigation])
@@ -26,8 +27,14 @@ export function MovieRow({
 }) {
 	return (
 		<div className="px-4 md:px-10 ">
-			<div className="pb-5 border-b border-gray-700">
+			<div className="pb-5 border-b border-gray-700 flex items-center space-x-2">
 				<h3 className="text-2xl leading-6 font-bold ">{title}</h3>
+				<Button variant="ghost">
+					<span className="flex items-center space-x-2">
+						<p>View more</p>
+						<HiArrowRight />
+					</span>
+				</Button>
 			</div>
 			<div className="mb-10">
 				<Swiper
