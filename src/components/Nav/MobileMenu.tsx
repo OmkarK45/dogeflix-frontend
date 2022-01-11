@@ -71,7 +71,7 @@ export function MobileMenu({
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<div className="relative max-w-xs w-full  shadow-xl pb-12 flex flex-col overflow-y-auto">
+					<div className="relative max-w-xs w-full bg-white dark:bg-gray-900 shadow-xl pb-12 flex flex-col overflow-y-auto">
 						<div className="px-4 pt-5 pb-2 flex">
 							<button
 								type="button"
@@ -90,10 +90,10 @@ export function MobileMenu({
 								DogeFlix
 							</Heading>
 						</div>
-						<div className="border-t border-gray-200 py-6 px-4 space-y-6">
+						<div className="border-t dark:border-gray-700 border-gray-200 py-6 px-4 space-y-6">
 							{user?.isLoggedIn ? (
 								<div>
-									<p className="font-medium capitalize text-base border-b border-gray-200 pb-2">
+									<p className="font-medium capitalize text-base  pb-2">
 										Hi, {user.data.user?.name}!
 									</p>
 								</div>
@@ -133,7 +133,7 @@ export function MobileMenu({
 							<div className="flow-root">
 								<button
 									onClick={() => console.log('logout')}
-									className="-m-2 p-2 w-full block font-medium text-gray-900 no-underline"
+									className="-m-2 p-2 w-full block font-medium no-underline"
 								>
 									<span className="flex items-center space-x-3">
 										<HiOutlineLogout className="w-5 h-5" />

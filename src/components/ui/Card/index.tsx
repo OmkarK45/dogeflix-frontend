@@ -22,7 +22,7 @@ export function Card({
 	return (
 		<div
 			className={clsx(
-				'0 border border-gray-700 dark:border-gray-700 ',
+				'0 border border-gray-300 dark:border-gray-700 ',
 				container ? 'mx-auto' : '',
 				rounded && `rounded-${rounded}`,
 				shadow !== 'none' && `shadow-${shadow}`,

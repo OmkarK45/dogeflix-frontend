@@ -43,8 +43,11 @@ export function LoginForm() {
 				})
 			)
 		} catch (error) {
+			console.log({ error })
 			if (error instanceof FetchError) {
-				toast.error(error.data.message)
+				toast.error(
+					'Incorrect username or password. Please sign up or check creds.'
+				)
 			} else {
 				toast.error("We are sorry but something isn't right. Please try again.")
 			}

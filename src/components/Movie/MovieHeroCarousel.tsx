@@ -26,7 +26,7 @@ interface MovieHeroCarouselProps {
 
 export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 	return (
-		<div className=" overflow-hidden">
+		<div className=" overflow-hidden  ">
 			<Swiper
 				autoplay={{
 					delay: 2500,
@@ -35,14 +35,14 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 				spaceBetween={30}
 				navigation={true}
 				pagination={{ clickable: true }}
-				className="mx-auto"
+				className="mx-auto h-full "
 			>
 				{movies.map((movie, idx) => {
 					return (
 						<SwiperSlide key={movie.id}>
-							<div className="relative h-auto">
+							<div className="relative h-full">
 								<div className="absolute inset-x-0 bottom-0 h-1/2 " />
-								<div className="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
+								<div className="max-w-7xl mx-auto sm:px-6 lg:px-0 h-full flex-grow  w-full ">
 									<div className="relative shadow-xl sm:rounded-2xl sm:overflow-hidden ">
 										<div className="absolute inset-0">
 											<img
@@ -52,16 +52,14 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 											/>
 											<div className="absolute inset-0 bg-gray-600 opacity-70 mix-blend-multiply" />
 										</div>
-										<div className="relative lg:w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8 bg-gradient-to-r from-pink-900 to-transparent">
+										<div className="relative lg:w-3/4 px-4 py-14 sm:px-6 sm:py-24 lg:py-28 lg:px-8 bg-gradient-to-r from-pink-900 to-transparent">
 											<Badge variant="pink" className="my-6">
 												Marvel
 											</Badge>
 											<h1 className=" text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-												<span className="block text-white">
-													{movie.title} Endgame
-												</span>
+												<span className="block text-white">{movie.title}</span>
 											</h1>
-											<p className="mt-6 max-w-lg mx-auto text-lg sm:max-w-3xl">
+											<p className="mt-6 text-left text-white text-lg sm:max-w-3xl">
 												Thanos has uncovered the secrets of the Infinity Gems
 												and the power of the universe. Now, the Avengers must
 												assemble to stop him.

@@ -12,7 +12,7 @@ export function MovieMetadata() {
 						{({ open }) => (
 							<>
 								<dt className="text-lg">
-									<Disclosure.Button className="text-left w-full flex justify-between items-start text-gray-400">
+									<Disclosure.Button className="text-left w-full flex justify-between items-start ">
 										<span className="font-medium ">More on this film</span>
 										<span className="ml-6 h-7 flex items-center">
 											<ChevronDownIcon

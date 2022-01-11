@@ -37,8 +37,8 @@ export function MovieComments() {
 			<Heading size="h5" className="mb-6">
 				Comments
 			</Heading>
-			<div className="bg-gray-800 shadow sm:rounded-lg sm:overflow-hidden">
-				<div className="bg-gray-900 bg-opacity-20 px-4 py-6 sm:px-6">
+			<div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg sm:overflow-hidden">
+				<div className="bg-white dark:bg-gray-900 bg-opacity-20 px-4 py-6 sm:px-6">
 					<div className="flex space-x-3">
 						<div className="flex-shrink-0">
 							<img
@@ -82,11 +82,11 @@ export function MovieComments() {
 										</div>
 										<div>
 											<div className="text-sm">
-												<a href="#" className="font-medium text-white">
+												<a href="#" className="font-medium">
 													{comment.name}
 												</a>
 											</div>
-											<div className="mt-1 text-sm text-gray-300">
+											<div className="mt-1 text-sm ">
 												<p>{comment.body}</p>
 											</div>
 											<div className="mt-2 text-sm space-x-2">

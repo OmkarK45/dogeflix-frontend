@@ -36,7 +36,7 @@ const ButtonVariants = {
 	danger:
 		'text-white bg-red-700 hover:bg-red-800 border border-red-800 focus:outline-none',
 	ghost:
-		'text-brand-500 shadow-none disabled:bg-brand-100 hover:bg-gray-900 active:bg-gray-800 disabled:bg-gray-800',
+		'text-brand-500 shadow-none disabled:bg-brand-100 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-900 dark:active:bg-gray-800 disabled:bg-gray-800',
 	outline:
 		'text-brand-500 border border-brand-500 hover:bg-gray-900 active:bg-gray-800 disabled:bg-gray-800',
 }

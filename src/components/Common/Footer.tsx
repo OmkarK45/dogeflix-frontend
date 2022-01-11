@@ -56,7 +56,7 @@ export function Footer() {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<div className="mt-2 text-center text-sm text-muted">
+		<div className="mt-2 max-w-7xl  mx-auto px-5 md:px-0 text-sm text-muted">
 			<Modal isOpen={open} onClose={() => setOpen(false)}>
 				<Modal.Header dismiss>
 					<div className="flex space-x-2">
@@ -108,8 +108,10 @@ export function Footer() {
 					</div>
 				</Modal.Content>
 			</Modal>
-			<p>&copy; DogeFlix, {new Date().getFullYear()}</p>
-			<div className="flex space-x-2 justify-center mt-2">
+			<div className="text-left md:text-center">
+				<p>&copy; DogeFlix, {new Date().getFullYear()}</p>
+			</div>
+			<div className="flex flex-col md:justify-center md:flex-row space-y-3 md:space-y-0 md:space-x-2 mt-2">
 				<div>
 					<a
 						className="no-underline text-muted cursor-newtab"

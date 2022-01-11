@@ -10,6 +10,8 @@ import {
 interface AlertProps {
 	message: string | React.ReactNode
 	status: 'error' | 'success' | 'info' | 'warning'
+	fullWidth?: boolean
+	className?: string
 }
 
 const STATUS_ICON = {
@@ -19,19 +21,21 @@ const STATUS_ICON = {
 	warning: { icon: HiExclamation, color: 'yellow' },
 }
 
-export function Alert({ message, status }: AlertProps) {
+export function Alert({ message, status, fullWidth, className }: AlertProps) {
 	const Icon = STATUS_ICON[status].icon
 	const color = STATUS_ICON[status].color
 
 	return (
 		<div
 			className={clsx(
-				'p-4 md:p-5 rounded-md max-w-md border',
+				'p-4 md:p-5 rounded-md border',
 				color === 'red' && `bg-red-100 border-red-300 dark:bg-red-200`,
 				color === 'green' && 'bg-green-100 border-green-300 dark:bg-green-200',
 				color === 'blue' && 'bg-blue-100 border-blue-300 dark:bg-blue-200',
 				color === 'yellow' &&
-					'bg-yellow-100 border-yellow-300 dark:bg-yellow-200'
+					'bg-yellow-100 border-yellow-300 dark:bg-yellow-200',
+				fullWidth ? 'max-w-full' : 'max-w-md',
+				className
 			)}
 		>
 			<div className="flex">

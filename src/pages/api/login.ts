@@ -44,7 +44,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
 		res.json(user)
 	} catch (error) {
-		console.log('[ERROR IN LOGIN ROUTE]:', error)
 		res.status(500).json({ message: (error as Error).message })
 	}
 }

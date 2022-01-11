@@ -10,6 +10,7 @@ import { ProfileDropdown } from '../User/ProfileDropdown'
 
 import { GradientBar } from '../ui/GradientBar'
 import { Link } from '../ui/Link'
+import { ThemeToggle } from '../ui/ThemeSwitcher'
 
 export function Navbar() {
 	const { user } = useUser({
@@ -27,18 +28,18 @@ export function Navbar() {
 			<header className="relative">
 				<nav aria-label="Top">
 					{!user?.isLoggedIn && (
-						<div className=" bg-gray-900	border-b border-gray-700 bg-blend-darken bg-opacity-30">
+						<div>
 							<div className="mx-auto max-w-7xl  h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
 								<div className="flex items-center space-x-6">
 									<Link
 										href="/auth/login"
-										className="-m-2 p-2 block font-medium text-white no-underline"
+										className="-m-2 p-2 block font-medium no-underline"
 									>
 										Sign in
 									</Link>
 									<Link
 										href="/auth/signup"
-										className="-m-2 p-2 block font-medium text-white no-underline"
+										className="-m-2 p-2 block font-medium no-underline"
 									>
 										Create an account
 									</Link>
@@ -48,7 +49,7 @@ export function Navbar() {
 					)}
 					{/* Secondary navigation */}
 					<div>
-						<div className="md:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+						<div className="md:max-w-7xl px-6 lg:px-0 mx-auto ">
 							<div>
 								<div className="h-16 flex items-center justify-between">
 									{/* Logo (lg+) */}
@@ -57,15 +58,15 @@ export function Navbar() {
 											href="/"
 											className="flex items-center space-x-2 no-underline"
 										>
-											<ShoppingBagIcon className="h-8 w-auto " />
-											<h6 className="mt-1 text-2xl font-bold tracking-tight">
+											<ShoppingBagIcon className="h-8  w-auto " />
+											<h6 className="mt-1  text-2xl font-bold tracking-tight">
 												DogeFlix
 											</h6>
 										</Link>
 									</div>
 
 									{/* Mobile menu and search (lg-) */}
-									<div className="flex-1  flex items-center lg:hidden">
+									<div className="flex-1 flex items-center lg:hidden">
 										<button
 											type="button"
 											className="-ml-2  p-2 rounded-md text-gray-400"
@@ -96,10 +97,8 @@ export function Navbar() {
 										</span>
 									</Link>
 
-									<div className="flex-1 flex items-center justify-end space-x-3">
-										<div className="hidden lg:block">search </div>
-										<div className="hidden lg:block"> playlists </div>
-										<div className="hidden lg:block"> favorites </div>
+									<div className="flex-1  flex items-center justify-end space-x-3">
+										<div className="hidden lg:block">searchg</div>
 
 										<div className="flex items-center lg:ml-8">
 											{user?.isLoggedIn ? (
@@ -107,6 +106,9 @@ export function Navbar() {
 													<ProfileDropdown />
 												</div>
 											) : null}
+										</div>
+										<div>
+											<ThemeToggle />
 										</div>
 									</div>
 								</div>

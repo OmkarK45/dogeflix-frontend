@@ -8,6 +8,7 @@ import { NProgress } from '~/components/ui/NProgress'
 import { toastOptions } from '~/lib/toastOptions'
 import { Footer } from '~/components/Common/Footer'
 import { GradientBar } from '~/components/ui/GradientBar'
+import { ThemeProvider } from 'next-themes'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -19,13 +20,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 				},
 			}}
 		>
-			<NProgress />
-			<Toaster position="bottom-right" toastOptions={toastOptions} />
-			<Component {...pageProps} />
-			<div className="my-12">
-				<Footer />
-			</div>
-			<GradientBar color="indigo" size="lg" />
+			<ThemeProvider storageKey="preferred-theme" attribute="class">
+				<NProgress />
+				<Toaster position="bottom-right" toastOptions={toastOptions} />
+				<Component {...pageProps} />
+				<div className="my-12">
+					<Footer />
+				</div>
+				<GradientBar color="indigo" size="lg" />
+			</ThemeProvider>
 		</SWRConfig>
 	)
 }

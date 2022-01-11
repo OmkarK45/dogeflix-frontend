@@ -91,7 +91,7 @@ export function Menu<TTag extends ElementType<any>>({
 							<HeadlessMenu.Items
 								static
 								className={clsx(
-									'z-20 overflow-hidden origin-top-right absolute right-5 w-56 rounded-md shadow-lg 0 ring-1 ring-black ring-opacity-5 focus:outline-none',
+									'z-20 overflow-hidden origin-top-right absolute right-5 w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none',
 									dropdownClassName
 								)}
 							>

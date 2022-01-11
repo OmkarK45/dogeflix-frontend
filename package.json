@@ -24,6 +24,7 @@
 		"cookie": "^0.4.1",
 		"date-fns": "^2.26.0",
 		"iron-session": "^6.0.2",
+		"lodash": "^4.17.21",
 		"next": "12.0.3",
 		"next-auth": "^3.29.0",
 		"next-themes": "^0.0.15",
@@ -41,6 +42,7 @@
 		"zod": "^3.11.6"
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.14.178",
 		"@types/react": "17.0.34",
 		"autoprefixer": "^10.4.0",
 		"clsx": "^1.1.1",

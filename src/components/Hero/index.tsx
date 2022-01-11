@@ -26,7 +26,7 @@ export function HeroSection() {
 							Sit back, relax and enjoy our latest collection of handcurated
 							movie trailers.
 						</h3>
-						<div className="flex flex-col sm:flex-row sm:items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-2 pt-10 pb-16">
+						<div className="flex flex-col sm:flex-row sm:items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-3 pt-10 pb-16">
 							<Button
 								href="/home"
 								size="xl"

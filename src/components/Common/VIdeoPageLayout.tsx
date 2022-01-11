@@ -11,9 +11,9 @@ import { Button } from '../ui/Button'
 export function VideoPageLayout() {
 	return (
 		<div className="container mx-auto">
-			<div className="flex flex-wrap">
-				<div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6">
-					<div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+			<div className="flex flex-wrap ">
+				<div className="md:w-2/3 w-full md:mt-12 pb-6 md:pb-0 md:pr-6">
+					<div className="aspect-w-16 aspect-h-9  md:rounded-lg overflow-hidden">
 						<ReactPlayer
 							url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
 							width="100%"
@@ -23,7 +23,7 @@ export function VideoPageLayout() {
 						/>
 					</div>
 					<div className="mt-4 px-3">
-						<div className="flex flex-col md:flex-row md:items-center md:space-y-0 space-y-3 justify-between pb-5 border-b border-gray-800">
+						<div className="flex flex-col md:flex-row md:items-center md:space-y-0 space-y-3 justify-between pb-5 border-b border-gray-300 dark:border-gray-800">
 							<div>
 								<h3 className="text-2xl leading-6 font-medium ">
 									Avengers Infinity War
@@ -37,7 +37,7 @@ export function VideoPageLayout() {
 									<Badge variant="red">3D</Badge>
 								</div>
 							</div>
-							<div className="flex md:space-x-3">
+							<div className="flex space-x-3">
 								<MovieReactions />
 							</div>
 						</div>

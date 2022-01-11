@@ -1,11 +1,11 @@
 import router from 'next/router'
 import toast from 'react-hot-toast'
 import {
-	HiHeart,
 	HiOutlineChevronDown,
 	HiOutlineHome,
 	HiOutlineLogout,
-	HiOutlineShoppingCart,
+	HiOutlinePlay,
+	HiOutlineVideoCamera,
 } from 'react-icons/hi'
 import fetchJson from '~/lib/fetchJson'
 import useUser from '~/lib/useUser'
@@ -33,14 +33,18 @@ export function ProfileDropdown() {
 						Home
 					</MenuItem>
 					<MenuItem
-						href={`/cart`}
-						icon={<HiOutlineShoppingCart className="w-5 h-5" />}
+						href={`/favorites`}
+						icon={<HiOutlinePlay className="w-5 h-5" />}
 					>
-						My Cart
+						Favorites
 					</MenuItem>
-					<MenuItem href={`/wishlist`} icon={<HiHeart className="w-5 h-5" />}>
-						My wishlist
+					<MenuItem
+						href={`/my-playlists`}
+						icon={<HiOutlineVideoCamera className="w-5 h-5" />}
+					>
+						My Playlists
 					</MenuItem>
+
 					<MenuItem
 						onClick={handleLogout}
 						icon={<HiOutlineLogout className="w-5 h-5" />}
