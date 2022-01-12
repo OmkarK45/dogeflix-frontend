@@ -1,103 +1,87 @@
-import { QuestionMarkCircleIcon } from '@heroicons/react/solid'
-import { object, string } from 'zod'
-import { Button } from '../ui/Button'
-import Form, { useZodForm } from '../ui/Form/Form'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import { fetcher } from '~/lib/fetchJson'
+import { ApiResponse, Comment } from '~/lib/types'
+import useUser from '~/lib/useUser'
+import { Card } from '../ui/Card'
+import { Data } from '../ui/Data'
 import { Heading } from '../ui/Heading'
-import { TextArea } from '../ui/TextArea'
+import { Link } from '../ui/Link'
+import { CommentForm } from './CommentForm'
+import format from 'date-fns/format'
 
-const comments = [
-	{
-		id: 1,
-		name: 'Leslie Alexander',
-		date: '4d ago',
-		imageId: '1494790108377-be9c29b29330',
-		body: 'Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.',
-	},
-	{
-		id: 2,
-		name: 'Michael Foster',
-		date: '4d ago',
-		imageId: '1519244703995-f4e0f30006d5',
-		body: 'Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.',
-	},
-	{
-		id: 3,
-		name: 'Dries Vincent',
-		date: '4d ago',
-		imageId: '1506794778202-cad84cf45f1d',
-		body: 'Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.',
-	},
-]
 export function MovieComments() {
-	const form = useZodForm({
-		schema: object({ body: string() }),
+	const router = useRouter()
+
+	const { user } = useUser({
+		redirectIfFound: false,
 	})
+
+	console.log(user?.isLoggedIn)
+	// TODO : type this
+	const { data: comments, mutate } = useSWR<ApiResponse<Comment[]>>(
+		`/comments/${router.query.video_id}`,
+		fetcher
+	)
+
 	return (
-		<section aria-labelledby="notes-title">
+		<section aria-labelledby="comment-section">
 			<Heading size="h5" className="mb-6">
 				Comments
 			</Heading>
 			<div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg sm:overflow-hidden">
-				<div className="bg-white dark:bg-gray-900 bg-opacity-20 px-4 py-6 sm:px-6">
-					<div className="flex space-x-3">
-						<div className="flex-shrink-0">
-							<img
-								className="h-10 w-10 rounded-full"
-								src={
-									'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80'
-								}
-								alt=""
-							/>
-						</div>
-						<div className="min-w-0 flex-1">
-							<Form action="#" form={form} onSubmit={() => {}}>
-								<div>
-									<TextArea
-										{...form.register('body')}
-										placeholder="Your thoughts"
-										label="Comment"
-									/>
-								</div>
-								<div className="mt-3 flex items-center justify-between">
-									<Form.SubmitButton size="lg" type="submit">
-										Comment
-									</Form.SubmitButton>
-								</div>
-							</Form>
-						</div>
-					</div>
-				</div>
+				{user?.isLoggedIn ? (
+					<CommentForm />
+				) : (
+					<Card className="font-medium py-3 my-3 px-4 border-none" rounded="lg">
+						<Card.Body>
+							<Link
+								target="_blank"
+								rel="noreferrer noopener"
+								href={`/auth/login`}
+							>
+								Sign In
+							</Link>{' '}
+							to post comments
+						</Card.Body>
+					</Card>
+				)}
 				<div className="divide-y divide-gray-200">
 					<div className="px-4 py-6 sm:px-6">
 						<ul role="list" className="space-y-8">
-							{comments.map((comment) => (
-								<li key={comment.id}>
-									<div className="flex space-x-3">
-										<div className="flex-shrink-0">
-											<img
-												className="h-10 w-10 rounded-full"
-												src={`https://images.unsplash.com/photo-${comment.imageId}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80`}
-												alt=""
-											/>
+							<Data data={comments} />
+							{comments &&
+								comments.data.map((comment) => (
+									<li key={comment.id}>
+										<div className="flex space-x-3">
+											<div className="flex-shrink-0">
+												<img
+													className="h-10 w-10 rounded-full"
+													src="https://res.cloudinary.com/dogecorp/image/upload/v1631712846/dogesocial/v1/images/6_g9vgao.svg"
+													alt=""
+												/>
+											</div>
+											<div>
+												<div className="text-sm">
+													<a href="#" className="font-medium">
+														{comment.user.name}
+													</a>
+												</div>
+												<div className="mt-1 text-sm ">
+													<p>{comment.body}</p>
+												</div>
+												<div className="mt-2 text-sm text-gray-500 space-x-2">
+													<time dateTime={comment.createdAt}>
+														{format(
+															new Date(comment.createdAt),
+															'MMMM d, yyyy'
+														)}
+													</time>
+												</div>
+											</div>
 										</div>
-										<div>
-											<div className="text-sm">
-												<a href="#" className="font-medium">
-													{comment.name}
-												</a>
-											</div>
-											<div className="mt-1 text-sm ">
-												<p>{comment.body}</p>
-											</div>
-											<div className="mt-2 text-sm space-x-2">
-												<span className="text-gray-500 font-medium">
-													{comment.date}
-												</span>{' '}
-											</div>
-										</div>
-									</div>
-								</li>
-							))}
+									</li>
+								))}
 						</ul>
 					</div>
 				</div>

@@ -19,6 +19,8 @@ import { Button } from '~/components/ui/Button'
 import { CgDolby } from 'react-icons/cg'
 import { Icon3D } from '../ui/3DIcon'
 import { Badge } from '../ui/Badge'
+import { HiPlay } from 'react-icons/hi'
+import { FaImdb } from 'react-icons/fa'
 
 interface MovieHeroCarouselProps {
 	movies: Movie[]
@@ -35,7 +37,7 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 				spaceBetween={30}
 				navigation={true}
 				pagination={{ clickable: true }}
-				className="mx-auto h-full "
+				className="mx-auto h-full movie-carousel"
 			>
 				{movies.map((movie, idx) => {
 					return (
@@ -47,29 +49,33 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 										<div className="absolute inset-0">
 											<img
 												className="h-full w-full object-cover"
-												src="https://cdn-www.comingsoon.net/assets/uploads/2015/07/narcossocials.jpg"
+												src={movie.poster_url}
 												alt="People working on laptops"
 											/>
 											<div className="absolute inset-0 bg-gray-600 opacity-70 mix-blend-multiply" />
 										</div>
-										<div className="relative lg:w-3/4 px-4 py-14 sm:px-6 sm:py-24 lg:py-28 lg:px-8 bg-gradient-to-r from-pink-900 to-transparent">
-											<Badge variant="pink" className="my-6">
-												Marvel
-											</Badge>
+										<div className="relative lg:w-3/4 px-4 py-14 sm:px-6 sm:py-24 lg:py-28 lg:px-8 bg-gradient-to-r from-gray-800 ">
 											<h1 className=" text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
 												<span className="block text-white">{movie.title}</span>
 											</h1>
-											<p className="mt-6 text-left text-white text-lg sm:max-w-3xl">
-												Thanos has uncovered the secrets of the Infinity Gems
-												and the power of the universe. Now, the Avengers must
-												assemble to stop him.
+											<p className="mt-6 line-clamp-3 text-left text-gray-200 text-lg sm:max-w-3xl">
+												{movie.description}
 											</p>
-											<div className="mt-10  mx-auto  sm:flex ">
+											<div className="mt-10 flex items-center space-x-2 mx-auto  sm:flex ">
 												<div>
 													<Button fullWidth variant="white" href="#" size="xl">
-														Watch Now{' '}
+														<span className="flex items-center">
+															<HiPlay className="w-7 h-7 mr-2" />
+															<p>Watch Now </p>
+														</span>
 													</Button>
 												</div>
+												<span className="flex items-center border border-gray-500 rounded-r-full rounded-l-full px-3 py-2">
+													<FaImdb className="w-7 h-7 mr-1 text-yellow-500" />
+													<p className="text-lg font-semibold leading-4 text-white">
+														{movie.rating}
+													</p>
+												</span>
 											</div>
 										</div>
 									</div>

@@ -28,17 +28,28 @@ interface PageInfo {
 	}
 }
 
+export interface Comment {
+	id: string
+	body: string
+	createdAt: string
+	updatedAt: string
+	user: {
+		id: string
+		name: string
+	}
+}
+
 export interface PaginatedApiResponse<T extends any = any> {
 	data: T[]
 	pageInfo: PageInfo
 	success: boolean
-	code: typeof HttpStatus
+	code: HttpStatus
 }
 
 export interface ApiResponse<T extends any = any> {
 	data: T
 	success: boolean
-	code: typeof HttpStatus
+	code: HttpStatus
 }
 
 export type GenreType =

@@ -7,14 +7,15 @@ import { Navbar } from '~/components/Nav/DesktopNav'
 import { movies } from '~/lib/dummyData'
 import { fetcher } from '~/lib/fetchJson'
 import { PaginatedApiResponse, Movie, GenreType } from '~/lib/types'
-import _, { flatMap, groupBy } from 'lodash'
+import _ from 'lodash'
 import { IndeterminateProgress } from '~/components/ui/Progress'
+import { Data } from '~/components/ui/Data'
 
 const HOMEPAGE_CATEGORIES = ['ACTION', 'ANIMATION', 'HORROR', 'COMEDY']
 
 export default function Home() {
 	const { data, error } = useSWR<PaginatedApiResponse<Movie>>(
-		`/videos/?movie_type=${HOMEPAGE_CATEGORIES.join(',')}&page=1&limit=40`,
+		`/videos/?movie_type=${HOMEPAGE_CATEGORIES.join(',')}&page=1&limit=10`,
 		fetcher
 	)
 
@@ -25,6 +26,7 @@ export default function Home() {
 			)
 			.groupBy('genre')
 			.value()
+
 		const movies2 = JSON.parse(JSON.stringify(movies)) as {
 			[key in GenreType]: Movie[]
 		}
@@ -47,18 +49,18 @@ export default function Home() {
 			<div>
 				<Navbar />
 				<div className="mt-0 md:mt-10">
-					<MovieHeroCarousel movies={movies} />
+					<MovieHeroCarousel movies={moviesByGenres['COMEDY']} />
 				</div>
+				<Data data={moviesByGenres} />
 
 				<div className="mt-10">
 					<MovieRow title="Action" movies={moviesByGenres['ACTION']} />
-					{/* @ts-ignore */}
-					<MovieRow title="Animation" movies={moviesByGenres['ANIMATION']} />
-					{/* @ts-ignore */}
-					<MovieRow title="Horror" movies={moviesByGenres['HORROR']} />
-					{/* @ts-ignore */}
 					<MovieRow title="Comedy" movies={moviesByGenres['COMEDY']} />
+					<MovieRow title="Horror" movies={moviesByGenres['HORROR']} />
+					<MovieRow title="Animation" movies={moviesByGenres['ANIMATION']} />
 				</div>
+
+				<div>Browse More Categories</div>
 			</div>
 		)
 }

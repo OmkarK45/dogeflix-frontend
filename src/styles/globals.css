@@ -8,6 +8,10 @@
 	background-size: cover;
 }
 
+.monolisa {
+	font-family: 'Monolisa', sans-serif;
+}
+
 .animate-scale {
 	@apply transform transition duration-300 hover:scale-110 hover:shadow-lg active:scale-95 active:shadow-none;
 }
@@ -61,14 +65,12 @@ input:-webkit-autofill:active {
 	padding: 30px 0;
 }
 .row .swiper-wrapper {
-	@apply py-16;
+	@apply py-12;
 }
 
 .row .swiper-slide {
-	min-height: 150px;
-	max-height: 150px;
+	height: auto;
 	display: flex;
-	align-items: center;
 	justify-content: center;
 	transition: 0.3s ease 0s;
 }
@@ -77,6 +79,15 @@ input:-webkit-autofill:active {
 	z-index: 10;
 	margin-left: 40px !important;
 	margin-right: 49px !important;
+}
+
+.row .swiper-button-next,
+.swiper-button-prev {
+	@apply text-pink-600;
+}
+.movie-carousel .swiper-button-next,
+.swiper-button-prev {
+	@apply text-pink-600;
 }
 
 .row .swiper-pagination {
