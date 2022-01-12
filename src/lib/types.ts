@@ -7,11 +7,10 @@ export interface Movie {
 	description: string
 	rating: number
 	duration: number
-	genre: typeof GenreType[]
+	genre: GenreType[]
 	director: string
 	cast: string[]
 	poster_url: string
-	trailer_url: string
 	writers: string[]
 	imdb_id: string
 	video_id: string
@@ -42,29 +41,27 @@ export interface ApiResponse<T extends any = any> {
 	code: typeof HttpStatus
 }
 
-export const GenreType = [
-	// This is a generic type
-	'MOVIE',
-	'ADVENTURE',
-	'ACTION',
-	'ANIMATION',
-	'BIOGRAPHY',
-	'COMEDY',
-	'CRIME',
-	'DOCUMENTARY',
-	'DRAMA',
-	'FAMILY',
-	'FANTASY',
-	'HISTORY',
-	'HORROR',
-	'MUSIC',
-	'MUSICAL',
-	'MYSTERY',
-	'ROMANCE',
-	'SCI_FI',
-	'TV_MOVIE',
-	'THRILLER',
-	'WAR',
-	'WESTERN',
-	'SPORT',
-] as const
+export type GenreType =
+	| 'MOVIE'
+	| 'ADVENTURE'
+	| 'ACTION'
+	| 'ANIMATION'
+	| 'BIOGRAPHY'
+	| 'COMEDY'
+	| 'CRIME'
+	| 'DOCUMENTARY'
+	| 'DRAMA'
+	| 'FAMILY'
+	| 'FANTASY'
+	| 'HISTORY'
+	| 'HORROR'
+	| 'MUSIC'
+	| 'MUSICAL'
+	| 'MYSTERY'
+	| 'ROMANCE'
+	| 'SCI_FI'
+	| 'TV_MOVIE'
+	| 'THRILLER'
+	| 'WAR'
+	| 'WESTERN'
+	| 'SPORT'

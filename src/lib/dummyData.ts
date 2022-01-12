@@ -1,13 +1,14 @@
-import { Movie } from './types'
+import { GenreType, Movie } from './types'
 
 export const movies: Movie[] = [
 	{
+		video_id: '123123',
 		id: 'asd-2324s-123sdf',
 		title: 'The Shawshank Redemption',
 		poster_url: 'https://wallpaperaccess.com/full/645154.jpg',
-		genres: ['Drama'],
+		genre: ['FAMILY', 'ACTION'],
 		rating: 9.3,
-		runtime: 142,
+		duration: 142,
 		year: 1994,
 		description: 'Two imprisoned',
 		cast: [
@@ -21,13 +22,6 @@ export const movies: Movie[] = [
 		director: 'Frank Darabont',
 		writers: ['Stephen King'],
 		imdb_id: 'tt0111161',
-		imdb_rating: 9.3,
-		imdb_votes: 99898,
-		imdb_url: 'http://www.imdb.com/title/tt0111161',
-		trailer_url: 'https://www.youtube.com/embed/NmzuHjWmXOc',
-		is3D: false,
-		isDolby: true,
-		isIMAX: true,
 	},
 
 	{
@@ -35,9 +29,9 @@ export const movies: Movie[] = [
 		title: 'The Avengers',
 		poster_url:
 			'https://cdn.vox-cdn.com/thumbor/kLhMHqhPRHYV2SPs-qOgIw_uO6I=/0x0:1920x1080/1200x800/filters:focal(807x387:1113x693)/cdn.vox-cdn.com/uploads/chorus_image/image/63304028/surprise_marvel_releases_a_new_full_trailer_and_poster_for_avengers_endgame_social.0.jpg',
-		genres: ['Crime', 'Drama'],
+		genre: ['CRIME', 'DRAMA'],
 		rating: 9.2,
-		runtime: 175,
+		duration: 175,
 		year: 1972,
 		description:
 			'Marvels Avengers assemble as a team to save the world from an intergalactic threat.',
@@ -52,22 +46,16 @@ export const movies: Movie[] = [
 		director: 'Joss Whedon',
 		writers: ['Joss Whedon', 'Joe Russo'],
 		imdb_id: 'tt0068646',
-		imdb_rating: 9.2,
-		imdb_votes: 98898,
-		imdb_url: 'http://www.imdb.com/title/tt0068646',
-		trailer_url: 'https://www.youtube.com/embed/sY1S34973zA',
-		is3D: false,
-		isDolby: true,
-		isIMAX: false,
+		video_id: '213123',
 	},
 	{
 		id: 'asd-2324s-123sdf7',
 		title: 'Ferdinand',
 		poster_url:
 			'https://funtasticlife.com/wp-content/uploads/2017/04/Ferdinand-Movie-Poster-horizontal.jpg',
-		genres: ['Drama'],
+		genre: ['DRAMA'],
 		rating: 9.2,
-		runtime: 175,
+		duration: 175,
 		year: 2017,
 
 		description: 'Ferdinand is a movie about ',
@@ -75,12 +63,6 @@ export const movies: Movie[] = [
 		director: 'Joss Whedon',
 		writers: ['Joss Whedon', 'Joe Russo'],
 		imdb_id: 'tt0068646',
-		imdb_rating: 9.2,
-		imdb_votes: 98898,
-		imdb_url: 'http://www.imdb.com/title/tt0068646',
-		trailer_url: 'https://www.youtube.com/embed/sY1S34973zA',
-		is3D: false,
-		isDolby: true,
-		isIMAX: false,
+		video_id: '23123',
 	},
 ]

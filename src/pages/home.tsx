@@ -19,17 +19,17 @@ export default function Home() {
 	)
 
 	const moviesByGenres = useMemo(() => {
-		if (!data) return []
-
-		const movies = _(data.data)
+		const movies = _(data?.data)
 			.flatMap((movie) =>
 				movie.genre.map((g) => _.assign({}, movie, { genre: g }))
 			)
 			.groupBy('genre')
 			.value()
-		const movies2 = JSON.parse(JSON.stringify(movies))
-		return movies2 as Record<keyof typeof GenreType, Movie[]>
-	}, [data, error])
+		const movies2 = JSON.parse(JSON.stringify(movies)) as {
+			[key in GenreType]: Movie[]
+		}
+		return movies2
+	}, [data])
 
 	if (!data) {
 		return (
@@ -38,27 +38,27 @@ export default function Home() {
 			</div>
 		)
 	}
-
 	if (error) {
 		return <div>Error!</div>
 	}
-	return (
-		<div>
-			<Navbar />
-			<div className="mt-0 md:mt-10">
-				<MovieHeroCarousel movies={movies} />
-			</div>
 
-			<div className="mt-10">
-				{/* @ts-ignore */}
-				<MovieRow title="Action" movies={moviesByGenres['ACTION']} />
-				{/* @ts-ignore */}
-				<MovieRow title="Animation" movies={moviesByGenres['ANIMATION']} />
-				{/* @ts-ignore */}
-				<MovieRow title="Horror" movies={moviesByGenres['HORROR']} />
-				{/* @ts-ignore */}
-				<MovieRow title="Comedy" movies={moviesByGenres['COMEDY']} />
+	if (moviesByGenres)
+		return (
+			<div>
+				<Navbar />
+				<div className="mt-0 md:mt-10">
+					<MovieHeroCarousel movies={movies} />
+				</div>
+
+				<div className="mt-10">
+					<MovieRow title="Action" movies={moviesByGenres['ACTION']} />
+					{/* @ts-ignore */}
+					<MovieRow title="Animation" movies={moviesByGenres['ANIMATION']} />
+					{/* @ts-ignore */}
+					<MovieRow title="Horror" movies={moviesByGenres['HORROR']} />
+					{/* @ts-ignore */}
+					<MovieRow title="Comedy" movies={moviesByGenres['COMEDY']} />
+				</div>
 			</div>
-		</div>
-	)
+		)
 }
