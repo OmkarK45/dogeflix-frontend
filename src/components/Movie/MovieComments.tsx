@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
 import { fetcher } from '~/lib/fetchJson'
-import { ApiResponse, Comment } from '~/lib/types'
+import { ApiResponse, Comment, PaginatedApiResponse } from '~/lib/types'
 import useUser from '~/lib/useUser'
 import { Card } from '../ui/Card'
 import { Data } from '../ui/Data'
@@ -9,20 +8,32 @@ import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
 import { CommentForm } from './CommentForm'
 import format from 'date-fns/format'
+import useSWR from 'swr'
+import { useEffect, useMemo, useState } from 'react'
+import { Button } from '../ui/Button'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 
 export function MovieComments() {
 	const router = useRouter()
+	const [page, setPage] = useState<number>(0)
+	const [comments, setComments] = useState<Comment[]>([])
+	const [reachedEnd, setReachedEnd] = useState<boolean>(false)
 
 	const { user } = useUser({
 		redirectIfFound: false,
 	})
 
-	console.log(user?.isLoggedIn)
-	// TODO : type this
-	const { data: comments, mutate } = useSWR<ApiResponse<Comment[]>>(
-		`/comments/${router.query.video_id}`,
+	const { data } = useSWR<PaginatedApiResponse<Comment>>(
+		`/comments/${router.query.video_id}?page=${page + 1}&limit=6`,
 		fetcher
 	)
+
+	useEffect(() => {
+		if (data?.pageInfo.totalCount === comments.length) {
+			setReachedEnd(true)
+		}
+		setComments((prev) => [...prev, ...(data?.data || [])])
+	}, [data])
 
 	return (
 		<section aria-labelledby="comment-section">
@@ -49,9 +60,13 @@ export function MovieComments() {
 				<div className="divide-y divide-gray-200">
 					<div className="px-4 py-6 sm:px-6">
 						<ul role="list" className="space-y-8">
-							<Data data={comments} />
+							<Data data={data} />
+							{comments.length === 0 && true && (
+								<ErrorFallback noAction message="No comments on this video." />
+							)}
 							{comments &&
-								comments.data.map((comment) => (
+								comments.length > 0 &&
+								comments.map((comment) => (
 									<li key={comment.id}>
 										<div className="flex space-x-3">
 											<div className="flex-shrink-0">
@@ -83,6 +98,14 @@ export function MovieComments() {
 									</li>
 								))}
 						</ul>
+						<Button
+							size="xl"
+							variant="ghost"
+							disabled={reachedEnd}
+							onClick={() => setPage((prev) => prev + 1)}
+						>
+							{reachedEnd ? 'No more comments' : 'Load More'}
+						</Button>
 					</div>
 				</div>
 			</div>

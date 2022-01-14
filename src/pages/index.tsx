@@ -11,7 +11,7 @@ export default function LandingPage() {
 		<>
 			<SEO
 				title="DogeFlix | Home of trailers."
-				description="We got brand new collection of winter clothes that you will love! Shop now and get 20% OFF."
+				description="Handpicked movie trailers. Watch now."
 				image="https://i.imgur.com/nyx2LXF.png"
 				cardType="summary_large_image"
 				path="/"

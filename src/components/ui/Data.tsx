@@ -1,4 +1,7 @@
-// component that shows data using json.stringify(data, null, 2) with syntax highlighting
+/*
+The `Data` component is a simple wrapper around the `JSON.stringify` function. It takes the `data`
+prop and renders it as a JSON string.
+*/
 export function Data({ data }: { data: any }) {
 	return (
 		<div className="dark:bg-gray-900 container max-w-7xl mx-auto max-h-80 overflow-y-scroll">

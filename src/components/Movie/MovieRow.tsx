@@ -18,6 +18,7 @@ import { Button } from '../ui/Button'
 import { HiArrowRight, HiPlay } from 'react-icons/hi'
 import { FaImdb } from 'react-icons/fa'
 import ButtonOrLink from '../ui/ButtonOrLink'
+import { useRouter } from 'next/router'
 // install Swiper modules
 SwiperCore.use([Lazy, FreeMode, Pagination, Navigation])
 
@@ -54,6 +55,8 @@ export function MovieRow({
 	title: string
 	movies: Movie[]
 }) {
+	const router = useRouter()
+
 	return (
 		<div className="px-4 md:px-10 container max-w-7xl mx-auto">
 			<div className="pb-5 border-b border-gray-700 flex items-center justify-between space-x-2">
@@ -69,7 +72,13 @@ export function MovieRow({
 				<Swiper {...SwiperProps}>
 					{movies.map((movie, idx) => {
 						return (
-							<SwiperSlide key={movie.id} className="cursor-pointer">
+							<SwiperSlide
+								onClick={() =>
+									router.push(`/watch/${movie.video_id}/${movie.imdb_id}`)
+								}
+								key={movie.id}
+								className="cursor-pointer"
+							>
 								<div className="group h-full bg-gray-900 overflow-hidden relative rounded-lg object-cover md:hover:scale-125 swiper-slide">
 									<img
 										className="swiper-lazy group-hover:opacity-60 opacity:30"

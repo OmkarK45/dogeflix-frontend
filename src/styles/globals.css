@@ -4,7 +4,7 @@
 @tailwind components;
 
 .hero-bg {
-	background: url('/images/background.png') no-repeat;
+	background: url('/images/background2.png') no-repeat;
 	background-size: cover;
 }
 
@@ -82,7 +82,7 @@ input:-webkit-autofill:active {
 }
 
 .row .swiper-button-next,
-.swiper-button-prev {
+.row .swiper-button-prev {
 	@apply text-pink-600;
 }
 .movie-carousel .swiper-button-next,

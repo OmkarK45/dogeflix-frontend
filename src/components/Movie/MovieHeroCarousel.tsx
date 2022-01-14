@@ -2,25 +2,26 @@
 /* eslint-disable @next/next/no-img-element */
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { HiPlay } from 'react-icons/hi'
+import { FaImdb } from 'react-icons/fa'
+
 // Import Swiper styles
 import 'swiper/css'
+import 'swiper/css/lazy'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import SwiperCore, {
 	Autoplay,
+	Lazy,
 	EffectFade,
 	Navigation,
 	Pagination,
 } from 'swiper'
 import { Movie } from '~/lib/types'
-SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination])
+SwiperCore.use([Lazy, Autoplay, EffectFade, Navigation, Pagination])
+
 import { Button } from '~/components/ui/Button'
-import { CgDolby } from 'react-icons/cg'
-import { Icon3D } from '../ui/3DIcon'
-import { Badge } from '../ui/Badge'
-import { HiPlay } from 'react-icons/hi'
-import { FaImdb } from 'react-icons/fa'
 
 interface MovieHeroCarouselProps {
 	movies: Movie[]
@@ -34,6 +35,7 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 					delay: 2500,
 					disableOnInteraction: false,
 				}}
+				lazy={true}
 				spaceBetween={30}
 				navigation={true}
 				pagination={{ clickable: true }}
@@ -48,9 +50,9 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 									<div className="relative shadow-xl sm:rounded-2xl sm:overflow-hidden ">
 										<div className="absolute inset-0">
 											<img
-												className="h-full w-full object-cover"
-												src={movie.poster_url}
-												alt="People working on laptops"
+												className="swiper-lazy h-full w-full object-cover"
+												data-src={movie.poster_url}
+												alt="Movie Poster"
 											/>
 											<div className="absolute inset-0 bg-gray-600 opacity-70 mix-blend-multiply" />
 										</div>
