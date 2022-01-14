@@ -63,7 +63,7 @@ export function CommentForm() {
 	}
 
 	return (
-		<div className="bg-white dark:bg-gray-900 bg-opacity-20 px-4 py-6 sm:px-6">
+		<div className="bg-white dark:bg-gray-800 bg-opacity-20 px-4 py-6 sm:px-6">
 			<div className="flex space-x-3">
 				<div className="flex-shrink-0">
 					<img

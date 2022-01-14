@@ -16,7 +16,12 @@ export interface Movie {
 	video_id: string
 	plot?: string
 	release?: string
+	reactions: VideoReaction
 }
+
+export type ReactionType = 'NICE' | 'YIKES' | 'KEKW' | 'POGGERS'
+
+export type VideoReaction = Record<ReactionType, number>
 
 interface PageInfo {
 	totalCount: number

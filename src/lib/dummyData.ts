@@ -22,6 +22,12 @@ export const movies: Movie[] = [
 		director: 'Frank Darabont',
 		writers: ['Stephen King'],
 		imdb_id: 'tt0111161',
+		reactions: {
+			NICE: 0,
+			YIKES: 0,
+			KEKW: 0,
+			POGGERS: 0,
+		},
 	},
 
 	{
@@ -47,6 +53,12 @@ export const movies: Movie[] = [
 		writers: ['Joss Whedon', 'Joe Russo'],
 		imdb_id: 'tt0068646',
 		video_id: '213123',
+		reactions: {
+			NICE: 0,
+			YIKES: 0,
+			KEKW: 0,
+			POGGERS: 0,
+		},
 	},
 	{
 		id: 'asd-2324s-123sdf7',
@@ -64,5 +76,11 @@ export const movies: Movie[] = [
 		writers: ['Joss Whedon', 'Joe Russo'],
 		imdb_id: 'tt0068646',
 		video_id: '23123',
+		reactions: {
+			NICE: 0,
+			YIKES: 0,
+			KEKW: 0,
+			POGGERS: 0,
+		},
 	},
 ]

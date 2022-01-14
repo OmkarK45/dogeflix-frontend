@@ -40,7 +40,7 @@ export function MovieComments() {
 			<Heading size="h5" className="mb-6">
 				Comments
 			</Heading>
-			<div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg sm:overflow-hidden">
+			<div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg sm:overflow-hidden">
 				{user?.isLoggedIn ? (
 					<CommentForm />
 				) : (

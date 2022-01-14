@@ -38,7 +38,7 @@ export function VideoPageLayout({ movie }: { movie: ApiResponse<Movie> }) {
 						<div className="flex flex-col md:flex-row md:items-center md:space-y-0 space-y-3 justify-between pb-5 border-b border-gray-300 dark:border-gray-800">
 							<MovieHeader movie={data?.data} />
 							<div className="flex space-x-3">
-								<MovieReactions />
+								<MovieReactions data={data!.data} />
 							</div>
 						</div>
 
