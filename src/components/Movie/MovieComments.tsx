@@ -60,7 +60,6 @@ export function MovieComments() {
 				<div className="divide-y divide-gray-200">
 					<div className="px-4 py-6 sm:px-6">
 						<ul role="list" className="space-y-8">
-							<Data data={data} />
 							{comments.length === 0 && true && (
 								<ErrorFallback noAction message="No comments on this video." />
 							)}

@@ -81,3 +81,13 @@ export type GenreType =
 	| 'WAR'
 	| 'WESTERN'
 	| 'SPORT'
+
+export interface Playlist {
+	id: string
+	name: string
+	user_id: string
+	_count: {
+		video: string
+	}
+	video?: Movie[]
+}

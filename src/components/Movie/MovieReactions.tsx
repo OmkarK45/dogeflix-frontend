@@ -64,7 +64,7 @@ export function MovieReactions({ data }: { data: Movie }) {
 					className={clsx(
 						'border border-gray-300 dark:border-gray-800 !px-3 py-1 !rounded-full',
 						hasReacted?.[reaction.type] &&
-							'border-2 dark:border-pink-400 dark:bg-pink-600/40'
+							'border-2 bg-pink-200/90 dark:border-pink-400 dark:bg-pink-600/40'
 					)}
 				>
 					<span className="flex items-center">
