@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -41,7 +42,10 @@ export function FavoritesLayout({
 		if (data?.data.pageInfo.totalCount === videos.length) {
 			setReachedEnd(true)
 		}
-		setVideos((prev) => [...prev, ...(data?.data.videos || [])])
+		setVideos((previous) => {
+			const prev = _.uniqBy(previous.concat(data?.data.videos), 'id')
+			return [...prev]
+		})
 	}, [data])
 
 	console.log('VIDEOS', videos)

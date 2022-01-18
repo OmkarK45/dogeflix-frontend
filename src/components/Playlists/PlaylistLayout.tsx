@@ -1,4 +1,5 @@
 import { formatDistanceToNow } from 'date-fns'
+import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '~/lib/fetchJson'
@@ -6,12 +7,9 @@ import { ApiResponse, Movie, PaginatedApiResponse, Playlist } from '~/lib/types'
 import useUser from '~/lib/useUser'
 import { UserProfile } from '../Common/UserProfile'
 import { MovieCard } from '../Movie/MovieCard'
-import { WatchMoreCard } from '../Movie/WatchMoreCard'
 import { Button } from '../ui/Button'
-import { Card } from '../ui/Card'
 import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import { Heading } from '../ui/Heading'
-import { Link } from '../ui/Link'
 import { PlaylistActions } from './PlaylistActions'
 import { PlaylistVideos } from './PlaylistVideos'
 
@@ -41,12 +39,14 @@ export function PlaylistLayout({
 		if (data?.data.pageInfo.totalCount === videos.length) {
 			setReachedEnd(true)
 		}
-		setVideos((prev) => {
-			console.log('PREVIOUS STATE', prev)
-			return [...prev, ...(data?.data.video || [])]
+		setVideos((previous) => {
+			// @ts-ignore
+			const prev = _.uniqBy(previous.concat(data?.data.video), 'id')
+			return [...prev]
 		})
 	}, [data])
-	console.log({ data, videos })
+	// @ts-ignore
+	console.log({ API: data?.data.video, videos })
 	return (
 		<div className="mx-auto container md:max-w-7xl md:min-h-[70vh]">
 			<div className="container pt-6 mx-auto">
@@ -79,14 +79,15 @@ export function PlaylistLayout({
 					</div>
 					<div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6">
 						<div>
-							{data?.data.video?.length === 0 && (
-								<div className="max-w-sm mx-auto text-center">
-									<ErrorFallback
-										noAction
-										message="You do not have any videos in your playlist. You can add videos to playlist by clicking on the + button on the trailer page."
-									/>
-								</div>
-							)}
+							{data?.data.video?.length === 0 ||
+								(reachedEnd && (
+									<div className="max-w-sm mx-auto text-center">
+										<ErrorFallback
+											noAction
+											message="You do not have any videos in your playlist. You can add videos to playlist by clicking on the + button on the trailer page."
+										/>
+									</div>
+								))}
 							<PlaylistVideos
 								playlistId={playlistResponse.data.id}
 								isMine={isMine}
