@@ -15,7 +15,7 @@ export function MovieGrid() {
 				<div className="mx-auto container md:max-w-7xl">
 					<div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-6 gap-8">
 						<Link href="/watch/123">
-							<MovieCard movie={movies[0]} />
+							<MovieCard />
 						</Link>
 					</div>
 				</div>

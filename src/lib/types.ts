@@ -1,3 +1,4 @@
+import { User } from '~/pages/api/user'
 import { HttpStatus } from './statusCodes'
 
 export interface Movie {
@@ -89,5 +90,11 @@ export interface Playlist {
 	_count: {
 		video: string
 	}
+
 	video?: Movie[]
+	user?: {
+		name: string
+	}
+	pageInfo?: PageInfo
+	created_at?: string
 }

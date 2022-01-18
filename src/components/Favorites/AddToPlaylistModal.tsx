@@ -15,6 +15,7 @@ import { object, string, z } from 'zod'
 import Form, { useZodForm } from '../ui/Form/Form'
 import { Input } from '../ui/Input'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 interface AddToPlaylistModalProps {
 	movie: Movie
@@ -28,7 +29,7 @@ export function AddToPlaylistModal({ movie }: AddToPlaylistModalProps) {
 	const [showForm, setShowForm] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
 	const [loading, setIsLoading] = useState(false)
-
+	const router = useRouter()
 	const { user } = useUser({
 		redirectIfFound: false,
 	})
@@ -64,7 +65,19 @@ export function AddToPlaylistModal({ movie }: AddToPlaylistModalProps) {
 
 	return (
 		<>
-			<Button onClick={() => setIsOpen(true)} size="xl" variant="ghost">
+			<Button
+				onClick={() => {
+					if (!user?.isLoggedIn) {
+						return router.push(
+							`/auth/login?redirect=/watch/${movie.video_id}/${movie.imdb_id}`
+						)
+					} else {
+						setIsOpen(true)
+					}
+				}}
+				size="xl"
+				variant="ghost"
+			>
 				<span className="flex text-pink-800 dark:text-pink-200 items-center space-x-2">
 					<HiPlus className="w-5 h-5" />
 					<p>Add to playlist</p>
@@ -76,18 +89,14 @@ export function AddToPlaylistModal({ movie }: AddToPlaylistModalProps) {
 					<Heading size="h3">Add to playlist</Heading>
 				</Modal.Header>
 				<Modal.Content>
-					<div className="sm:flex sm:items-start">
-						<div className="mt-3 text-center sm:mt-0 sm:text-left">
-							<div className="mt-2">
-								<p className="text-sm text-gray-500">
-									Please choose a playlist to add video to. You can create a new
-									playlist or select an existing one. You can manage your
-									playlists at any time. Please note that you can only add a
-									video to a playlist once.
-									<Link href="/playlists">Your Playlists</Link>
-								</p>
-							</div>
-						</div>
+					<div className="sm:flex  sm:items-start text-center mt-3  sm:text-left">
+						<p className="text-sm text-gray-500 prose">
+							Please choose a playlist to add video to. You can create a new
+							playlist or select an existing one. You can manage your playlists
+							at any time. Please note that you can only add a video to a
+							playlist once.
+							<Link href="/playlists">Your Playlists</Link>
+						</p>
 					</div>
 				</Modal.Content>
 				{!data ? (
@@ -173,6 +182,7 @@ export function AddToPlaylistModal({ movie }: AddToPlaylistModalProps) {
 								variant="ghost"
 								size="sm"
 								className="w-1/4 mt-7"
+								disabled={!form.formState.isDirty}
 							>
 								Create
 							</Button>

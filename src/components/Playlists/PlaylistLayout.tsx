@@ -1,57 +1,106 @@
-import { HiOutlineX } from 'react-icons/hi'
-import { movies } from '~/lib/dummyData'
-import { PageHeader } from '../Common/PageHeader'
+import { formatDistanceToNow } from 'date-fns'
+import { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { fetcher } from '~/lib/fetchJson'
+import { ApiResponse, Movie, PaginatedApiResponse, Playlist } from '~/lib/types'
+import useUser from '~/lib/useUser'
 import { UserProfile } from '../Common/UserProfile'
 import { MovieCard } from '../Movie/MovieCard'
 import { WatchMoreCard } from '../Movie/WatchMoreCard'
-import { Alert } from '../ui/Alert'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
+import { ErrorFallback } from '../ui/Fallbacks/ErrorFallback'
 import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
+import { PlaylistActions } from './PlaylistActions'
+import { PlaylistVideos } from './PlaylistVideos'
 
-export function PlaylistLayout() {
+export function PlaylistLayout({
+	playlistResponse,
+}: {
+	playlistResponse: ApiResponse<Playlist> & PaginatedApiResponse<Movie>
+}) {
+	const { user } = useUser({
+		redirectIfFound: false,
+	})
+
+	const [page, setPage] = useState<number>(0)
+	const [videos, setVideos] = useState<Movie[]>([])
+	const [reachedEnd, setReachedEnd] = useState<boolean>(false)
+
+	const { data } = useSWR<typeof playlistResponse>(
+		`/playlists/${playlistResponse.data.id}?page=${page + 1}&limit=10`,
+		fetcher,
+		{ fallbackData: playlistResponse }
+	)
+
+	const isMine = user?.data.user?.id === playlistResponse.data.user_id
+
+	useEffect(() => {
+		// @ts-ignore
+		if (data?.data.pageInfo.totalCount === videos.length) {
+			setReachedEnd(true)
+		}
+		setVideos((prev) => {
+			console.log('PREVIOUS STATE', prev)
+			return [...prev, ...(data?.data.video || [])]
+		})
+	}, [data])
+	console.log({ data, videos })
 	return (
-		<div>
-			<div className="mx-auto container md:max-w-7xl">
-				<div className="container pt-6 mx-auto">
-					<div className="flex flex-wrap">
-						<div className="md:w-1/3 w-full ">
-							<MovieCard movie={movies[0]} />
-							<div className="mt-4 px-5 md:px-0">
-								<Heading size="h4"> Playlist Name</Heading>
+		<div className="mx-auto container md:max-w-7xl md:min-h-[70vh]">
+			<div className="container pt-6 mx-auto">
+				<div className="flex flex-wrap">
+					<div className="md:w-1/3 w-full ">
+						<MovieCard />
+						<div className="flex items-center justify-between mt-4 px-5 md:px-0">
+							<div>
+								<Heading size="h4">
+									{data?.data.name === ''
+										? 'Unnamed playlist'
+										: data?.data.name}
+								</Heading>
 								<div className="flex space-x-2 mt-1 text-gray-700 dark:text-gray-400">
-									<p>34 Videos</p>
+									<p>{data?.data?._count?.video ?? '-'} Videos</p>
 									<p>·</p>
-									<p>Last updated yesterday</p>
+									{data?.data.created_at && (
+										<p>
+											Last updated{' '}
+											{formatDistanceToNow(new Date(data!.data.created_at))}
+										</p>
+									)}
 								</div>
-
-								<Button variant="dark" className="mt-3">
-									Share
-								</Button>
 							</div>
-							<div className="px-5 md:px-0">
-								<UserProfile name="ok" avatar="ok" />
-							</div>
+							{isMine && <PlaylistActions playlist={data?.data!} />}
 						</div>
-						<div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6">
-							<div className="space-y-2 mx-4 md:space-y-0">
-								<Card rounded="md" className="relative">
-									<Card.Body noPadding>
-										<Link href="/watch/123" className="no-underline">
-											<WatchMoreCard />
-										</Link>
-                              {/* {isMine && this layout} */}
-										<Card.Body className="flex space-x-2 bg-gray-200 dark:bg-gray-700">
-											<Button variant="dark">
-												<span className="flex items-center space-x-2">
-													<HiOutlineX className="h-5 w-5" />
-													<p>Remove from favorites</p>
-												</span>
-											</Button>
-										</Card.Body>
-									</Card.Body>
-								</Card>
+						<div className="px-5 md:px-0">
+							<UserProfile name={data?.data.user?.name!} avatar="ok" />
+						</div>
+					</div>
+					<div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6">
+						<div>
+							{data?.data.video?.length === 0 && (
+								<div className="max-w-sm mx-auto text-center">
+									<ErrorFallback
+										noAction
+										message="You do not have any videos in your playlist. You can add videos to playlist by clicking on the + button on the trailer page."
+									/>
+								</div>
+							)}
+							<PlaylistVideos
+								playlistId={playlistResponse.data.id}
+								isMine={isMine}
+								videos={videos}
+							/>
+							<div className="text-center mt-4">
+								<Button
+									size="xl"
+									variant="ghost"
+									disabled={reachedEnd}
+									onClick={() => !reachedEnd && setPage((prev) => prev + 1)}
+								>
+									{reachedEnd ? 'No more videos' : 'Load More'}
+								</Button>
 							</div>
 						</div>
 					</div>

@@ -13,7 +13,7 @@
 }
 
 .animate-scale {
-	@apply transform transition duration-300 hover:scale-110 hover:shadow-lg active:scale-95 active:shadow-none;
+	@apply md:transform md:transition md:duration-300 md:hover:scale-110 md:hover:shadow-lg md:active:scale-95 md:active:shadow-none;
 }
 
 html {

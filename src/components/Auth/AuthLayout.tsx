@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card } from '~/components/ui/Card'
 import { Heading } from '~/components/ui/Heading'
-import { Footer } from '../Common/Footer'
 import { GradientBar } from '../ui/GradientBar'
 import { Logo } from '../ui/Logo'
 import { Patterns } from '../ui/Patterns'
@@ -34,7 +33,6 @@ export function AuthLayout({ title, subtitle, children }: Props) {
 					<div>{children}</div>
 				</Card.Body>
 			</Card>
-			<Footer />
 			<div className="hidden md:block absolute bottom-0 left-0 pb-2 ml-4">
 				<Patterns />
 			</div>

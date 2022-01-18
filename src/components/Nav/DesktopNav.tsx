@@ -11,8 +11,10 @@ import { ProfileDropdown } from '../User/ProfileDropdown'
 import { GradientBar } from '../ui/GradientBar'
 import { Link } from '../ui/Link'
 import { ThemeToggle } from '../ui/ThemeSwitcher'
+import { useRouter } from 'next/router'
 
 export function Navbar() {
+	const router = useRouter()
 	const { user } = useUser({
 		redirectIfFound: false,
 	})
@@ -26,10 +28,13 @@ export function Navbar() {
 			<MobileMenu open={open} setOpen={setOpen} />
 
 			<header className="relative">
-				<nav aria-label="Top">
+				<nav
+					aria-label="Top"
+					className={clsx(router.pathname === '/' && 'text-white')}
+				>
 					{!user?.isLoggedIn && (
 						<div>
-							<div className="mx-auto max-w-7xl  h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+							<div className="mx-auto max-w-7xl h-10 px-4 flex items-center justify-between sm:px-6 lg:px-0">
 								<div className="flex items-center space-x-6">
 									<Link
 										href="/auth/login"
@@ -102,7 +107,7 @@ export function Navbar() {
 
 										<div className="flex items-center lg:ml-8">
 											{user?.isLoggedIn ? (
-												<div className="hidden md:block">
+												<div className="hidden md:block ">
 													<ProfileDropdown />
 												</div>
 											) : null}

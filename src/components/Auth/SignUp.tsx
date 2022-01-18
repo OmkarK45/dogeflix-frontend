@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast'
 import { z } from 'zod'
 import fetchJson, { FetchError } from '~/lib/fetchJson'
+import { useAuthRedirect } from '~/lib/useAuthRedirect'
 import useUser from '~/lib/useUser'
 import { Card } from '../ui/Card'
 import Form, { useZodForm } from '../ui/Form/Form'
@@ -16,6 +17,8 @@ const SignUpSchema = z.object({
 })
 
 export function SignUp() {
+	const authRedirect = useAuthRedirect()
+
 	const { mutateUser } = useUser({
 		redirectTo: '/products',
 		redirectIfFound: true,
@@ -41,6 +44,7 @@ export function SignUp() {
 					credentials: 'include',
 				})
 			)
+			authRedirect()
 		} catch (error) {
 			if (error instanceof FetchError) {
 				toast.error(error.data.message)

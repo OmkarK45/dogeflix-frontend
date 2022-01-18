@@ -1,10 +1,12 @@
 import { ExclamationIcon } from '@heroicons/react/solid'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { HiHeart } from 'react-icons/hi'
 import useSWR, { mutate } from 'swr'
 import { fetcher, mutationFn } from '~/lib/fetchJson'
 import { Movie } from '~/lib/types'
+import useUser from '~/lib/useUser'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { Heading } from '../ui/Heading'
@@ -16,6 +18,12 @@ interface AddToFavoriteModalProps {
 
 export function AddToFavoriteModal({ movie }: AddToFavoriteModalProps) {
 	const [isOpen, setIsOpen] = useState(false)
+	const router = useRouter()
+
+	const { user } = useUser({
+		redirectIfFound: false,
+	})
+
 	const { data: hasFavorited } = useSWR(
 		`/favorites/${movie.video_id}/has-favorited`,
 		fetcher
@@ -38,7 +46,19 @@ export function AddToFavoriteModal({ movie }: AddToFavoriteModalProps) {
 
 	return (
 		<>
-			<Button onClick={() => setIsOpen(true)} size="xl" variant="ghost">
+			<Button
+				onClick={() => {
+					if (!user?.isLoggedIn) {
+						return router.push(
+							`/auth/login?redirect=/watch/${movie.video_id}/${movie.imdb_id}`
+						)
+					} else {
+						setIsOpen(true)
+					}
+				}}
+				size="xl"
+				variant="ghost"
+			>
 				<span className="flex text-pink-800 dark:text-pink-200 items-center space-x-2">
 					<HiHeart className="w-5 h-5" />
 					{hasFavorited?.id ? <p>Favorited</p> : <p>Add to favorites</p>}

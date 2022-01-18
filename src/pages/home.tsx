@@ -50,7 +50,6 @@ export default function Home() {
 				<div className="mt-0 md:mt-10">
 					<MovieHeroCarousel movies={moviesByGenres['COMEDY']} />
 				</div>
-				<Data data={moviesByGenres} />
 
 				<div className="mt-10">
 					<MovieRow title="Action" movies={moviesByGenres['ACTION']} />

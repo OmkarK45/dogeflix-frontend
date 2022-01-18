@@ -47,9 +47,9 @@ export function MovieComments() {
 					<Card className="font-medium py-3 my-3 px-4 border-none" rounded="lg">
 						<Card.Body>
 							<Link
-								target="_blank"
 								rel="noreferrer noopener"
-								href={`/auth/login`}
+								target="_blank"
+								href={`/auth/login?redirect=/watch/${router.query.video_id}/${router.query.imdb_id}`}
 							>
 								Sign In
 							</Link>{' '}
@@ -101,7 +101,7 @@ export function MovieComments() {
 							size="xl"
 							variant="ghost"
 							disabled={reachedEnd}
-							onClick={() => setPage((prev) => prev + 1)}
+							onClick={() => !reachedEnd && setPage((prev) => prev + 1)}
 						>
 							{reachedEnd ? 'No more comments' : 'Load More'}
 						</Button>

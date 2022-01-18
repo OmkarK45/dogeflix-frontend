@@ -30,7 +30,7 @@ export function MenuItem({
 						active
 							? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200'
 							: 'dark:text-gray-200',
-						'flex items-center w-full px-4 py-2 text-sm leading-5 text-left '
+						'flex items-center w-full px-4 py-2 text-sm leading-5 text-left text-gray-900'
 					)}
 				>
 					<span className={clsx('flex items-center', className)}>

@@ -9,8 +9,8 @@ import { Card } from '../ui/Card'
 import FormSubmitButton from '../ui/Form/SubmitButton'
 import useUser from '~/lib/useUser'
 import fetchJson, { FetchError } from '~/lib/fetchJson'
-import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useAuthRedirect } from '~/lib/useAuthRedirect'
 
 const LoginSchema = object({
 	email: string().email(),
@@ -18,6 +18,8 @@ const LoginSchema = object({
 })
 
 export function LoginForm() {
+	const authRedirect = useAuthRedirect()
+
 	const { mutateUser } = useUser({
 		redirectTo: '/',
 		redirectIfFound: true,
@@ -42,6 +44,7 @@ export function LoginForm() {
 					credentials: 'include',
 				})
 			)
+			authRedirect()
 		} catch (error) {
 			console.log({ error })
 			if (error instanceof FetchError) {
