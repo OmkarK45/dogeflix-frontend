@@ -12,6 +12,7 @@ import { GradientBar } from '../ui/GradientBar'
 import { Link } from '../ui/Link'
 import { ThemeToggle } from '../ui/ThemeSwitcher'
 import { useRouter } from 'next/router'
+import { SearchBar } from '../Search/SearchBar'
 
 export function Navbar() {
 	const router = useRouter()
@@ -102,8 +103,10 @@ export function Navbar() {
 										</span>
 									</Link>
 
-									<div className="flex-1  flex items-center justify-end space-x-3">
-										<div className="hidden lg:block">searchg</div>
+									<div className="flex-1 flex items-center justify-end space-x-3">
+										<div className="hidden lg:block">
+											{router.pathname !== '/' && <SearchBar />}
+										</div>
 
 										<div className="flex items-center lg:ml-8">
 											{user?.isLoggedIn ? (
@@ -126,7 +129,7 @@ export function Navbar() {
 								'block md:hidden w-full py-2 px-3 transition-all duration-500 '
 							)}
 						>
-							search here{' '}
+							<SearchBar />
 						</div>
 					) : null}
 				</nav>

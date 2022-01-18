@@ -19,6 +19,7 @@ import { HiArrowRight, HiPlay } from 'react-icons/hi'
 import { FaImdb } from 'react-icons/fa'
 import ButtonOrLink from '../ui/ButtonOrLink'
 import { useRouter } from 'next/router'
+import { MovieCardTall } from './MovieCardTall'
 // install Swiper modules
 SwiperCore.use([Lazy, FreeMode, Pagination, Navigation])
 
@@ -61,7 +62,7 @@ export function MovieRow({
 		<div className="px-4 md:px-10 container max-w-7xl mx-auto">
 			<div className="pb-5 border-b border-gray-700 flex items-center justify-between space-x-2">
 				<h3 className="text-2xl leading-6 font-bold ">{title}</h3>
-				<Button href={`/${title}`} variant="ghost">
+				<Button href={`/${title.toUpperCase()}`} variant="ghost">
 					<span className="flex items-center space-x-2">
 						<p>View more</p>
 						<HiArrowRight />
@@ -79,38 +80,7 @@ export function MovieRow({
 								key={movie.id}
 								className="cursor-pointer"
 							>
-								<div className="group h-full bg-gray-900 overflow-hidden relative rounded-lg object-cover md:hover:scale-125 swiper-slide">
-									<img
-										className="swiper-lazy group-hover:opacity-60 opacity:30"
-										data-src={movie.poster_url}
-									/>
-									<div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-
-									<div className="absolute h-full flex flex-col justify-end bg-gradient-to-t from-gray-900  bottom-0 left-0 right-0 pt-4 px-3 pb-4">
-										<div className="h-full w-full items-center justify-center hidden md:group-hover:flex">
-											<ButtonOrLink
-												href={`/watch/${movie.video_id}/${movie.imdb_id}`}
-												type="button"
-												className="text-white bg-brand-700 hover:bg-brand-800 font-medium rounded-full text-sm p-3 text-center inline-flex items-center  "
-											>
-												<HiPlay className="w-12 h-12" />
-											</ButtonOrLink>
-										</div>
-										<p className="text-md font-medium leading-6 text-white sm:w-11/12">
-											{movie.title} ({movie.year})
-										</p>
-										<div className="mt-5 flex items-center">
-											<div className="flex items-center text-white sm:justify-end">
-												<span className="flex items-center">
-													<FaImdb className="w-5 h-5 mr-1 text-yellow-500" />
-													<p className="text-sm font-semibold leading-4 text-white">
-														{movie.rating}
-													</p>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
+								<MovieCardTall isSwiper movie={movie} />
 							</SwiperSlide>
 						)
 					})}

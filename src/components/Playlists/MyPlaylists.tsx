@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { fetcher } from '~/lib/fetchJson'
@@ -26,14 +27,18 @@ export function MyPlaylists({
 		if (data?.pageInfo.totalCount === playtlists.length) {
 			setReachedEnd(true)
 		}
-		setPlaylists((prev) => [...prev, ...(data?.data || [])])
+		setPlaylists((previous) => {
+			console.log('POREVOS', previous)
+			const prev = _.uniqBy(previous.concat(data?.data ?? []), 'id')
+			return [...prev]
+		})
 	}, [data])
 
 	return (
 		<div>
 			<div className="mx-auto container md:max-w-7xl ">
 				<div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  pt-6 gap-8">
-					{data?.data.map((playlist) => (
+					{playtlists.map((playlist) => (
 						<Link
 							className="no-underline animate-scale"
 							key={playlist.id}

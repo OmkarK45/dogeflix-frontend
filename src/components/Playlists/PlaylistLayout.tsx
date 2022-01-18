@@ -79,15 +79,14 @@ export function PlaylistLayout({
 					</div>
 					<div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6">
 						<div>
-							{data?.data.video?.length === 0 ||
-								(reachedEnd && (
-									<div className="max-w-sm mx-auto text-center">
-										<ErrorFallback
-											noAction
-											message="You do not have any videos in your playlist. You can add videos to playlist by clicking on the + button on the trailer page."
-										/>
-									</div>
-								))}
+							{data?.data?.pageInfo?.totalCount === 0 && (
+								<div className="max-w-sm mx-auto text-center">
+									<ErrorFallback
+										noAction
+										message="You do not have any videos in your playlist. You can add videos to playlist by clicking on the + button on the trailer page."
+									/>
+								</div>
+							)}
 							<PlaylistVideos
 								playlistId={playlistResponse.data.id}
 								isMine={isMine}

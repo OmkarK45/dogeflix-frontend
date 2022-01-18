@@ -1,6 +1,8 @@
 import { HiOutlineShare } from 'react-icons/hi'
 import ButtonOrLink from '../ui/ButtonOrLink'
 import { RiMovie2Line } from 'react-icons/ri'
+import Image from 'next/image'
+
 interface MovieCardProps {
 	poster_url?: string
 	title?: string
@@ -17,9 +19,11 @@ export function MovieCard({
 	return (
 		<div className="relative flex items-end justify-center overflow-hidden bg-gray-300 md:rounded-lg group h-56">
 			{poster_url ? (
-				<img
+				<Image
+					alt="Movie Poster"
+					layout="fill"
 					src={poster_url}
-					className="absolute object-cover object-center w-full h-full transition duration-300 ease-out transform scale-100 group-hover:scale-105"
+					className="absolute object-contain object-center w-full h-full transition duration-300 ease-out transform scale-100 group-hover:scale-105"
 				/>
 			) : (
 				<div>
@@ -32,7 +36,7 @@ export function MovieCard({
 			<div className="absolute z-10 w-full h-full bg-gradient-to-b from-transparent to-black opacity-90"></div>
 			<div className="relative flex justify-between items-center w-full px-4 z-20 py-3 text-left">
 				<div>
-					<h2 className=" font-sans text-xl font-semibold text-white">
+					<h2 className="line-clamp-1 font-sans text-xl font-semibold text-white">
 						{title}
 					</h2>
 					<span className="inline-block font-sans text-xs text-white">

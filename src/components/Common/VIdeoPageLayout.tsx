@@ -3,12 +3,30 @@ import useSWR from 'swr'
 import { fetcher } from '~/lib/fetchJson'
 import { ApiResponse, Movie } from '~/lib/types'
 import { MovieActions } from '../Movie/AddToFavorites'
-import { MovieComments } from '../Movie/MovieComments'
 import { MovieHeader } from '../Movie/MovieHeader'
 import { MovieMetadata } from '../Movie/MovieMetadata'
 import { MovieReactions } from '../Movie/MovieReactions'
-import { WatchMore } from '../Movie/WatchMore'
+import dynamic, { DynamicOptions } from 'next/dynamic'
+import { Spinner } from '../ui/Spinner'
+import { useRouter } from 'next/router'
 
+const WatchMore = dynamic<{}>(
+	() => import('../Movie/WatchMore').then((mod) => mod.WatchMore),
+	{ loading: () => <p>Loading...</p>, ssr: false }
+)
+
+const MovieComments = dynamic<{}>(
+	() => import('../Movie/MovieComments').then((mod) => mod.MovieComments),
+	{
+		loading: () => (
+			<div>
+				<Spinner className="w-5 h-5" /> Loading comment section (dynamic
+				import!)
+			</div>
+		),
+		ssr: false,
+	}
+)
 export function VideoPageLayout({ movie }: { movie: ApiResponse<Movie> }) {
 	const { data } = useSWR<ApiResponse<Movie>>(
 		`/videos/${movie.data.video_id}`,
@@ -24,6 +42,7 @@ export function VideoPageLayout({ movie }: { movie: ApiResponse<Movie> }) {
 						<ReactPlayer
 							url={`https://www.youtube-nocookie.com/embed/${data?.data.video_id}`}
 							width="100%"
+							key={`https://www.youtube-nocookie.com/embed/${data?.data.video_id}`}
 							height="100%"
 							playing={false}
 							controls={true}

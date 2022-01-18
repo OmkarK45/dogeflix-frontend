@@ -99,6 +99,8 @@ export function Footer() {
 						<p className="text-sm text-gray-500 mt-4">
 							Honourable mentions:
 							<ul>
+								<li>SWR - Data fetching library </li>
+								<li>RapidAPI- Data Source Scrapper </li>
 								<li>Prisma - Type Safe ORM for TypeScript </li>
 								<li>React Hook Form - Form without tears </li>
 								<li>ZOD - Schema validation for typescript</li>
