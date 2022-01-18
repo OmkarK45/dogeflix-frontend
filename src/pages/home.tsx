@@ -9,6 +9,7 @@ import { PaginatedApiResponse, Movie, GenreType } from '~/lib/types'
 import _ from 'lodash'
 import { IndeterminateProgress } from '~/components/ui/Progress'
 import { Data } from '~/components/ui/Data'
+import { Button } from '~/components/ui/Button'
 
 const HOMEPAGE_CATEGORIES = ['ACTION', 'ANIMATION', 'HORROR', 'COMEDY']
 
@@ -58,7 +59,11 @@ export default function Home() {
 					<MovieRow title="Animation" movies={moviesByGenres['ANIMATION']} />
 				</div>
 
-				<div>Browse More Categories</div>
+				<div className="container max-w-7xl mx-auto text-center">
+					<Button href="/categories" size="xl">
+						Browse All Categories
+					</Button>
+				</div>
 			</div>
 		)
 }

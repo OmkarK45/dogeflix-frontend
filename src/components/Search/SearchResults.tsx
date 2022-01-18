@@ -34,8 +34,8 @@ export function SearchResults({
 	}, [data?.data])
 
 	return (
-		<div className="mx-auto container md:max-w-7xl">
-			<p className="font-medium pt-6">
+		<div className="mx-auto container md:max-w-7xl ">
+			<p className="font-medium pt-6 px-3 md:px-0">
 				Found {movies.length} movies for &#34;{query}&#34;
 			</p>
 			<div className="container px-2 md:px-0 row mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 pt-6 gap-8">
@@ -58,7 +58,7 @@ export function SearchResults({
 									<h3 className="text-sm font-medium ">{movie.title}</h3>
 									<p className="mt-1 text-sm text-gray-500">{movie.year}</p>
 								</div>
-								<div className="absolute top-0 inset-x-0 h-96 rounded-lg p-4 flex items-end justify-end overflow-hidden">
+								<div className="absolute top-0 inset-x-0 h-52 md:h-96 rounded-lg p-4 flex items-end justify-end overflow-hidden">
 									<div
 										aria-hidden="true"
 										className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"

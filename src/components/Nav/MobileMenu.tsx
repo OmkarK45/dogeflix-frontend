@@ -5,7 +5,9 @@ import {
 	HiOutlineHeart,
 	HiOutlineHome,
 	HiOutlineLogout,
+	HiOutlinePlay,
 	HiOutlineShoppingCart,
+	HiOutlineVideoCamera,
 } from 'react-icons/hi'
 
 import useUser from '~/lib/useUser'
@@ -16,19 +18,19 @@ import { Logo } from '../ui/Logo'
 
 const navItems = [
 	{
-		label: 'Explore Products',
-		href: '/products',
+		label: 'Home',
+		href: '/home',
 		icon: <HiOutlineHome className="w-5 h-5" />,
 	},
 	{
-		label: 'My Cart',
-		href: '/cart',
-		icon: <HiOutlineShoppingCart className="w-5 h-5" />,
+		label: 'My Favorites',
+		href: '/favorites',
+		icon: <HiOutlinePlay className="w-5 h-5" />,
 	},
 	{
-		label: 'My Wishlist',
-		href: '/wishlist',
-		icon: <HiOutlineHeart className="w-5 h-5" />,
+		label: 'My Playlists',
+		href: '/my-playlists',
+		icon: <HiOutlineVideoCamera className="w-5 h-5" />,
 	},
 ]
 

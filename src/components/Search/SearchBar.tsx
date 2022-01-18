@@ -24,15 +24,13 @@ export function SearchBar() {
 					router.push(`/search?keyword=${values.query}`)
 				}}
 			>
-				<div className="relative flex items-center space-x-2">
-					<Input
-						label="Search"
-						noLabel
-						placeholder="Search for movies, imdb6...."
-						type="search"
-						{...form.register('query')}
-					/>
-				</div>
+				<Input
+					label="Search"
+					noLabel
+					placeholder="Search for movies, imdb6...."
+					type="search"
+					{...form.register('query')}
+				/>
 			</Form>
 		</div>
 	)
