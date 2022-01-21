@@ -65,7 +65,12 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 											</p>
 											<div className="mt-10 flex items-center space-x-2 mx-auto  sm:flex ">
 												<div>
-													<Button fullWidth variant="white" href="#" size="xl">
+													<Button
+														href={`/watch/${movie.video_id}/${movie.imdb_id}`}
+														fullWidth
+														variant="white"
+														size="xl"
+													>
 														<span className="flex items-center">
 															<HiPlay className="w-7 h-7 mr-2" />
 															<p>Watch Now </p>

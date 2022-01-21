@@ -55,7 +55,7 @@ export function SignUp() {
 	}
 
 	return (
-		<AuthLayout title="Sign Up." subtitle="Sign up and join DogeMart!">
+		<AuthLayout title="Sign Up." subtitle="Sign up and join DogeFlix!">
 			<Form form={form} onSubmit={async (values) => await handleSubmit(values)}>
 				<Input
 					label="Your Name"
@@ -87,7 +87,7 @@ export function SignUp() {
 							className="font-medium text-brand-600 hover:text-brand-400"
 							href="/auth/login"
 						>
-							Log into DogeMart
+							Log into DogeFlix
 						</Link>
 					</Card.Body>
 				</Card>

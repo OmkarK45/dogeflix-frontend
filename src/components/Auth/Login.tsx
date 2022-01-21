@@ -60,7 +60,7 @@ export function LoginForm() {
 	return (
 		<AuthLayout
 			title="Sign In."
-			subtitle="Welcome back! Sign in to your DogeMart account."
+			subtitle="Welcome back! Sign in to your DogeFlix account."
 		>
 			<Form
 				form={form}
