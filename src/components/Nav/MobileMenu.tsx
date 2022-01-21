@@ -1,6 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+import router from 'next/router'
 import { Fragment } from 'react'
+import toast from 'react-hot-toast'
 import {
 	HiOutlineHeart,
 	HiOutlineHome,
@@ -9,6 +11,7 @@ import {
 	HiOutlineShoppingCart,
 	HiOutlineVideoCamera,
 } from 'react-icons/hi'
+import fetchJson from '~/lib/fetchJson'
 
 import useUser from '~/lib/useUser'
 
@@ -41,9 +44,15 @@ export function MobileMenu({
 	open: boolean
 	setOpen: (open: boolean) => void
 }) {
-	const { user } = useUser({
+	const { user, mutateUser } = useUser({
 		redirectIfFound: false,
 	})
+
+	async function handleLogout() {
+		mutateUser(await fetchJson('/api/logout', { method: 'POST' }), false)
+		toast.success('You have been logged out. You will be redirected to home.')
+		router.push('/')
+	}
 
 	return (
 		<Transition.Root show={open} as={Fragment}>
@@ -134,7 +143,7 @@ export function MobileMenu({
 							))}
 							<div className="flow-root">
 								<button
-									onClick={() => console.log('logout')}
+									onClick={handleLogout}
 									className="-m-2 p-2 w-full block font-medium no-underline"
 								>
 									<span className="flex items-center space-x-3">
