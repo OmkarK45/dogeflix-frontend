@@ -13,6 +13,7 @@ import { Link } from '../ui/Link'
 import { ThemeToggle } from '../ui/ThemeSwitcher'
 import { useRouter } from 'next/router'
 import { SearchBar } from '../Search/SearchBar'
+import { Logo } from '../ui/Logo'
 
 export function Navbar() {
 	const router = useRouter()
@@ -64,7 +65,7 @@ export function Navbar() {
 											href="/"
 											className="flex items-center space-x-2 no-underline"
 										>
-											<ShoppingBagIcon className="h-8  w-auto " />
+											<Logo className="h-8  w-auto " />
 											<h6 className="mt-1  text-2xl font-bold tracking-tight">
 												DogeFlix
 											</h6>

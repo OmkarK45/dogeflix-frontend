@@ -1,5 +1,6 @@
 import { SearchIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
+import toast from 'react-hot-toast'
 import { HiOutlineInformationCircle } from 'react-icons/hi'
 import { z } from 'zod'
 import Form, { useZodForm } from '../ui/Form/Form'
@@ -21,6 +22,9 @@ export function SearchBar() {
 			<Form
 				form={form}
 				onSubmit={(values) => {
+					if (values.query === null || values.query.trim().length === 0) {
+						return toast.error('Search query may not be empty')
+					}
 					router.push(`/search?keyword=${values.query}`)
 				}}
 			>

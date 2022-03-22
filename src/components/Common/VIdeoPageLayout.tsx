@@ -7,26 +7,13 @@ import { MovieHeader } from '../Movie/MovieHeader'
 import { MovieMetadata } from '../Movie/MovieMetadata'
 import { MovieReactions } from '../Movie/MovieReactions'
 import dynamic, { DynamicOptions } from 'next/dynamic'
-import { Spinner } from '../ui/Spinner'
-import { useRouter } from 'next/router'
+import { MovieComments } from '../Movie/MovieComments'
 
 const WatchMore = dynamic<{}>(
 	() => import('../Movie/WatchMore').then((mod) => mod.WatchMore),
 	{ loading: () => <p>Loading...</p>, ssr: false }
 )
 
-const MovieComments = dynamic<{}>(
-	() => import('../Movie/MovieComments').then((mod) => mod.MovieComments),
-	{
-		loading: () => (
-			<div>
-				<Spinner className="w-5 h-5" /> Loading comment section (dynamic
-				import!)
-			</div>
-		),
-		ssr: false,
-	}
-)
 export function VideoPageLayout({ movie }: { movie: ApiResponse<Movie> }) {
 	const { data } = useSWR<ApiResponse<Movie>>(
 		`/videos/${movie.data.video_id}`,

@@ -27,7 +27,7 @@ export function WatchMore() {
 			const prev = _.uniqBy(previous.concat(data?.data ?? []), 'id')
 			return [...prev]
 		})
-	}, [data])
+	}, [data, videos.length])
 
 	return (
 		<div>

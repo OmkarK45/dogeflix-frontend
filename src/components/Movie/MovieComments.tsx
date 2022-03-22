@@ -3,7 +3,6 @@ import { fetcher } from '~/lib/fetchJson'
 import { ApiResponse, Comment, PaginatedApiResponse } from '~/lib/types'
 import useUser from '~/lib/useUser'
 import { Card } from '../ui/Card'
-import { Data } from '../ui/Data'
 import { Heading } from '../ui/Heading'
 import { Link } from '../ui/Link'
 import { CommentForm } from './CommentForm'
@@ -32,6 +31,7 @@ export function MovieComments() {
 		if (data?.pageInfo.totalCount === comments.length) {
 			setReachedEnd(true)
 		}
+
 		setComments((prev) => [...prev, ...(data?.data || [])])
 	}, [data])
 

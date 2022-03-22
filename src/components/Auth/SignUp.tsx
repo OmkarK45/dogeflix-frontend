@@ -20,7 +20,7 @@ export function SignUp() {
 	const authRedirect = useAuthRedirect()
 
 	const { mutateUser } = useUser({
-		redirectTo: '/products',
+		redirectTo: '/home',
 		redirectIfFound: true,
 	})
 

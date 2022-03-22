@@ -11,6 +11,7 @@ import useUser from '~/lib/useUser'
 import fetchJson, { FetchError } from '~/lib/fetchJson'
 import toast from 'react-hot-toast'
 import { useAuthRedirect } from '~/lib/useAuthRedirect'
+import { Button } from '../ui/Button'
 
 const LoginSchema = object({
 	email: string().email(),
@@ -28,6 +29,11 @@ export function LoginForm() {
 	const form = useZodForm({
 		schema: LoginSchema,
 	})
+
+	function handleGuestLogin() {
+		form.setValue('email', 'root@dogeflix.com')
+		form.setValue('password', 'root_user')
+	}
 
 	async function handleSubmit(values: z.infer<typeof LoginSchema>) {
 		const body = {
@@ -83,8 +89,10 @@ export function LoginForm() {
 					autoComplete="current-password"
 					{...form.register('password')}
 				/>
-
-				<FormSubmitButton>Login</FormSubmitButton>
+				<Button onClick={() => handleGuestLogin()} size="lg" variant="white">
+					Login as Guest
+				</Button>
+				<FormSubmitButton size="lg">Login</FormSubmitButton>
 			</Form>
 			<div>
 				<Card rounded="lg" className="mt-4">
